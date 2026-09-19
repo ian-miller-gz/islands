@@ -1,0 +1,5 @@
+name: Quiet
+entry: liblogs.so
+version: 3
+host: reef
+listen: true

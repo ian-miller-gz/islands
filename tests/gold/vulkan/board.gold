@@ -1,0 +1,92 @@
+gui select load: PASS
+gui place: PASS
+select rest: at=0.0,0.0 pan=0.0,0.0 selected=[] events=[] rewrites=73
+gui nothing selected: PASS
+gui stage: PASS
+gui click a node: PASS
+select selected: at=0.0,0.0 pan=0.0,0.0 selected=[osc] events=[osc entered, osc pressed, osc clicked, deck selected, osc exited] rewrites=5
+gui selected: PASS
+gui board said so: PASS
+select dress: osc=0.16,0.19,0.22 osc.out=1.00,1.00,1.00 amp=0.16,0.19,0.22 out=0.16,0.19,0.22
+gui stage a socket: PASS
+gui click a socket: PASS
+select socket: at=0.0,0.0 pan=0.0,0.0 selected=[osc.out] events=[osc.out entered, osc.out pressed, osc.out clicked, deck selected, osc.out exited] rewrites=73
+gui one selection: PASS
+select dress: osc=0.16,0.19,0.22 osc.out=1.00,1.00,1.00 amp=0.16,0.19,0.22 out=0.16,0.19,0.22
+select stepped: at=0.0,0.0 pan=0.0,0.0 selected=[amp.in] events=[deck selected] rewrites=0
+select stepped again: at=0.0,0.0 pan=0.0,0.0 selected=[amp] events=[deck selected] rewrites=5
+gui walked: PASS
+select dropped: at=0.0,0.0 pan=0.0,0.0 selected=[out] events=[deck selected] rewrites=10
+gui down a row: PASS
+select edge: at=0.0,0.0 pan=0.0,0.0 selected=[out] events=[] rewrites=0
+select home: at=0.0,0.0 pan=0.0,0.0 selected=[osc] events=[deck selected] rewrites=10
+select end: at=0.0,0.0 pan=0.0,0.0 selected=[out] events=[deck selected] rewrites=10
+select taken: at=0.0,0.0 pan=0.0,0.0 selected=[out] events=[deck activated] rewrites=0
+gui activated: PASS
+select banded: at=25.0,25.0 pan=0.0,0.0 selected=[out] events=[] rewrites=74
+select stretching: at=120.0,50.0 pan=0.0,0.0 selected=[out] events=[] rewrites=1
+select over two: at=200.0,70.0 pan=0.0,0.0 selected=[out] events=[] rewrites=1
+select caught: at=200.0,70.0 pan=0.0,0.0 selected=[osc,osc.out,amp,amp.in] events=[deck selected] rewrites=73
+gui caught two boxes: PASS
+gui and the first: PASS
+select banded press: at=190.0,220.0 pan=0.0,0.0 selected=[osc,osc.out,amp,amp.in] events=[lone entered, lone pressed] rewrites=5
+select banded click: at=190.0,220.0 pan=0.0,0.0 selected=[osc,osc.out,amp,amp.in] events=[lone clicked] rewrites=5
+gui a click chooses nothing on a banded board: PASS
+select bare press: at=250.0,170.0 pan=0.0,0.0 selected=[osc,osc.out,amp,amp.in] events=[lone exited] rewrites=74
+select cleared: at=250.0,170.0 pan=0.0,0.0 selected=[] events=[deck selected] rewrites=73
+gui cleared: PASS
+select list steers: at=250.0,170.0 pan=0.0,0.0 selected=[] events=[roster selected] rewrites=38
+gui the list moved: PASS
+select grabbed: at=150.0,170.0 pan=0.0,0.0 selected=[] events=[] rewrites=0
+select panned: at=130.0,150.0 pan=20.0,20.0 selected=[] events=[] rewrites=20
+select let go: at=130.0,150.0 pan=20.0,20.0 selected=[] events=[] rewrites=0
+select ask: asked=0 at=0.0,0.0 board= target=
+gui the view moved: PASS
+gui the pan asked nothing: PASS
+gui stage under pan: PASS
+gui click under pan: PASS
+select hit under pan: at=130.0,150.0 pan=20.0,20.0 selected=[amp] events=[amp entered, amp pressed, amp clicked, deck selected, amp exited] rewrites=5
+gui picked: PASS
+select asking a node: at=140.0,30.0 pan=20.0,20.0 selected=[amp] events=[amp entered] rewrites=5
+select ask: asked=0 at=0.0,0.0 board= target=
+select asked a node: at=140.0,30.0 pan=20.0,20.0 selected=[amp] events=[] rewrites=0
+select ask: asked=1 at=140.0,30.0 board=deck target=amp
+gui the node answered: PASS
+gui its board said so: PASS
+gui the view held still: PASS
+select asking the board: at=250.0,170.0 pan=20.0,20.0 selected=[amp] events=[amp exited] rewrites=5
+select asked the board: at=250.0,170.0 pan=20.0,20.0 selected=[amp] events=[] rewrites=0
+select ask: asked=1 at=250.0,170.0 board=deck target=
+gui the bare board answered: PASS
+gui and named no node: PASS
+select asking off the board: at=60.0,225.0 pan=20.0,20.0 selected=[amp] events=[roster.0 entered] rewrites=11
+select asked off the board: at=60.0,225.0 pan=20.0,20.0 selected=[amp] events=[] rewrites=0
+select ask: asked=1 at=60.0,225.0 board= target=roster.0
+gui the widget answered: PASS
+gui and no board: PASS
+gui an ask stood: PASS
+select asking a strip: at=311.0,70.0 pan=20.0,20.0 selected=[amp] events=[roster.0 exited] rewrites=11
+select asked a strip: at=311.0,70.0 pan=20.0,20.0 selected=[amp] events=[] rewrites=0
+select ask: asked=1 at=311.0,70.0 board= target=strip
+gui the strip answered: PASS
+select asking nothing: at=5.0,5.0 pan=20.0,20.0 selected=[amp] events=[] rewrites=0
+select asked nothing: at=5.0,5.0 pan=20.0,20.0 selected=[amp] events=[] rewrites=0
+select ask: asked=0 at=0.0,0.0 board= target=
+gui nothing asked: PASS
+gui stage the drive: PASS
+gui the drive refuses on nothing: PASS
+gui stage it again: PASS
+gui the drive asks a plain widget: PASS
+select driven off the board: at=5.0,5.0 pan=20.0,20.0 selected=[amp] events=[] rewrites=0
+select ask: asked=1 at=311.0,70.0 board= target=strip
+gui the driven widget answered: PASS
+gui the band chooses by the band: PASS
+gui stage the banded: PASS
+gui click the lone node: PASS
+select banded board: at=5.0,5.0 pan=20.0,20.0 selected=[amp] events=[lone entered, lone pressed, lone clicked, lone exited] rewrites=5
+gui chose nothing: PASS
+gui stage the lone socket: PASS
+gui click the lone socket: PASS
+select banded socket: at=5.0,5.0 pan=20.0,20.0 selected=[amp] events=[lone.out entered, lone.out pressed, lone.out clicked, lone.out exited] rewrites=73
+gui still nothing: PASS
+gui the write chooses: PASS

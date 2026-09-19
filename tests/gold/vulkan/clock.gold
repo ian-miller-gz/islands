@@ -1,0 +1,13 @@
+PASS initial: index, delta, elapsed, rate all zero
+PASS first pass: delta and elapsed zero, index zero
+PASS second pass: index one, delta and elapsed positive
+PASS one stamp per pass: repeated reads agree
+PASS monotonic run: index steps one, elapsed never backward
+PASS rate: positive after passes with positive delta
+PASS sequence: index stays in [0, count)
+PASS sequence: zero count or non-positive period holds frame zero
+PASS pulse: the two-phase sequence's first phase, false when period <= 0
+PASS single-frame sequence: always frame zero
+PASS reset: index, delta, elapsed, rate all zero
+PASS reset then stamp: first pass zero again
+clock relay: PASS

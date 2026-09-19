@@ -1,0 +1,24 @@
+gui pressed load: PASS
+gui place: PASS
+pressed rest: box='' board='' target='' at=0.0,0.0
+pressed ground: box='' board='deck' target='' at=120.0,140.0
+gui drained: PASS
+pressed released: box='' board='' target='' at=0.0,0.0
+pressed box: box='' board='deck' target='osc' at=50.0,30.0
+gui position untouched: PASS
+gui pan untouched: PASS
+gui pan: PASS
+gui zoom: PASS
+pressed viewed: box='' board='' target='' at=0.0,0.0
+pressed under the view: box='' board='deck' target='osc' at=50.0,30.0
+gui restored: PASS
+gui unpanned: PASS
+pressed settled: box='' board='' target='' at=0.0,0.0
+pressed off the board: box='' board='' target='' at=0.0,0.0
+gui stage: PASS
+gui driven: PASS
+pressed driven: box='' board='deck' target='osc' at=50.0,30.0
+gui stage again: PASS
+gui driven ground: PASS
+pressed driven ground: box='' board='deck' target='' at=140.0,90.0
+gui click refuses a stranger: PASS

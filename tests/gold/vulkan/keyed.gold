@@ -1,0 +1,17 @@
+gui keyed load: PASS
+gui aside load: PASS
+keyed deaf: key=text code=0 control=false cursor=0 name='' seat=- aside=text
+gui focus: PASS
+keyed unclaimed: key=delete code=0 control=false cursor=0 name='' seat=- aside=text
+gui drained: PASS
+keyed steered: key=text code=0 control=false cursor=1 name='' seat=- aside=text
+keyed taken: key=text code=0 control=false cursor=1 name='' seat=- aside=text
+keyed letter: key=text code=113 control=false cursor=1 name='' seat=- aside=text
+keyed chorded: key=text code=100 control=true cursor=1 name='' seat=- aside=text
+gui seat: PASS
+keyed seated: key=text code=0 control=false cursor=1 name='q' seat=name aside=text
+gui release: PASS
+keyed stale: key=text code=0 control=false cursor=1 name='q' seat=- aside=text
+keyed deafened: key=down code=0 control=false cursor=0 name='q' seat=- aside=text
+gui aside untouched: PASS
+gui release focus: PASS

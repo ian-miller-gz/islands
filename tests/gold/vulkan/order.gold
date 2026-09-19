@@ -1,0 +1,48 @@
+gui order load: PASS
+order deck bare: out osc amp lfo
+reaches osc>out: no
+join osc.out>amp.in: made
+join amp.out>out: made
+order deck: osc amp out lfo
+reaches osc>out: yes
+reaches out>osc: no
+reaches osc.out>amp.in: yes
+reaches osc>amp: yes
+reaches osc>lfo: no
+reaches ghost>out: no
+gui the chain leads: PASS
+gui and not backwards: PASS
+join feed.out>dry.in: made
+join feed.out>wet.in: made
+join dry.out>sum: made
+join wet.out>sum: made
+order bus: feed wet dry sum
+reaches feed>sum: yes
+reaches dry>wet: no
+join top>gate: made
+join gate>tail: made
+order wall: top tail
+reaches top>tail: yes
+gui the terminal carries: PASS
+order page: osc amp out lfo feed wet dry sum top tail one two
+reaches osc>feed: no
+join one.out>two.in: made
+join two.out>one.in: made
+order ring: refused, 0 named
+order page: refused, 0 named
+order deck: osc amp out lfo
+reaches one>one: yes
+reaches one.out>two.out: yes
+gui a ring has no order: PASS
+gui and names nobody: PASS
+part two.out>one.in: parted
+order ring: one two
+reaches one>one: no
+join amp.out>amp.in: made
+order deck: refused, 0 named
+reaches amp>amp: yes
+part amp.out>amp.in: parted
+order deck: osc amp out lfo
+order ghost: refused, 0 named
+gui an unknown document refuses: PASS
+gui and reaches nothing: PASS

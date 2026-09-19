@@ -1,0 +1,8 @@
+name: Messages
+entry: libmessages.so
+version: 3
+host: reef
+listen: true
+
+engine:
+  platform: [posix, windows]

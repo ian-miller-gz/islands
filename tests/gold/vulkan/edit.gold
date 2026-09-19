@@ -1,0 +1,43 @@
+gui edit load: PASS
+edit deaf: name='' note='' caret=0,0 seat=- marks=- cursor=0 events=[] rewrites=57
+gui focus: PASS
+edit walks: name='' note='' caret=0,0 seat=- marks=- cursor=1 events=[menu selected] rewrites=43
+gui seat: PASS
+gui refuse a non-field seat: PASS
+edit typed: name='path' note='' caret=4,4 seat=name marks=name cursor=1 events=[name edited] rewrites=7
+gui edited answers once: PASS
+gui edited consumed: PASS
+edit hands: name='path' note='' caret=4,4 seat=- marks=- cursor=2 events=[menu selected] rewrites=50
+gui reseat: PASS
+edit home: name='path' note='' caret=0,0 seat=name marks=name cursor=2 events=[] rewrites=7
+edit select: name='path' note='' caret=2,0 seat=name marks=name cursor=2 events=[] rewrites=7
+edit replace: name='Rth' note='' caret=1,1 seat=name marks=name cursor=2 events=[name edited] rewrites=7
+edit append: name='Rths' note='' caret=4,4 seat=name marks=name cursor=2 events=[name edited] rewrites=7
+edit erase: name='Rth' note='' caret=3,3 seat=name marks=name cursor=2 events=[name edited] rewrites=7
+edit delete: name='th' note='' caret=0,0 seat=name marks=name cursor=2 events=[name edited] rewrites=7
+edit commit: name='th' note='' caret=0,0 seat=name marks=name cursor=2 events=[name committed] rewrites=0
+gui committed answers once: PASS
+gui committed consumed: PASS
+edit step: name='th' note='' caret=0,0 seat=note marks=note cursor=2 events=[] rewrites=14
+edit second: name='th' note='two' caret=0,0 seat=note marks=note cursor=2 events=[note edited] rewrites=7
+gui reseat for the chords: PASS
+edit copied: name='th' note='two' caret=1,0 seat=name marks=name cursor=2 events=[] rewrites=14
+gui the selection reached the clipboard: PASS
+edit pasted: name='seed/h' note='two' caret=5,5 seat=name marks=name cursor=2 events=[name edited] rewrites=7
+edit claimed: name='seed/h' note='two' caret=5,5 seat=name marks=name cursor=2 events=[] rewrites=0
+gui refocus: PASS
+gui release the seat: PASS
+edit returns: name='seed/h' note='two' caret=5,5 seat=- marks=- cursor=3 events=[menu selected] rewrites=50
+gui place: PASS
+gui a measured run: PASS
+edit measured: name='cartridges/' note='two' caret=5,5 seat=- marks=- cursor=3 events=[] rewrites=7
+edit aims: name='cartridges/' note='two' caret=5,5 seat=- marks=- cursor=3 events=[name entered, name pressed] rewrites=7
+edit places: name='cartridges/' note='two' caret=4,4 seat=name marks=name cursor=3 events=[name clicked] rewrites=7
+edit reaches: name='cartridges/' note='two' caret=4,4 seat=name marks=name cursor=3 events=[name pressed] rewrites=7
+edit beyond: name='cartridges/' note='two' caret=11,11 seat=name marks=name cursor=3 events=[name clicked] rewrites=7
+edit grabs: name='cartridges/' note='two' caret=11,11 seat=name marks=name cursor=3 events=[name pressed] rewrites=7
+edit wobble: name='cartridges/' note='two' caret=11,11 seat=name marks=name cursor=3 events=[] rewrites=0
+edit sweeps: name='cartridges/' note='two' caret=9,4 seat=name marks=name cursor=3 events=[] rewrites=7
+edit widens: name='cartridges/' note='two' caret=11,4 seat=name marks=name cursor=3 events=[] rewrites=7
+edit kept: name='cartridges/' note='two' caret=11,4 seat=name marks=name cursor=3 events=[] rewrites=7
+edit swapped: name='cartX' note='two' caret=5,5 seat=name marks=name cursor=3 events=[name edited] rewrites=7

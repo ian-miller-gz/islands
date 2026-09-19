@@ -1,0 +1,6 @@
+name: trusted
+entry: libdemo.so
+assets: assets
+version: 3
+web: https to localhost trusting gateway.crt
+web: https to 127.0.0.1

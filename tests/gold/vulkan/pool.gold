@@ -1,0 +1,20 @@
+gui build: PASS
+gui deck: PASS
+pool empty: live=1 dead=0
+pool composed: live=1001 dead=0
+pool swept: live=1 dead=0
+pool again: live=1001 dead=0
+gui the pool did not grow: PASS
+gui hollow: PASS
+pool hollowed: live=1000 dead=1
+gui raze: PASS
+pool razed: live=0 dead=0
+gui a stranger has no pool: PASS
+gui place: PASS
+pool stood: right0 at=250,10 box=120x30
+gui put away: PASS
+pool writes: both=45 one=25
+gui the hidden stack wrote nothing: PASS
+pool hidden: right at=240,0 box=200x200
+pool under: right0 at=240,0 box=200x200
+gui a hidden row keeps its parent's box: PASS

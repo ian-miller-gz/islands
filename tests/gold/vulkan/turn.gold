@@ -1,0 +1,82 @@
+gui turn load: PASS
+gui place: PASS
+gui range: PASS
+gui resting: PASS
+gui graphic: PASS
+gui write over: PASS
+gui clamped: PASS
+gui write under: PASS
+gui snapped: PASS
+gui restate: PASS
+gui boundless keeps its own: PASS
+gui unsnapped mode: PASS
+turn rest: gain=0.300 free=440.000 mode=0.000 slide=0.500 run='' caret=0,0 seat=- marks=- cursor=0 events=[] rewrites=82
+turn press: gain=0.300 free=440.000 mode=0.000 slide=0.500 run='' caret=0,0 seat=- marks=- cursor=0 events=[gain entered, gain pressed] rewrites=8
+turn wobble: gain=0.300 free=440.000 mode=0.000 slide=0.500 run='' caret=0,0 seat=- marks=- cursor=0 events=[] rewrites=0
+turn click: gain=0.300 free=440.000 mode=0.000 slide=0.500 run='' caret=0,0 seat=gain marks=gain cursor=0 events=[gain clicked] rewrites=8
+gui close the cell: PASS
+turn grab: gain=0.300 free=440.000 mode=0.000 slide=0.500 run='' caret=0,0 seat=- marks=- cursor=0 events=[gain pressed] rewrites=8
+turn drag: gain=0.500 free=440.000 mode=0.000 slide=0.500 run='' caret=0,0 seat=- marks=- cursor=0 events=[gain dialled] rewrites=8
+turn run: gain=1.000 free=440.000 mode=0.000 slide=0.500 run='' caret=0,0 seat=- marks=- cursor=0 events=[gain dialled] rewrites=8
+gui dialled answers once: PASS
+gui dialled consumed: PASS
+turn drop: gain=1.000 free=440.000 mode=0.000 slide=0.500 run='' caret=0,0 seat=- marks=- cursor=0 events=[gain exited] rewrites=8
+turn hold: gain=1.000 free=440.000 mode=0.000 slide=0.500 run='' caret=0,0 seat=- marks=- cursor=0 events=[free entered, free pressed] rewrites=8
+turn creep: gain=1.000 free=440.200 mode=0.000 slide=0.500 run='' caret=0,0 seat=- marks=- cursor=0 events=[free dialled] rewrites=8
+turn race: gain=1.000 free=442.200 mode=0.000 slide=0.500 run='' caret=0,0 seat=- marks=- cursor=0 events=[free dialled] rewrites=8
+turn release: gain=1.000 free=442.200 mode=0.000 slide=0.500 run='' caret=0,0 seat=- marks=- cursor=0 events=[] rewrites=8
+turn first: gain=1.000 free=442.200 mode=0.000 slide=0.500 run='' caret=0,0 seat=- marks=- cursor=0 events=[free exited, gain entered, gain pressed] rewrites=16
+turn once: gain=1.000 free=442.200 mode=0.000 slide=0.500 run='' caret=0,0 seat=gain marks=gain cursor=0 events=[gain clicked] rewrites=8
+turn again: gain=1.000 free=442.200 mode=0.000 slide=0.500 run='' caret=0,0 seat=gain marks=gain cursor=0 events=[gain pressed] rewrites=8
+turn restored: gain=0.300 free=442.200 mode=0.000 slide=0.500 run='' caret=0,0 seat=gain marks=gain cursor=0 events=[gain clicked, gain dialled] rewrites=8
+turn throw: gain=0.300 free=442.200 mode=0.000 slide=0.500 run='' caret=0,0 seat=gain marks=gain cursor=0 events=[gain exited, mode entered, mode pressed] rewrites=16
+turn thrown: gain=0.300 free=442.200 mode=1.000 slide=0.500 run='' caret=0,0 seat=- marks=- cursor=0 events=[mode clicked, mode dialled] rewrites=16
+turn again thrown: gain=0.300 free=442.200 mode=1.000 slide=0.500 run='' caret=0,0 seat=- marks=- cursor=0 events=[mode pressed] rewrites=8
+turn returned: gain=0.300 free=442.200 mode=0.000 slide=0.500 run='' caret=0,0 seat=- marks=- cursor=0 events=[mode clicked, mode dialled] rewrites=8
+turn lands: gain=0.300 free=442.200 mode=0.000 slide=0.040 run='' caret=0,0 seat=- marks=- cursor=0 events=[mode exited, slide entered, slide pressed, slide dialled] rewrites=16
+turn rides: gain=0.300 free=442.200 mode=0.000 slide=0.500 run='' caret=0,0 seat=- marks=- cursor=0 events=[slide dialled] rewrites=8
+turn parts: gain=0.300 free=442.200 mode=0.000 slide=0.500 run='' caret=0,0 seat=- marks=- cursor=0 events=[] rewrites=8
+gui a slider never seats: PASS
+turn taps: gain=0.300 free=442.200 mode=0.000 slide=0.750 run='' caret=0,0 seat=- marks=- cursor=0 events=[slide pressed, slide dialled] rewrites=8
+turn tapped: gain=0.300 free=442.200 mode=0.000 slide=0.750 run='' caret=0,0 seat=- marks=- cursor=0 events=[] rewrites=8
+turn taps again: gain=0.300 free=442.200 mode=0.000 slide=0.750 run='' caret=0,0 seat=- marks=- cursor=0 events=[slide pressed] rewrites=8
+turn held to the point: gain=0.300 free=442.200 mode=0.000 slide=0.750 run='' caret=0,0 seat=- marks=- cursor=0 events=[] rewrites=8
+gui focus: PASS
+gui release the seat: PASS
+gui seat the field: PASS
+turn ring: gain=0.300 free=442.200 mode=0.000 slide=0.750 run='' caret=0,0 seat=gain marks=- cursor=0 events=[slide exited] rewrites=15
+turn nudge: gain=0.310 free=442.200 mode=0.000 slide=0.750 run='' caret=0,0 seat=gain marks=- cursor=0 events=[gain dialled] rewrites=8
+turn end: gain=1.000 free=442.200 mode=0.000 slide=0.750 run='' caret=0,0 seat=gain marks=- cursor=0 events=[gain dialled] rewrites=8
+turn home: gain=0.000 free=442.200 mode=0.000 slide=0.750 run='' caret=0,0 seat=gain marks=- cursor=0 events=[gain dialled] rewrites=8
+turn open: gain=0.000 free=442.200 mode=0.000 slide=0.750 run='' caret=0,0 seat=gain marks=gain cursor=0 events=[] rewrites=8
+turn typed: gain=0.000 free=442.200 mode=0.000 slide=0.750 run='0.5' caret=3,3 seat=gain marks=gain cursor=0 events=[gain edited] rewrites=8
+gui edited: PASS
+turn commit: gain=0.000 free=442.200 mode=0.000 slide=0.750 run='0.5' caret=3,3 seat=gain marks=- cursor=0 events=[gain committed] rewrites=8
+gui committed: PASS
+turn nudges again: gain=0.010 free=442.200 mode=0.000 slide=0.750 run='0.5' caret=3,3 seat=gain marks=- cursor=0 events=[gain dialled] rewrites=8
+turn steps on: gain=0.010 free=442.200 mode=0.000 slide=0.750 run='0.5' caret=3,3 seat=free marks=- cursor=0 events=[] rewrites=0
+turn reaches the flag: gain=0.010 free=442.200 mode=0.000 slide=0.750 run='0.5' caret=3,3 seat=mode marks=- cursor=0 events=[] rewrites=0
+turn keyed throw: gain=0.010 free=442.200 mode=1.000 slide=0.750 run='0.5' caret=3,3 seat=mode marks=- cursor=0 events=[mode dialled] rewrites=8
+turn reaches the slider: gain=0.010 free=442.200 mode=1.000 slide=0.750 run='0.5' caret=3,3 seat=slide marks=- cursor=0 events=[] rewrites=0
+turn stays shut: gain=0.010 free=442.200 mode=1.000 slide=0.750 run='0.5' caret=3,3 seat=slide marks=- cursor=0 events=[] rewrites=0
+turn nudged: gain=0.010 free=442.200 mode=1.000 slide=0.760 run='0.5' caret=3,3 seat=slide marks=- cursor=0 events=[slide dialled] rewrites=8
+turn hands: gain=0.010 free=442.200 mode=1.000 slide=0.760 run='0.5' caret=3,3 seat=- marks=- cursor=1 events=[menu selected] rewrites=43
+gui pull refuses a stranger: PASS
+gui stage: PASS
+gui pull once: PASS
+turn once pulled: gain=0.010 free=443.200 mode=1.000 slide=0.760 run='0.5' caret=3,3 seat=- marks=- cursor=1 events=[free entered, free pressed, free dialled, free exited] rewrites=8
+gui stage again: PASS
+gui pull thrice: PASS
+turn thrice pulled: gain=0.010 free=446.200 mode=1.000 slide=0.760 run='0.5' caret=3,3 seat=- marks=- cursor=1 events=[free entered, free pressed, free dialled, free exited] rewrites=8
+gui holds count: PASS
+gui release the seat: PASS
+turn measured: gain=0.010 free=446.200 mode=1.000 slide=0.760 run='0.5' caret=3,3 seat=- marks=- cursor=1 events=[] rewrites=0
+turn presses: gain=0.010 free=446.200 mode=1.000 slide=0.760 run='0.5' caret=3,3 seat=- marks=- cursor=1 events=[gain entered, gain pressed] rewrites=8
+turn opens: gain=0.010 free=446.200 mode=1.000 slide=0.760 run='0.5' caret=3,0 seat=gain marks=gain cursor=1 events=[gain clicked] rewrites=8
+turn anchors: gain=0.010 free=446.200 mode=1.000 slide=0.760 run='0.5' caret=3,0 seat=gain marks=gain cursor=1 events=[gain pressed] rewrites=8
+turn marks: gain=0.010 free=446.200 mode=1.000 slide=0.760 run='0.5' caret=3,1 seat=gain marks=gain cursor=1 events=[] rewrites=8
+turn holds: gain=0.010 free=446.200 mode=1.000 slide=0.760 run='0.5' caret=3,1 seat=gain marks=gain cursor=1 events=[] rewrites=8
+gui release the seat again: PASS
+turn regrabs: gain=0.010 free=446.200 mode=1.000 slide=0.760 run='0.5' caret=3,1 seat=- marks=- cursor=1 events=[gain pressed] rewrites=8
+turn scrubs: gain=0.140 free=446.200 mode=1.000 slide=0.760 run='0.5' caret=3,1 seat=- marks=- cursor=1 events=[gain dialled] rewrites=8
+turn dropped: gain=0.140 free=446.200 mode=1.000 slide=0.760 run='0.5' caret=3,1 seat=- marks=- cursor=1 events=[] rewrites=8

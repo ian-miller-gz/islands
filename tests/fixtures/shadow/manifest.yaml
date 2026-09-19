@@ -1,0 +1,3 @@
+name: shadow
+entry: libshadow.so
+version: 3

@@ -1,0 +1,26 @@
+gui saved load: PASS
+gui joins read: PASS
+gui label read: PASS
+gui bare label: PASS
+gui directed: PASS
+saved emit: link osc.out amp.in "excites"
+saved emit: link amp out ""
+gui canonical reloads: PASS
+gui byte stable: PASS
+gui tree survives: PASS
+gui joins survive: PASS
+gui label survives: PASS
+gui refuse half a pair: PASS
+gui refuse a stranger: PASS
+gui refuse a self join: PASS
+gui refuse a nested line: PASS
+gui refuse a second label: PASS
+gui place: PASS
+saved rest: excites@105.0,42.0 x1.0 osc@34.0,42.0 x1.0 amp@164.0,42.0 x1.0 out@164.0,132.0 x1.0
+gui size is the basis: PASS
+gui zoom: PASS
+saved zoomed: excites@190.0,64.0 x2.0 osc@48.0,64.0 x2.0 amp@308.0,64.0 x2.0 out@308.0,244.0 x2.0
+gui rename: PASS
+saved renamed: drives@198.0,64.0 x2.0 osc@48.0,64.0 x2.0 amp@308.0,64.0 x2.0 out@308.0,244.0 x2.0
+gui disconnect: PASS
+saved parted: osc@48.0,64.0 x2.0 amp@308.0,64.0 x2.0 out@308.0,244.0 x2.0

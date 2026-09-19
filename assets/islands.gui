@@ -1,0 +1,12 @@
+
+style ink color=#1a202cff
+style muted color=#718096ff
+style sheet color=#f2f4f7ff edge=#cbd5e0ff border=1
+style box color=#e9f1fbff edge=#b9d0e8ff border=1
+style place color=#e2e8f0ff edge=#1a202cff border=0 hover=#cfe0f2ff press=#9ec5e8ff
+style entry color=#00000000 edge=#1a202cff border=0 hover=#d8e8f7ff press=#9ec5e8ff
+style call color=#2b6cb0ff edge=#ffffffff border=0 hover=#3d7fc4ff press=#1e4e8cff
+style selected color=#9ec5e8ff hover=#9ec5e8ff press=#8ab4dcff
+style paper color=#ffffffff edge=#1a202cff border=1 hover=#9ec5e8ff
+style clear color=#00000000 border=0
+style chrome color=#00000000 edge=#1a202cff border=0 hover=#00000000 press=#00000000 glow=#2b6cb0ff

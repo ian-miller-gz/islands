@@ -1,0 +1,5 @@
+name: vital
+entry: libdemo.so
+assets: assets
+version: 3
+requires: cartridges/.test/roster vital

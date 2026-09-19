@@ -1,0 +1,20 @@
+PASS overlap self
+PASS overlap nested
+PASS overlap partial
+PASS overlap touch-right strict
+PASS overlap touch-below strict
+PASS overlap disjoint
+PASS contains interior
+PASS contains top-left edge in
+PASS contains right edge out
+PASS contains bottom edge out
+PASS contains outside
+PASS grid hit corner wall
+PASS grid miss gap
+PASS grid straddle wall+gap
+PASS grid hit floating block
+PASS grid miss above block
+PASS grid miss over marker
+PASS grid hit floor
+PASS grid miss past edge
+PASS grid hit clipped at origin

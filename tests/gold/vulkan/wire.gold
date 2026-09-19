@@ -1,0 +1,109 @@
+gui wire load: PASS
+gui place: PASS
+wire rest: at=0.0,0.0 wiring=- hover=- links=[ ] joined=[ ] cut=[ ] events=[] rewrites=20
+wire over: at=100.0,50.0 wiring=- hover=osc.out links=[ ] joined=[ ] cut=[ ] events=[osc.out entered] rewrites=0
+gui a port is picked: PASS
+wire hitched: at=100.0,50.0 wiring=osc.out hover=osc.out links=[ ] joined=[ ] cut=[ ] events=[osc.out pressed] rewrites=33
+gui the wire is pending: PASS
+wire reaching: at=160.0,110.0 wiring=osc.out hover=- links=[ ] joined=[ ] cut=[ ] events=[osc.out exited] rewrites=13
+wire assisted: at=160.0,110.0 wiring=- hover=- links=[ osc.out>out ] joined=[ osc.out>out ] cut=[ ] events=[deck joined] rewrites=25
+gui the assist joined: PASS
+gui gesture over: PASS
+wire pressed: at=100.0,50.0 wiring=osc.out hover=osc.out links=[ osc.out>out ] joined=[ ] cut=[ ] events=[osc.out entered, osc.out pressed] rewrites=38
+wire over a port: at=170.0,50.0 wiring=osc.out hover=amp.in links=[ osc.out>out ] joined=[ ] cut=[ ] events=[osc.out exited, amp.in entered] rewrites=18
+wire joined: at=170.0,50.0 wiring=- hover=amp.in links=[ osc.out>out, osc.out>amp.in ] joined=[ osc.out>amp.in ] cut=[ ] events=[deck joined] rewrites=30
+gui linked: PASS
+gui joins answer: PASS
+wire on a plate: at=200.0,140.0 wiring=- hover=out links=[ osc.out>out, osc.out>amp.in ] joined=[ ] cut=[ ] events=[amp.in exited, out entered, out pressed] rewrites=15
+gui a plate carries: PASS
+wire let go: at=200.0,140.0 wiring=- hover=out links=[ osc.out>out, osc.out>amp.in ] joined=[ ] cut=[ ] events=[out clicked, deck selected] rewrites=15
+gui stage: PASS
+gui drive: PASS
+wire driven: at=200.0,140.0 wiring=- hover=out links=[ osc.out>out, osc.out>amp.in, amp.out>out ] joined=[ amp.out>out ] cut=[ ] events=[out exited, amp.out entered, amp.out pressed, amp.out exited, out entered, deck joined] rewrites=35
+gui driven join: PASS
+wire stroked: at=188.0,110.0 wiring=- hover=- links=[ osc.out>out, osc.out>amp.in, amp.out>out ] joined=[ ] cut=[ ] events=[out exited] rewrites=20
+wire across: at=215.0,110.0 wiring=- hover=- links=[ osc.out>out, osc.out>amp.in ] joined=[ ] cut=[ amp.out>out ] events=[deck cut] rewrites=30
+wire dropped: at=215.0,110.0 wiring=- hover=- links=[ osc.out>out, osc.out>amp.in ] joined=[ ] cut=[ ] events=[] rewrites=0
+gui cut parted: PASS
+wire clicked: at=135.0,50.0 wiring=- hover=- links=[ osc.out>out, osc.out>amp.in ] joined=[ ] cut=[ ] events=[] rewrites=0
+wire bare: at=135.0,50.0 wiring=- hover=- links=[ osc.out>out, osc.out>amp.in ] joined=[ ] cut=[ ] events=[] rewrites=0
+gui a click parts nothing: PASS
+wire grabbed: at=135.0,50.0 wiring=- hover=- links=[ osc.out>out, osc.out>amp.in ] joined=[ ] cut=[ ] events=[] rewrites=0
+wire pulled through: at=135.0,60.0 wiring=- hover=- links=[ ] joined=[ ] cut=[ osc.out>out, osc.out>amp.in ] events=[deck cut, deck cut] rewrites=20
+wire let go of: at=135.0,60.0 wiring=- hover=- links=[ ] joined=[ ] cut=[ ] events=[] rewrites=0
+gui board cleared: PASS
+gui the source is audio: PASS
+gui the sink is MIDI: PASS
+gui stage the drive: PASS
+gui drive: PASS
+wire crossed: at=135.0,60.0 wiring=- hover=- links=[ ] joined=[ ] cut=[ ] events=[osc.out entered, osc.out pressed, osc.out exited, amp.in entered, amp.in exited] rewrites=20
+gui cross-kind refused: PASS
+gui the sink is audio: PASS
+gui stage again: PASS
+gui drive again: PASS
+wire agreed: at=135.0,60.0 wiring=- hover=- links=[ osc.out>amp.in ] joined=[ osc.out>amp.in ] cut=[ ] events=[osc.out entered, osc.out pressed, osc.out exited, amp.in entered, deck joined, amp.in exited] rewrites=25
+gui kinds agree: PASS
+wire aiming: at=100.0,50.0 wiring=osc.out hover=osc.out links=[ osc.out>amp.in ] joined=[ ] cut=[ ] events=[osc.out entered, osc.out pressed] rewrites=38
+wire in reach: at=200.0,100.0 wiring=osc.out hover=- links=[ osc.out>amp.in ] joined=[ ] cut=[ ] events=[osc.out exited] rewrites=18
+wire nearest: at=200.0,100.0 wiring=- hover=- links=[ osc.out>amp.in, osc.out>out ] joined=[ osc.out>out ] cut=[ ] events=[deck joined] rewrites=30
+gui the nearest agreeing port took it: PASS
+gui the sink is MIDI: PASS
+gui the second source is MIDI: PASS
+gui the far sink is MIDI: PASS
+wire aiming again: at=100.0,50.0 wiring=osc.out hover=osc.out links=[ osc.out>amp.in, osc.out>out ] joined=[ ] cut=[ ] events=[osc.out entered, osc.out pressed] rewrites=43
+wire nothing agrees: at=130.0,90.0 wiring=osc.out hover=- links=[ osc.out>amp.in, osc.out>out ] joined=[ ] cut=[ ] events=[osc.out exited] rewrites=23
+wire refused: at=130.0,90.0 wiring=- hover=- links=[ osc.out>amp.in, osc.out>out ] joined=[ ] cut=[ ] events=[] rewrites=30
+gui no join at all: PASS
+gui the wire is gone: PASS
+gui the second source agrees: PASS
+gui the far sink agrees: PASS
+wire aimed: at=230.0,50.0 wiring=amp.out hover=amp.out links=[ osc.out>amp.in, osc.out>out ] joined=[ ] cut=[ ] events=[amp.out entered, amp.out pressed] rewrites=43
+wire a candidate stands: at=150.0,110.0 wiring=amp.out hover=- links=[ osc.out>amp.in, osc.out>out ] joined=[ ] cut=[ ] events=[amp.out exited] rewrites=23
+gui the guide is seated with the wire: PASS
+wire guided: at=150.0,110.0 wiring=- hover=- links=[ osc.out>amp.in, osc.out>out, amp.out>out ] joined=[ amp.out>out ] cut=[ ] events=[deck joined] rewrites=35
+gui the guided release joined: PASS
+gui the old join is parted: PASS
+wire near a pin: at=112.0,56.0 wiring=- hover=- links=[ osc.out>amp.in, amp.out>out ] joined=[ ] cut=[ ] events=[] rewrites=30
+gui the rest aims: PASS
+wire grasped: at=112.0,56.0 wiring=osc.out hover=- links=[ osc.out>amp.in, amp.out>out ] joined=[ ] cut=[ ] events=[] rewrites=43
+gui the grasp wired: PASS
+wire carried: at=170.0,110.0 wiring=osc.out hover=- links=[ osc.out>amp.in, amp.out>out ] joined=[ ] cut=[ ] events=[] rewrites=23
+gui the aim follows: PASS
+wire landed: at=170.0,110.0 wiring=- hover=- links=[ osc.out>amp.in, amp.out>out, osc.out>out ] joined=[ osc.out>out ] cut=[ ] events=[deck joined] rewrites=35
+gui the grasped wire joined: PASS
+wire far from every pin: at=250.0,170.0 wiring=- hover=- links=[ osc.out>amp.in, amp.out>out, osc.out>out ] joined=[ ] cut=[ ] events=[] rewrites=0
+gui nothing aimed: PASS
+wire banded: at=250.0,170.0 wiring=- hover=- links=[ osc.out>amp.in, amp.out>out, osc.out>out ] joined=[ ] cut=[ ] events=[] rewrites=36
+gui no wire began: PASS
+wire let be: at=250.0,170.0 wiring=- hover=- links=[ osc.out>amp.in, amp.out>out, osc.out>out ] joined=[ ] cut=[ ] events=[deck selected] rewrites=35
+wire on the pin: at=100.0,50.0 wiring=osc.out hover=osc.out links=[ osc.out>amp.in, amp.out>out, osc.out>out ] joined=[ ] cut=[ ] events=[osc.out entered, osc.out pressed] rewrites=48
+wire clicked the pin: at=100.0,50.0 wiring=- hover=osc.out links=[ osc.out>amp.in, amp.out>out, osc.out>out ] joined=[ ] cut=[ ] events=[osc.out clicked, deck selected] rewrites=35
+gui the pin's click: PASS
+gui no join from a click: PASS
+wire grasped again: at=112.0,56.0 wiring=osc.out hover=- links=[ osc.out>amp.in, amp.out>out, osc.out>out ] joined=[ ] cut=[ ] events=[osc.out exited] rewrites=48
+wire clicked near the pin: at=112.0,56.0 wiring=- hover=- links=[ osc.out>amp.in, amp.out>out, osc.out>out ] joined=[ ] cut=[ ] events=[osc.out clicked] rewrites=35
+gui the grasped click is the pin's: PASS
+gui a standing pair redressed: PASS
+wire dressed: at=112.0,56.0 wiring=- hover=- links=[ osc.out>amp.in, amp.out>out, osc.out>out:dressed ] joined=[ ] cut=[ ] events=[] rewrites=0
+gui the link wears the style: PASS
+gui a fresh pair dressed at the join: PASS
+wire joined dressed: at=112.0,56.0 wiring=- hover=- links=[ osc.out>amp.in, osc.out>out:dressed, amp.out>out:dressed ] joined=[ ] cut=[ ] events=[] rewrites=35
+gui undressed: PASS
+wire undressed: at=112.0,56.0 wiring=- hover=- links=[ osc.out>amp.in, osc.out>out, amp.out>out:dressed ] joined=[ ] cut=[ ] events=[] rewrites=0
+gui the law is back: PASS
+gui osc.out is muted: PASS
+gui the mute reads back: PASS
+wire near a muted pin: at=112.0,56.0 wiring=- hover=- links=[ osc.out>amp.in, osc.out>out, amp.out>out:dressed ] joined=[ ] cut=[ ] events=[] rewrites=15
+gui nothing aims at it: PASS
+wire pressed a muted pin: at=100.0,50.0 wiring=- hover=osc.out links=[ osc.out>amp.in, osc.out>out, amp.out>out:dressed ] joined=[ ] cut=[ ] events=[osc.out entered, osc.out pressed] rewrites=15
+gui no wire began: PASS
+wire let the muted pin go: at=100.0,50.0 wiring=- hover=osc.out links=[ osc.out>amp.in, osc.out>out, amp.out>out:dressed ] joined=[ ] cut=[ ] events=[osc.out clicked] rewrites=15
+gui stage the drag: PASS
+gui the drag is refused a source: PASS
+wire dragged from a muted pin: at=100.0,50.0 wiring=- hover=osc.out links=[ osc.out>amp.in, amp.out>out:dressed ] joined=[ ] cut=[ ] events=[osc.out pressed, osc.out exited, out entered, out exited, osc.out entered] rewrites=30
+gui no join from a muted source: PASS
+gui connect still joins it: PASS
+gui osc.out is open again: PASS
+wire pressed the open pin: at=100.0,50.0 wiring=osc.out hover=osc.out links=[ osc.out>amp.in, amp.out>out:dressed, osc.out>out ] joined=[ ] cut=[ ] events=[osc.out pressed] rewrites=48
+gui the wire began: PASS
+wire let the open pin go: at=100.0,50.0 wiring=- hover=osc.out links=[ osc.out>amp.in, amp.out>out:dressed, osc.out>out ] joined=[ ] cut=[ ] events=[osc.out clicked] rewrites=35

@@ -1,0 +1,4 @@
+name: policy
+entry: libdemo.so
+version: 3
+requires: cartridges/.test/roster ensur

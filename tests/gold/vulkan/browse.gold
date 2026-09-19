@@ -1,0 +1,10 @@
+gui browse plant: PASS
+browse stand: rows=[../ alpha/ beta/ 2-early.gui 10-late.gui note.md] cursor=0 path=. result=pending
+browse onto: rows=[../ alpha/ beta/ 2-early.gui 10-late.gui note.md] cursor=2 path=beta/ result=pending
+browse into: rows=[../ inner.gui] cursor=0 path=alpha/ result=pending
+browse picked: rows=[../ inner.gui] cursor=1 path=alpha/inner.gui result=pending
+browse out: rows=[../ alpha/ beta/ 2-early.gui 10-late.gui note.md] cursor=0 path=. result=pending
+browse screened: rows=[../ alpha/ beta/ 2-early.gui 10-late.gui] cursor=0 path=. result=pending
+gui a missing directory lists nothing: PASS
+browse seeded: rows=[../ alpha/ beta/ 2-early.gui 10-late.gui note.md] cursor=0 path=note.md result=pending
+browse confirm: rows=[] cursor=- path=note.md result=accepted

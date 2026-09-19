@@ -1,0 +1,6 @@
+name: relay
+entry: libmessages.so
+version: 3
+host: reef
+listen: true
+requires: cartridges/.test/roster acquire: start close: kill

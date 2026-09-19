@@ -1,0 +1,9 @@
+gui nothing adopted: PASS
+gui open without designation raises nothing: PASS
+gui an unknown name is refused by count: PASS
+gui the known name adopted: PASS
+gui the unknown name is not: PASS
+gui designated raises: PASS
+gui re-adoption replaces whole: PASS
+gui the designation is gone: PASS
+gui the door closed again: PASS

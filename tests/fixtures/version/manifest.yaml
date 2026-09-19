@@ -1,0 +1,4 @@
+name: version
+entry: libdemo.so
+assets: assets
+version: 999999

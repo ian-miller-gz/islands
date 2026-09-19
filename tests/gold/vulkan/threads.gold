@@ -1,0 +1,8 @@
+main: primed released before the worker exists
+worker: took the primed signal without blocking
+main: lap 1 counter 3
+main: lap 2 counter 6
+main: lap 3 counter 9
+sub-worker: stop token seen, loop returns
+worker: stop token seen, the nest stops with it
+threads relay: PASS

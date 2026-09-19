@@ -1,0 +1,19 @@
+gui pinned load: PASS
+gui place: PASS
+gui across read: PASS
+gui down read: PASS
+gui none read: PASS
+pinned rest: box@30.0,30.0 +50.0,50.0 x80.0,40.0 rail@4.0,30.0 +24.0,50.0 x24.0,40.0 cap@30.0,4.0 +50.0,24.0 x80.0,16.0 hover=-
+gui pan: PASS
+pinned panned: box@30.0,30.0 +30.0,40.0 x80.0,40.0 rail@4.0,30.0 +24.0,40.0 x24.0,40.0 cap@30.0,4.0 +30.0,24.0 x80.0,16.0 hover=-
+gui zoom: PASS
+pinned zoomed: box@30.0,30.0 +40.0,60.0 x160.0,80.0 rail@4.0,30.0 +24.0,60.0 x24.0,80.0 cap@30.0,4.0 +40.0,24.0 x160.0,16.0 hover=-
+gui stretch: PASS
+pinned stretched: box@30.0,30.0 +40.0,40.0 x160.0,40.0 rail@4.0,30.0 +24.0,40.0 x24.0,40.0 cap@30.0,4.0 +40.0,24.0 x160.0,16.0 hover=-
+pinned over: box@30.0,30.0 +40.0,40.0 x160.0,40.0 rail@4.0,30.0 +24.0,40.0 x24.0,40.0 cap@30.0,4.0 +40.0,24.0 x160.0,16.0 hover=rail
+gui picked where it stands: PASS
+gui unpin: PASS
+pinned unpinned: box@30.0,30.0 +40.0,40.0 x160.0,40.0 rail@4.0,30.0 +-12.0,40.0 x48.0,40.0 cap@30.0,4.0 +40.0,24.0 x160.0,16.0 hover=rail
+gui repin: PASS
+pinned repinned: box@30.0,30.0 +40.0,40.0 x160.0,40.0 rail@4.0,30.0 +24.0,40.0 x24.0,40.0 cap@30.0,4.0 +40.0,24.0 x160.0,16.0 hover=rail
+gui refuse a stranger name: PASS

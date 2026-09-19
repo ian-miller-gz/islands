@@ -1,0 +1,42 @@
+#pragma region COPYRIGHT
+/* ===========================================================================
+ *              (C) Copyright 2025 - Islands-Engine - Ian Miller             *
+ =============================================================================
+ *  This program is free software: you can redistribute it and/or modify     *
+ *  it under the terms of the GNU Affero General Public License as           *
+ *  published by the Free Software Foundation, either version 3 of the       *
+ *  License, or (at your option) any later version.                          *
+ *                                                                           *
+ *  This program is distributed in the hope that it will be useful,          *
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of           *
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            *
+ *  GNU Affero General Public License for more details.                      *
+ *                                                                           *
+ *  You should have received a copy of the GNU Affero General Public License *
+ *  along with this program.  If not, see <https://www.gnu.org/licenses/>.   *
+ ============================================================================*/
+#pragma endregion
+#pragma once
+
+#include <island/gui/sac.selection.hpp>
+#include <common.hpp>
+
+namespace GUI::SAC::PLAYHEAD {
+
+constexpr STRING::Hot NAME = "playhead";
+
+struct Mark {
+  Float at = 0.0f;
+  Float wide = 0.0f;
+};
+
+auto blade(Float at, Float scale, Float hair) -> Mark;
+
+auto stripcap(Float at, Float pan, Float scale, Float wide) -> Mark;
+
+#if SR_SAC == SR_NONE
+inline auto blade(Float at, Float, Float) -> Mark { return {at, 0.0f}; }
+inline auto stripcap(Float, Float, Float, Float) -> Mark { return {}; }
+#endif
+
+}  // namespace GUI::SAC::PLAYHEAD

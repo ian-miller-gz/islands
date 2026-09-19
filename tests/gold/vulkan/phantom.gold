@@ -1,0 +1,17 @@
+gui phantom load: PASS
+gui place: PASS
+phantom rest: under@30.0,200.0 +30.0,200.0 x80.0,32.0 roam@10.0,10.0 +30.0,30.0 x80.0,40.0 hover=-
+phantom shown: under@30.0,200.0 +30.0,200.0 x80.0,32.0 roam@10.0,10.0 +30.0,30.0 x80.0,40.0 hover=roam
+gui shown child answers: PASS
+gui pan out: PASS
+phantom panned out: under@30.0,200.0 +30.0,200.0 x80.0,32.0 roam@10.0,10.0 +30.0,200.0 x80.0,40.0 hover=under
+gui clipped away answers no press: PASS
+phantom press: under@30.0,200.0 +30.0,200.0 x80.0,32.0 roam@10.0,10.0 +30.0,200.0 x80.0,40.0 hover=under
+phantom release: under@30.0,200.0 +30.0,200.0 x80.0,32.0 roam@10.0,10.0 +30.0,200.0 x80.0,40.0 hover=under
+gui beneath clicks: PASS
+gui phantom never clicks: PASS
+gui pan home: PASS
+phantom panned home: under@30.0,200.0 +30.0,200.0 x80.0,32.0 roam@10.0,10.0 +30.0,30.0 x80.0,40.0 hover=under
+gui beneath still answers: PASS
+phantom home: under@30.0,200.0 +30.0,200.0 x80.0,32.0 roam@10.0,10.0 +30.0,30.0 x80.0,40.0 hover=roam
+gui child answers again: PASS

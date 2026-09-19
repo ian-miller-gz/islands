@@ -1,0 +1,24 @@
+PASS counter uncommitted before frame
+PASS counter commits the pass sum
+PASS gauge records the set value
+PASS scope records one sample
+PASS fold covers every sample
+PASS fold orders low <= mean <= high
+PASS fold p99 within the window
+PASS names answers every series
+series:
+  test.count
+  test.fold
+  test.gauge
+  test.scope
+PASS reset sweeps the registry
+probes:
+  frame.period
+  gfx.draws
+  input.age
+PASS memory samples the rss gauge
+PASS memory tracks the peak >= rss
+memory:
+  memory.peak
+  memory.rss
+PASS hardware disarms to unarmed

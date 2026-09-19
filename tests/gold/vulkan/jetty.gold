@@ -1,0 +1,4 @@
+broker: up
+console: echo answers
+delivered: telemetry ping
+teardown: complete, exit 0

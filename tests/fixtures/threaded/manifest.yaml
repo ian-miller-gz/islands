@@ -1,0 +1,4 @@
+name: threaded
+entry: libdemo.so
+version: 3
+threads: true

@@ -1,0 +1,26 @@
+gui wheel load: PASS
+gui place: PASS
+wheel rest: box=0.0 turns=0.0 control=false at=0.0,0.0 first=0 hover=-
+wheel turned: box=0.0 turns=1.0 control=false at=120.0,140.0 first=0 hover=-
+gui drained: PASS
+wheel chorded: box=0.0 turns=-2.0 control=true at=120.0,140.0 first=0 hover=-
+gui view untouched: PASS
+gui pan untouched: PASS
+wheel over a box: box=0.0 turns=1.0 control=false at=50.0,30.0 first=0 hover=osc
+gui pan: PASS
+gui zoom: PASS
+wheel viewed: box=0.0 turns=0.0 control=false at=0.0,0.0 first=0 hover=osc
+wheel under the view: box=0.0 turns=1.0 control=true at=50.0,30.0 first=0 hover=osc
+gui restored: PASS
+gui unpanned: PASS
+wheel settled: box=0.0 turns=0.0 control=false at=0.0,0.0 first=0 hover=osc
+wheel over a row: box=0.0 turns=0.0 control=false at=0.0,0.0 first=3 hover=menu.0
+wheel off the board: box=0.0 turns=0.0 control=false at=0.0,0.0 first=3 hover=away
+wheel still: box=0.0 turns=0.0 control=false at=0.0,0.0 first=3 hover=away
+gui wheel refuses a stranger: PASS
+gui stage: PASS
+gui driven: PASS
+wheel driven: box=0.0 turns=3.0 control=true at=50.0,30.0 first=3 hover=away
+gui stage again: PASS
+gui driven row: PASS
+wheel driven row: box=0.0 turns=0.0 control=false at=0.0,0.0 first=0 hover=away

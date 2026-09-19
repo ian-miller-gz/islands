@@ -1,0 +1,16 @@
+gui the id is the board's stem and the row's count: PASS
+gui and the first row counts from zero: PASS
+gui the row reads back out of it: PASS
+gui a child of a seat names its seat: PASS
+gui the board's own furniture names no row: PASS
+gui another board's widget names no row: PASS
+gui the bare board names no row: PASS
+gui and a token that is not a count names none: PASS
+gui board load: PASS
+gui undesignated reads no selection: PASS
+gui the name adopts: PASS
+gui nothing selected names no row: PASS
+gui select the second seat: PASS
+gui the selection names its row: PASS
+gui re-adoption replaces whole: PASS
+gui the door closed again: PASS

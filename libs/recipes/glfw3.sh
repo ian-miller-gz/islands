@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+source "$(dirname "${BASH_SOURCE[0]}")/common.sh"
+SOURCE="$ROOT/submodules/glfw"
+SEAMS=(-DGLFW_BUILD_X11=ON -DGLFW_BUILD_WAYLAND=ON)
+[[ "$PLATFORM" == windows ]] && SEAMS=(-DGLFW_BUILD_X11=OFF -DGLFW_BUILD_WAYLAND=OFF)
+
+cmake -S "$SOURCE" -B "$BUILD" -DCMAKE_BUILD_TYPE=$CMAKE_TYPE \
+  ${TOOLCHAIN[@]+"${TOOLCHAIN[@]}"} \
+  -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DBUILD_SHARED_LIBS=OFF \
+  "${SEAMS[@]}" \
+  -DGLFW_BUILD_EXAMPLES=OFF -DGLFW_BUILD_TESTS=OFF -DGLFW_BUILD_DOCS=OFF \
+  -DGLFW_INSTALL=OFF
+cmake --build "$BUILD" --parallel "$JOBS"
+cp "$BUILD/src/libglfw3.a" "$HERE/"
+finish "$HERE/libglfw3.a"

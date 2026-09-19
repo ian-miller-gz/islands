@@ -1,0 +1,4 @@
+name: invalid
+entry: manifest.yaml
+assets: assets
+version: 3

@@ -1,0 +1,9 @@
+name: neutral
+entry: libdemo.so
+version: 3
+engine:
+  platform: [posix, web]
+platforms:
+  web:
+    engine:
+      overlay: none

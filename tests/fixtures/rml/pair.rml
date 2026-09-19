@@ -1,0 +1,13 @@
+<rml>
+<head>
+<title>Harbor</title>
+<link type="text/rcss" href="pair.rcss"/>
+</head>
+<body>
+<div id="harbor" class="panel">
+  <div id="name" class="label">Harbor</div>
+  <div id="moor" class="button">Moor</div>
+  <img id="flag" class="image" src="icons" rect="2 0 1 1"/>
+</div>
+</body>
+</rml>

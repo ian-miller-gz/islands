@@ -1,0 +1,18 @@
+launcher
+target assets/launcher.gui = document 0
+read pname rect=`` text=
+read general rect=`` text=General
+click library hover=library events=enter:library,press:library,click:library
+read general rect=`` 100x28 text=General
+click gear hover=gear events=enter:gear,press:gear,click:gear
+read setupname rect=`` 0x0 text=Options
+read box0 rect=`` 572x28 text=
+click setupclose hover=setupclose events=enter:setupclose,press:setupclose,click:setupclose
+read setupname rect=`` 620x380 text=Options
+read about rect=`` 240x32 text=About
+read noticeline rect=`` 360x120 text=Islands Beta - ver. 0.1.0
+click about hover=about events=enter:about,press:about,click:about
+read noticeline rect=`` 0x0 text=Islands Beta - ver. 0.1.0
+read noticeclose rect=`` 150x34 text=Close
+click noticeclose hover=noticeclose events=enter:noticeclose,press:noticeclose,click:noticeclose
+read noticeline rect=`` 360x120 text=Islands Beta - ver. 0.1.0

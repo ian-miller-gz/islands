@@ -1,0 +1,13 @@
+
+style line color=#5f5a7aff border=0
+style clear color=#00000000 border=0
+style note color=#00000000 edge=#9793a8ff border=0 hover=#332e47ff press=#4c4076ff
+style card color=#2a2637ff edge=#454059ff border=1 hover=#2a2637ff press=#2a2637ff
+style still color=#413d51ff
+style plate color=#353044ff
+style leaf style=entry size=17
+style post style=entry size=16 pad=8
+style slat style=entry size=17 pad=14
+style trace color=#00000000 edge=#c9c5d6ff border=0 hover=#00000000 press=#00000000 size=15 pad=8
+style folded style=note z=0
+style unfolded style=card edge=#e2deeaff z=1

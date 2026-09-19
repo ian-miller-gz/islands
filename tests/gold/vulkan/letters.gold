@@ -1,0 +1,16 @@
+gui letters load: PASS
+gui place: PASS
+letters rest: sign x80.0,56.0 fold x80.0,40.0 mark x60.0,20.0 note x80.0,56.0
+gui authored fold: PASS
+gui size is the basis: PASS
+gui zoom: PASS
+letters zoomed: sign x160.0,112.0 fold x160.0,80.0 mark x120.0,40.0 note x80.0,56.0
+gui the text rides the zoom: PASS
+gui the derived fold rides it too: PASS
+gui the fold stands: PASS
+gui the stacked size stands: PASS
+gui shrink: PASS
+letters shrunk: sign x40.0,28.0 fold x40.0,20.0 mark x30.0,10.0 note x80.0,56.0
+gui the text shrinks with it: PASS
+gui and so does the derived fold: PASS
+gui the stacked size still stands: PASS

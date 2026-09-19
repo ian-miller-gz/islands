@@ -1,0 +1,16 @@
+name: Islands - Launcher
+entry: liblauncher.so
+requires: cartridges/.core/launcher/monitor acquire: start close: kill
+splash: true
+size: 1280x800
+assets: assets
+version: 3
+gui:
+  dialog: true
+summary: islands launcher
+engine:
+  platform: [posix, windows]
+platforms:
+  windows:
+    entry: liblauncher.dll
+console: false

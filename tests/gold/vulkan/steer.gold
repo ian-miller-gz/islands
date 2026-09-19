@@ -1,0 +1,47 @@
+gui steer load: PASS
+steer bank: cursor=0 first=0 top=alpha shown=3 back=0 events=[] rewrites=81
+steer deaf: cursor=0 first=0 top=alpha shown=3 back=0 events=[] rewrites=0
+gui focus: PASS
+steer down: cursor=1 first=0 top=alpha shown=3 back=0 events=[menu selected] rewrites=43
+gui selected answers once: PASS
+gui selected consumed: PASS
+steer chase: cursor=3 first=1 top=beta shown=3 back=0 events=[menu selected, menu selected] rewrites=43
+steer end: cursor=4 first=2 top=gamma shown=3 back=0 events=[menu selected] rewrites=43
+steer wrap: cursor=0 first=0 top=alpha shown=3 back=0 events=[menu selected] rewrites=43
+steer rise: cursor=4 first=2 top=gamma shown=3 back=0 events=[menu selected] rewrites=43
+steer prior: cursor=1 first=1 top=beta shown=3 back=0 events=[menu selected] rewrites=43
+steer next: cursor=4 first=2 top=gamma shown=3 back=0 events=[menu selected] rewrites=43
+steer home: cursor=0 first=0 top=alpha shown=3 back=0 events=[menu selected] rewrites=43
+steer take: cursor=0 first=0 top=alpha shown=3 back=0 events=[menu activated] rewrites=0
+gui activated answers once: PASS
+gui activated consumed: PASS
+gui place: PASS
+steer hover: cursor=0 first=0 top=alpha shown=3 back=0 events=[menu.0 entered] rewrites=11
+steer spin: cursor=0 first=2 top=gamma shown=3 back=0 events=[] rewrites=43
+steer return: cursor=1 first=1 top=beta shown=3 back=0 events=[menu selected] rewrites=43
+steer claimed: cursor=1 first=1 top=beta shown=3 back=0 events=[] rewrites=0
+gui refocus: PASS
+steer recover: cursor=2 first=1 top=beta shown=3 back=0 events=[menu selected] rewrites=43
+steer second: cursor=2 first=1 top=beta shown=3 back=1 events=[back selected] rewrites=38
+steer shrink: cursor=1 first=0 top=alpha shown=2 back=1 events=[menu.0 exited] rewrites=65
+gui release: PASS
+steer released: cursor=1 first=0 top=alpha shown=2 back=1 events=[menu.0 entered] rewrites=11
+steer arm: cursor=0 first=0 top=alpha shown=3 back=0 events=[menu.0 exited, menu.1 entered, menu.1 pressed] rewrites=81
+steer quick: cursor=1 first=0 top=alpha shown=3 back=0 events=[menu.1 clicked, menu selected, menu activated] rewrites=43
+gui quick click activates: PASS
+steer reach: cursor=1 first=0 top=alpha shown=3 back=0 events=[menu.1 exited, back.1 entered, back.1 pressed] rewrites=22
+steer plain: cursor=1 first=0 top=alpha shown=3 back=1 events=[back.1 clicked, back selected] rewrites=38
+gui plain click selects: PASS
+gui plain click no take: PASS
+steer revisit: cursor=1 first=0 top=alpha shown=3 back=1 events=[back.1 exited, menu.1 entered, menu.1 pressed] rewrites=22
+steer marked: cursor=1 first=0 top=alpha shown=3 back=1 events=[menu.1 clicked, menu activated] rewrites=11
+gui quick marked take: PASS
+gui quick marked no move: PASS
+steer closed: cursor=1 first=0 top=alpha shown=3 back=1 events=[] rewrites=11
+gui a stated row wears the closed mark: PASS
+gui a row never stated wears none: PASS
+steer standing: cursor=1 first=0 top=alpha shown=3 back=1 events=[] rewrites=0
+steer unfolded: cursor=1 first=0 top=alpha shown=3 back=1 events=[] rewrites=11
+gui the stand moves to open: PASS
+steer bare: cursor=1 first=0 top=alpha shown=3 back=1 events=[] rewrites=11
+gui the mark comes off again: PASS

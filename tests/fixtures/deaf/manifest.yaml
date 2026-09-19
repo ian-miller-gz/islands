@@ -1,0 +1,4 @@
+name: Deaf
+entry: libmessages.so
+version: 3
+host: reef

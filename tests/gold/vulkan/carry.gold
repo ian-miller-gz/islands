@@ -1,0 +1,89 @@
+gui board load: PASS
+gui undesignated refuses: PASS
+gui adopt: PASS
+gui watch: PASS
+gui place: PASS
+carry rest: one@20.0,20.0 +40.0,40.0 z0.0 two@120.0,20.0 +140.0,40.0 z0.0 three@20.0,100.0 +40.0,120.0 z0.0 hand=- dropped=[]
+carry press: one@20.0,20.0 +40.0,40.0 z0.0 two@120.0,20.0 +140.0,40.0 z0.0 three@20.0,100.0 +40.0,120.0 z0.0 hand=- dropped=[]
+gui no hold yet: PASS
+carry lone: one@60.0,40.0 +80.0,60.0 z2.0 two@120.0,20.0 +140.0,40.0 z0.0 three@20.0,100.0 +40.0,120.0 z0.0 hand=one dropped=[]
+gui in hand: PASS
+gui rides: PASS
+gui alone: PASS
+carry dropped: one@60.0,40.0 +80.0,60.0 z0.0 two@120.0,20.0 +140.0,40.0 z0.0 three@20.0,100.0 +40.0,120.0 z0.0 hand=- dropped=[one@60.0,40.0]
+gui dropped one: PASS
+gui select: PASS
+gui select: PASS
+gui select: PASS
+carry grab: one@60.0,40.0 +80.0,60.0 z0.0 two@120.0,20.0 +140.0,40.0 z0.0 three@20.0,100.0 +40.0,120.0 z0.0 hand=- dropped=[]
+carry shape: one@20.0,40.0 +40.0,60.0 z2.0 two@80.0,20.0 +100.0,40.0 z2.0 three@0.0,100.0 +20.0,120.0 z2.0 hand=two dropped=[]
+gui mate rides: PASS
+gui pooled: PASS
+carry roomy: one@80.0,80.0 +100.0,100.0 z2.0 two@140.0,60.0 +160.0,80.0 z2.0 three@40.0,140.0 +60.0,160.0 z2.0 hand=two dropped=[]
+gui unpooled: PASS
+carry drop: one@80.0,80.0 +100.0,100.0 z0.0 two@140.0,60.0 +160.0,80.0 z0.0 three@40.0,140.0 +60.0,160.0 z0.0 hand=- dropped=[one@80.0,80.0, three@40.0,140.0, two@140.0,60.0]
+gui whole set: PASS
+gui leader last: PASS
+gui hand empty: PASS
+carry after: one@80.0,80.0 +100.0,100.0 z0.0 two@140.0,60.0 +160.0,80.0 z0.0 three@40.0,140.0 +60.0,160.0 z0.0 hand=- dropped=[]
+gui one frame: PASS
+carry held: selected=[one, two, three]
+gui follow: PASS
+carry followed: selected=[three]
+gui a stranger is counted: PASS
+gui driven press: PASS
+carry aimed: one@80.0,80.0 +100.0,100.0 z0.0 two@140.0,60.0 +160.0,80.0 z0.0 three@40.0,140.0 +60.0,160.0 z0.0 hand=- dropped=[]
+gui driven hold waits: PASS
+gui first leg: PASS
+carry across: one@104.0,80.0 +124.0,100.0 z2.0 two@140.0,60.0 +160.0,80.0 z0.0 three@40.0,140.0 +60.0,160.0 z0.0 hand=one dropped=[]
+gui driven in hand: PASS
+gui second leg: PASS
+carry beneath: one@104.0,96.0 +124.0,116.0 z2.0 two@140.0,60.0 +160.0,80.0 z0.0 three@40.0,140.0 +60.0,160.0 z0.0 hand=one dropped=[]
+gui driven still in hand: PASS
+gui driven lift: PASS
+gui moved at the lift: PASS
+carry landed: one@110.0,102.0 +130.0,122.0 z0.0 two@140.0,60.0 +160.0,80.0 z0.0 three@40.0,140.0 +60.0,160.0 z0.0 hand=- dropped=[one@110.0,102.0]
+gui driven drop: PASS
+gui a travel with no standing press refuses: PASS
+gui stand down: PASS
+carry down: one@110.0,102.0 +130.0,122.0 z0.0 two@140.0,60.0 +160.0,80.0 z0.0 three@40.0,140.0 +60.0,160.0 z0.0 hand=- dropped=[]
+gui nothing held: PASS
+gui re-adopt: PASS
+gui the door closes again: PASS
+gui plate load: PASS
+gui the word reads back: PASS
+gui its absence reads back: PASS
+gui place: PASS
+worn rider rest: rider@20.0,20.0 shown=yes picture=0x0 hot=0,0
+worn rider press: rider@20.0,20.0 shown=yes picture=0x0 hot=0,0
+gui rider bare press wears nothing: PASS
+worn rider cross: rider@40.0,40.0 shown=no picture=60x30 hot=30,15
+worn rider ride: rider@60.0,60.0 shown=no picture=60x30 hot=30,15
+worn rider moor: rider@60.0,60.0 shown=yes picture=0x0 hot=0,0
+gui rider release bares the pointer: PASS
+gui rider drawn again: PASS
+worn whole rest: whole@100.0,20.0 shown=yes picture=0x0 hot=0,0
+worn whole press: whole@100.0,20.0 shown=yes picture=0x0 hot=0,0
+gui whole bare press wears nothing: PASS
+worn whole cross: whole@120.0,40.0 shown=no picture=80x52 hot=30,6
+worn whole ride: whole@140.0,60.0 shown=no picture=80x52 hot=30,6
+worn whole moor: whole@140.0,60.0 shown=yes picture=0x0 hot=0,0
+gui whole release bares the pointer: PASS
+gui whole drawn again: PASS
+worn frame rest: drawn@20.0,70.0 shown=yes picture=0x0 hot=0,0
+worn frame press: drawn@20.0,70.0 shown=yes picture=0x0 hot=0,0
+gui frame bare press wears nothing: PASS
+worn frame cross: drawn@40.0,90.0 shown=yes picture=0x0 hot=0,0
+worn frame ride: drawn@60.0,90.0 shown=yes picture=0x0 hot=0,0
+worn frame moor: drawn@60.0,90.0 shown=yes picture=0x0 hot=0,0
+gui frame release bares the pointer: PASS
+gui frame drawn again: PASS
+gui the write lands: PASS
+worn written rest: drawn@60.0,90.0 shown=yes picture=0x0 hot=0,0
+worn written press: drawn@60.0,90.0 shown=yes picture=0x0 hot=0,0
+gui written bare press wears nothing: PASS
+worn written cross: drawn@80.0,90.0 shown=no picture=60x30 hot=30,15
+worn written ride: drawn@100.0,90.0 shown=no picture=60x30 hot=30,15
+worn written moor: drawn@100.0,90.0 shown=yes picture=0x0 hot=0,0
+gui written release bares the pointer: PASS
+gui written drawn again: PASS

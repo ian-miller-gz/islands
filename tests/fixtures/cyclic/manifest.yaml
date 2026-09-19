@@ -1,0 +1,6 @@
+name: cyclic
+entry: libmessages.so
+version: 3
+host: reef
+listen: true
+requires: tests/fixtures/cycle

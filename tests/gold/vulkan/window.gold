@@ -1,0 +1,21 @@
+gui undesignated has no window: PASS
+gui the name adopts: PASS
+gui the span is the face over the scale: PASS
+gui a SAME down scale takes the across value: PASS
+gui a stated down scale is its own axis: PASS
+gui a board at no scale has no window: PASS
+gui an unmeasured board has no window: PASS
+gui the floor fits the span whole: PASS
+gui a span of nothing has no floor: PASS
+gui an unmeasured axis has no floor: PASS
+gui the wheel keeps the point under the pointer: PASS
+gui and a scale of nothing moves no pan: PASS
+gui a marker behind the middle is not chased: PASS
+gui and one at the middle takes the pan with it: PASS
+gui a thing in the window is left alone: PASS
+gui and one outside it lands in the middle: PASS
+gui the walls fold the origin in and wander out: PASS
+gui and each far wall is floored at the span: PASS
+gui re-adoption replaces whole: PASS
+gui the doors closed again: PASS
+gui and the pans stand where they were: PASS

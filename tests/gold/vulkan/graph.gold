@@ -1,0 +1,79 @@
+gui graph load: PASS
+gui place: PASS
+gui port read: PASS
+gui no port: PASS
+gui no kind: PASS
+gui port write: PASS
+gui port wrote: PASS
+gui kind wrote: PASS
+gui kind read: PASS
+gui refuse no scale: PASS
+gui scale stands: PASS
+graph rest: osc@10.0,10.0 +30.0,30.0 x80.0,40.0 amp@140.0,10.0 +160.0,30.0 x80.0,40.0 out@140.0,100.0 +160.0,120.0 x80.0,40.0 hover=- events=[] rewrites=25
+gui pan: PASS
+graph panned: osc@10.0,10.0 +10.0,20.0 x80.0,40.0 amp@140.0,10.0 +140.0,20.0 x80.0,40.0 out@140.0,100.0 +140.0,110.0 x80.0,40.0 hover=- events=[] rewrites=20
+gui zoom: PASS
+graph zoomed: osc@10.0,10.0 +0.0,20.0 x160.0,80.0 amp@140.0,10.0 +260.0,20.0 x160.0,80.0 out@140.0,100.0 +260.0,200.0 x160.0,80.0 hover=- events=[] rewrites=20
+gui uniform pair: PASS
+gui stretch: PASS
+graph stretched: osc@10.0,10.0 +0.0,20.0 x160.0,40.0 amp@140.0,10.0 +260.0,20.0 x160.0,40.0 out@140.0,100.0 +260.0,110.0 x160.0,40.0 hover=- events=[] rewrites=20
+gui axes apart: PASS
+gui refuse no down scale: PASS
+gui parse a pair: PASS
+gui pair parsed: PASS
+gui uniform again: PASS
+graph uniform: osc@10.0,10.0 +0.0,20.0 x160.0,80.0 amp@140.0,10.0 +260.0,20.0 x160.0,80.0 out@140.0,100.0 +260.0,200.0 x160.0,80.0 hover=- events=[] rewrites=20
+graph over: osc@10.0,10.0 +0.0,20.0 x160.0,80.0 amp@140.0,10.0 +260.0,20.0 x160.0,80.0 out@140.0,100.0 +260.0,200.0 x160.0,80.0 hover=osc events=[osc entered] rewrites=5
+gui hovered under zoom: PASS
+gui view restored: PASS
+gui pan restored: PASS
+graph back: osc@10.0,10.0 +30.0,30.0 x80.0,40.0 amp@140.0,10.0 +160.0,30.0 x80.0,40.0 out@140.0,100.0 +160.0,120.0 x80.0,40.0 hover=- events=[osc exited] rewrites=20
+graph press: osc@10.0,10.0 +30.0,30.0 x80.0,40.0 amp@140.0,10.0 +160.0,30.0 x80.0,40.0 out@140.0,100.0 +160.0,120.0 x80.0,40.0 hover=osc events=[osc entered, osc pressed] rewrites=5
+graph wobble: osc@10.0,10.0 +30.0,30.0 x80.0,40.0 amp@140.0,10.0 +160.0,30.0 x80.0,40.0 out@140.0,100.0 +160.0,120.0 x80.0,40.0 hover=osc events=[] rewrites=0
+graph click: osc@10.0,10.0 +30.0,30.0 x80.0,40.0 amp@140.0,10.0 +160.0,30.0 x80.0,40.0 out@140.0,100.0 +160.0,120.0 x80.0,40.0 hover=osc events=[osc clicked, deck selected] rewrites=5
+graph grab: osc@10.0,10.0 +30.0,30.0 x80.0,40.0 amp@140.0,10.0 +160.0,30.0 x80.0,40.0 out@140.0,100.0 +160.0,120.0 x80.0,40.0 hover=osc events=[osc pressed] rewrites=5
+graph carry: osc@50.0,40.0 +70.0,60.0 x80.0,40.0 amp@140.0,10.0 +160.0,30.0 x80.0,40.0 out@140.0,100.0 +160.0,120.0 x80.0,40.0 hover=- events=[osc exited, osc moved] rewrites=5
+gui moved answers once: PASS
+gui moved consumed: PASS
+graph drop: osc@50.0,40.0 +70.0,60.0 x80.0,40.0 amp@140.0,10.0 +160.0,30.0 x80.0,40.0 out@140.0,100.0 +160.0,120.0 x80.0,40.0 hover=osc events=[osc entered] rewrites=5
+gui rezoom: PASS
+graph rescaled: osc@50.0,40.0 +120.0,100.0 x160.0,80.0 amp@140.0,10.0 +300.0,40.0 x160.0,80.0 out@140.0,100.0 +300.0,220.0 x160.0,80.0 hover=osc events=[] rewrites=20
+graph hold: osc@50.0,40.0 +120.0,100.0 x160.0,80.0 amp@140.0,10.0 +300.0,40.0 x160.0,80.0 out@140.0,100.0 +300.0,220.0 x160.0,80.0 hover=osc events=[osc pressed] rewrites=5
+graph scaled carry: osc@70.0,40.0 +160.0,100.0 x160.0,80.0 amp@140.0,10.0 +300.0,40.0 x160.0,80.0 out@140.0,100.0 +300.0,220.0 x160.0,80.0 hover=osc events=[osc moved] rewrites=5
+graph let go: osc@70.0,40.0 +160.0,100.0 x160.0,80.0 amp@140.0,10.0 +300.0,40.0 x160.0,80.0 out@140.0,100.0 +300.0,220.0 x160.0,80.0 hover=- events=[osc exited] rewrites=5
+gui unzoom: PASS
+graph settled: osc@70.0,40.0 +90.0,60.0 x80.0,40.0 amp@140.0,10.0 +160.0,30.0 x80.0,40.0 out@140.0,100.0 +160.0,120.0 x80.0,40.0 hover=- events=[] rewrites=20
+gui drag refuses a stranger: PASS
+gui stage: PASS
+gui drag: PASS
+graph driven: osc@70.0,40.0 +90.0,60.0 x80.0,40.0 amp@140.0,100.0 +160.0,120.0 x80.0,40.0 out@140.0,100.0 +160.0,120.0 x80.0,40.0 hover=- events=[amp entered, amp pressed, amp exited, out entered, amp moved, out exited] rewrites=10
+gui drag moved: PASS
+gui stage again: PASS
+gui click: PASS
+graph clicked: osc@70.0,40.0 +90.0,60.0 x80.0,40.0 amp@140.0,100.0 +160.0,120.0 x80.0,40.0 out@140.0,100.0 +160.0,120.0 x80.0,40.0 hover=- events=[away entered, away pressed, away clicked, away exited] rewrites=5
+gui connect: PASS
+gui linked: PASS
+gui directed: PASS
+gui again is a no-op: PASS
+gui refuse self: PASS
+gui refuse a stranger: PASS
+gui refuse off the board: PASS
+gui refuse a cross kind: PASS
+gui connect a socket: PASS
+gui label: PASS
+gui ports: PASS
+gui standing links: PASS
+graph links: osc>out amp.out>out=excites
+graph wired: osc@70.0,40.0 +90.0,60.0 x80.0,40.0 amp@140.0,100.0 +160.0,120.0 x80.0,40.0 out@140.0,100.0 +160.0,120.0 x80.0,40.0 hover=- events=[] rewrites=35
+gui stage to wire: PASS
+gui carry a wired node: PASS
+graph wire follows: osc@140.0,100.0 +160.0,120.0 x80.0,40.0 amp@140.0,100.0 +160.0,120.0 x80.0,40.0 out@140.0,100.0 +160.0,120.0 x80.0,40.0 hover=- events=[osc entered, osc pressed, osc exited, out entered, osc moved, out exited] rewrites=20
+gui rename: PASS
+gui one link still: PASS
+gui disconnect: PASS
+gui parted once: PASS
+graph links: amp.out>out=excites
+gui remove a port: PASS
+graph links:
+gui retired: PASS
+graph unwired: osc@140.0,100.0 +160.0,120.0 x80.0,40.0 amp@140.0,100.0 +160.0,120.0 x80.0,40.0 out@140.0,100.0 +160.0,120.0 x80.0,40.0 hover=- events=[] rewrites=25

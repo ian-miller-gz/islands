@@ -1,0 +1,37 @@
+`` INFO    - Initializing Logger...
+`` INFO    - ``/logs/islands.log
+`` INFO    - ``
+`` INFO  ~/island::main.initialize  - Logger initialized.
+`` INFO  ~/island::main.initialize  - Setting working directory to ``
+`` INFO  ~/island::main.initialize  - Working directory set.
+`` INFO  ~/island::main.routine  - Initializing process...
+`` INFO  ~/island/initialize::initialize  - Loading Cartridge...
+`` INFO  ~/cartridge::load  - No cartridge configured.
+`` INFO  ~/island/initialize::initialize  - Complete!
+`` INFO  ~/island/initialize::initialize  - Initializing Terminal...
+usage: web <url> [body]
+web transfer refused: no web reach declared (the manifest web: key or --web); requested https://api.example.com/data
+Window 480x320, decorated.
+Window size 800x600.
+Window 800x600, decorated.
+Window is not up.
+Capturing the next frame to temp/reach.ppm.
+`` INFO  ~/island/initialize::initialize  - Complete!
+`` INFO  ~/island/initialize::initialize  - Initializing Audio...
+`` INFO  ~/island/initialize::initialize  - Complete!
+`` INFO  ~/island/initialize::initialize  - Initializing Graphics...
+`` INFO  ~/island/graphics/vulkan::initialize  - Using Vulkan as graphics backend.
+`` INFO  ~/island/graphics/vulkan::initialize  - Window created: 800 x 600
+`` INFO  ~/island/graphics/vulkan::initialize  - Physical device selected
+`` INFO  ~/island/graphics/vulkan::initialize  - Swap chain created with 3 images
+`` INFO  ~/island/graphics/vulkan::initialize  - Vulkan backend initialized successfully
+`` INFO  ~/island/initialize::initialize  - Complete!
+`` INFO  ~/island/initialize::initialize  - Initializing Overlay...
+`` INFO  ~/island/overlay/backend::initialize  - Overlay disabled for this run.
+`` INFO  ~/island/initialize::initialize  - Complete!
+`` INFO  ~/island::main.routine  - Initialization successful.
+`` INFO  ~/island::main.routine  - Processing...
+`` INFO  ~/island::main.routine  - Processing ceased.
+`` INFO  ~/island::main.routine  - Closing process...
+`` INFO  ~/island::main.routine  - Close successful.
+`` INFO  ~/island::main.routine  - Process terminated.

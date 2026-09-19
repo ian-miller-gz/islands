@@ -1,0 +1,7 @@
+ensured: the daemon came up
+joined: the second engine reused it
+singleton: one host process
+died: the run continued
+vital: refused while unreachable
+vital: the death ended the run
+policy: the typo was refused

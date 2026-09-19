@@ -1,0 +1,6 @@
+name: Splash
+entry: libdemo.so
+assets: assets
+version: 3
+splash: true
+size: 640x480

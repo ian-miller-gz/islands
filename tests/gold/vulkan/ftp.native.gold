@@ -1,0 +1,7 @@
+web 226 (40 bytes): ahoy from the archive
+web 550 (0 bytes).
+web 226 (29 bytes): the older origin answers too
+web 226 (0 bytes).
+web 226 (29 bytes): a resource the session stored
+web transfer refused: ftp://elsewhere.test is not in the declared allowlist; requested ftp://elsewhere.test/data
+web transfer refused: http://127.0.0.1 is not in the declared allowlist; requested http://127.0.0.1/data

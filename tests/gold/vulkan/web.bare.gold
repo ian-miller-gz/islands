@@ -1,0 +1,2 @@
+usage: web <url> [body]
+web transfer refused: no web reach declared (the manifest web: key or --web); requested https://api.example.com/data

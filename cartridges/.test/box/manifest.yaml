@@ -1,0 +1,5 @@
+name: box
+entry: libbox.so
+assets: assets
+cache: cache
+version: 3

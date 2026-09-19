@@ -1,0 +1,48 @@
+gui board load: PASS
+gui undesignated refuses: PASS
+gui adopt: PASS
+gui a lattice of no size: PASS
+gui draw: PASS
+gui place: PASS
+stroke rest: mode=pencil from=0.0,0.0[0,0] to=0.0,0.0[0,0] laid=[]
+gui select: PASS
+stroke press: mode=pencil opened standing from=130.0,130.0[6,6] to=130.0,130.0[6,6] laid=[6,6]
+gui opened: PASS
+gui a cell laid: PASS
+stroke pull: mode=pencil standing dragged from=130.0,130.0[6,6] to=190.0,170.0[9,8] laid=[7,6 8,7 9,8]
+gui dragged: PASS
+gui walked: PASS
+stroke back: mode=pencil standing dragged from=130.0,130.0[6,6] to=130.0,130.0[6,6] laid=[8,8 7,7]
+stroke closed: mode=pencil closed dragged from=130.0,130.0[6,6] to=130.0,130.0[6,6] laid=[]
+gui closed: PASS
+stroke after: mode=pencil from=0.0,0.0[0,0] to=0.0,0.0[0,0] laid=[]
+gui one frame: PASS
+stroke claimed: selected=[box]
+gui the selection stands: PASS
+stroke still: mode=pencil opened standing from=130.0,130.0[6,6] to=130.0,130.0[6,6] laid=[6,6]
+stroke click: mode=pencil closed from=130.0,130.0[6,6] to=130.0,130.0[6,6] laid=[]
+gui a click, not a drag: PASS
+stroke chorded: mode=pencil opened standing control from=130.0,130.0[6,6] to=130.0,130.0[6,6] laid=[6,6]
+gui the chord latched: PASS
+stroke pulling: mode=pencil standing dragged control from=130.0,130.0[6,6] to=190.0,170.0[9,8] laid=[7,6 8,7 9,8]
+gui held for the span: PASS
+stroke chord closed: mode=pencil closed dragged control from=130.0,130.0[6,6] to=190.0,170.0[9,8] laid=[]
+gui closed chorded: PASS
+stroke plain: mode=pencil opened standing from=130.0,130.0[6,6] to=130.0,130.0[6,6] laid=[6,6]
+gui no chord: PASS
+stroke plain closed: mode=pencil closed from=130.0,130.0[6,6] to=130.0,130.0[6,6] laid=[]
+stroke on the box: mode=pencil from=0.0,0.0[0,0] to=0.0,0.0[0,0] laid=[]
+gui not the pencil's: PASS
+stroke let go: mode=pencil from=0.0,0.0[0,0] to=0.0,0.0[0,0] laid=[]
+gui over the board: PASS
+stroke over the box: mode=pencil opened standing from=50.0,35.0[2,1] to=50.0,35.0[2,1] laid=[2,1]
+gui the pencil's now: PASS
+stroke box closed: mode=pencil closed from=50.0,35.0[2,1] to=50.0,35.0[2,1] laid=[]
+gui stand down: PASS
+gui no mode: PASS
+stroke banding: mode=- from=0.0,0.0[0,0] to=0.0,0.0[0,0] laid=[]
+stroke stretching: mode=- from=0.0,0.0[0,0] to=0.0,0.0[0,0] laid=[]
+stroke down: mode=- from=0.0,0.0[0,0] to=0.0,0.0[0,0] laid=[]
+stroke banded: selected=[]
+gui re-adopt: PASS
+gui the door closes again: PASS

@@ -1,0 +1,4 @@
+name: Mute
+entry: libvault.so
+version: 3
+host: reef

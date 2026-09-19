@@ -1,0 +1,23 @@
+gui author: PASS
+gui load: PASS
+gui born: PASS
+reborn loaded: generation=1 authored="authored" hung=""
+gui hang: PASS
+gui write: PASS
+reborn composed: generation=1 authored="authored" hung="the owner's own"
+gui still born: PASS
+reborn dark: generation=2 authored="authored" hung=""
+gui kept: PASS
+gui bumped: PASS
+gui authored survived: PASS
+gui hung gone: PASS
+gui write refused: PASS
+gui hang: PASS
+gui write: PASS
+reborn re-composed: generation=2 authored="authored" hung="the owner's own"
+gui recovered: PASS
+reborn light: generation=3 authored="authored" hung=""
+gui bumped again: PASS
+gui a stranger is unborn: PASS
+reborn removed: generation=0 authored="" hung=""
+gui the dropped are unborn: PASS

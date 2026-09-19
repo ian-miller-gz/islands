@@ -1,0 +1,23 @@
+PASS integer presents nearest
+PASS integer 1280x720 scale 4
+PASS integer 1280x720 fills the window
+PASS integer 1200x700 scale 3
+PASS integer 1200x700 letterboxes 960x540
+PASS integer 1200x700 stays inside
+PASS integer 200x100 clamps at 1
+PASS integer 200x100 crops centered
+PASS integer 200x100 clips the view
+PASS letterbox presents bilinear
+PASS letterbox 1280x720 scale 4
+PASS letterbox 1280x720 fills the window
+PASS letterbox 1200x700 scale 3.75
+PASS letterbox 1200x700 spans the width
+PASS letterbox 200x100 scales below 1
+PASS letterbox 200x100 keeps the view whole
+PASS letterbox 1280x720 whole
+PASS letterbox 1200x700 whole
+PASS letterbox 641x361 whole
+PASS letterbox 200x400 whole
+PASS letterbox 400x100 whole
+PASS letterbox 64x36 whole
+PASS default fit steps (scale 3)

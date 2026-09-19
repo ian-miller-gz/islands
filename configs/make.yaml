@@ -1,0 +1,660 @@
+
+compiler: g++
+standard: c++23
+
+link_flags: ["-Wl,--allow-multiple-definition", "-Wl,--export-dynamic"]
+
+library_flags: ["-fPIC", "-fno-gnu-unique"]
+
+library_archives:
+  - build/outputs/src/shell/os/libshell.a
+  - build/outputs/src/topics/durable/libdurable.a
+  - build/outputs/src/store/libstore.a
+  - <prebuilt>/sqlite/libsqlite3.a
+  - build/outputs/src/conduit/libconduit.a
+
+prebuilt:
+  selector: SR_PROFILE
+  options:
+    SR_DEBUG: libs/debug
+    SR_RELEASE: libs/release
+
+system:
+  selector: SR_LIBRARIES
+  value: SR_SYSTEM
+  packages:
+    sdl-gpu: sdl3
+    glfw3: glfw3
+    mbedtls: [mbedtls, mbedcrypto, mbedx509]
+    spdlog: spdlog
+    sqlite: sqlite3
+    vulkan: vulkan
+
+toolchain:
+  selector: SR_PLATFORM
+  options:
+    SR_WINDOWS: windows
+toolchains:
+  windows:
+    compiler: x86_64-w64-mingw32-g++
+    archiver: x86_64-w64-mingw32-ar
+    delivery:
+      selector: SR_LINKAGE
+      options:
+        SR_STATIC: static
+        SR_SHARED: shared
+    engine: islands
+    compile_flags: ["-D_WIN32_WINNT=0x0A00", "-DWIN32_LEAN_AND_MEAN"]
+    link_flags: ["-static", "-Wl,--allow-multiple-definition"]
+    library_flags: []
+    imports: [ws2_32, bcrypt, crypt32, psapi, gdi32, ole32, oleaut32, uuid, imm32, version, setupapi, winmm]
+    prebuilt:
+      SR_DEBUG: libs/windows/debug
+      SR_RELEASE: libs/windows/release
+    output:
+      kind: native
+      directory: build/windows
+      binary: .exe
+      library: .dll
+
+tokens:
+  gfx:
+    SR_GFX_BACKEND: SR_VULKAN
+
+  window:
+    SR_WINDOW_BACKEND: SR_GLFW
+
+  overlay:
+    SR_OVERLAY_BACKEND: SR_NONE
+
+  gui:
+    SR_GUI_BACKEND: SR_NATIVE
+
+  sac:
+    SR_SAC: SR_NATIVE
+
+  logger:
+    SR_LOGGER_BACKEND: SR_SPDLOG
+
+  cartridge:
+    SR_CARTRIDGE: SR_NONE
+
+  network:
+    SR_NETWORK_BACKEND: SR_UNIX
+    SR_DATAGRAM_BACKEND: SR_UDP
+
+  web:
+    SR_WEB_BACKEND: SR_NATIVE
+    SR_SERVER: SR_NATIVE
+
+  listen:
+    SR_LISTEN: SR_UNIX
+
+  topics:
+    SR_TOPICS: SR_LOCAL
+
+  metrics:
+    SR_METRICS: SR_REGISTRY
+
+  midi:
+    SR_MIDI_BACKEND: SR_ALSA
+
+  profile:
+    SR_PROFILE: SR_DEBUG
+
+  libraries:
+    SR_LIBRARIES: SR_VENDORED
+
+  linkage:
+    SR_LINKAGE: SR_STATIC
+
+  platform:
+    SR_PLATFORM: SR_POSIX
+
+  values:
+    SR_NONE: 1
+    SR_MEADOW: 2
+    SR_UNIX: 3
+    SR_TCP: 4
+    SR_ABSTRACT: 5
+    SR_TCP6: 6
+    SR_SCTP: 7
+    SR_UDP: 8
+    SR_POSIX: 9
+    SR_VSOCK: 10
+    SR_TLS: 11
+    SR_NATIVE: 13
+    SR_RMLUI: 14
+    SR_LOCAL: 15
+    SR_REGISTRY: 16
+    SR_WEB: 17
+    SR_ALSA: 18
+    SR_DEBUG: 1
+    SR_RELEASE: 2
+    SR_VENDORED: 19
+    SR_SYSTEM: 20
+    SR_WINDOWS: 21
+    SR_LAUNCHER: 22
+    SR_STATIC: 23
+    SR_SHARED: 24
+
+directives:
+  engine:
+    ENGINE_NAME: "Islands"
+    ISLAND_NAME: "Island"
+    REEF_NAME: "Reef"
+    BUILD_NAME: "build"
+
+
+precompiled:
+  - header: src/common.hpp
+    subtrees:
+      - src
+      - cartridges
+
+roots:
+  - src/core
+  - cartridges/.core
+  - cartridges/.test
+  - cartridges
+
+includes:
+  - submodules
+  - submodules/glfw/include
+  - submodules/mbedtls/include
+  - submodules/SDL/include
+  - submodules/spdlog/include
+  - submodules/vulkan/include
+
+configurations:
+  bench: {}
+  vsock:
+    SR_NETWORK_BACKEND: SR_VSOCK
+  tls:
+    SR_NETWORK_BACKEND: SR_TLS
+  topics-off:
+    SR_TOPICS: SR_NONE
+  metrics-off:
+    SR_METRICS: SR_NONE
+  midi-off:
+    SR_MIDI_BACKEND: SR_NONE
+  measured-release:
+    SR_PROFILE: SR_RELEASE
+    SR_METRICS: SR_REGISTRY
+  system:
+    SR_LIBRARIES: SR_SYSTEM
+  coexist:
+    SR_NETWORK_BACKEND: [SR_UNIX, SR_TCP]
+  coexist-tls:
+    SR_NETWORK_BACKEND: [SR_UNIX, SR_TLS]
+  web-native:
+    SR_WEB_BACKEND: SR_NATIVE
+  zero-network:
+    SR_NETWORK_BACKEND: SR_NONE
+    SR_DATAGRAM_BACKEND: SR_NONE
+    SR_LISTEN: SR_NONE
+    SR_WEB_BACKEND: SR_NONE
+    SR_SERVER: SR_NONE
+  windows-shared:
+    SR_PLATFORM: SR_WINDOWS
+    SR_LINKAGE: SR_SHARED
+    SR_CARTRIDGE: SR_NONE
+    SR_LOGGER_BACKEND: SR_SPDLOG
+    SR_OVERLAY_BACKEND: SR_NONE
+    SR_LISTEN: SR_UNIX
+    SR_NETWORK_BACKEND: [SR_TCP, SR_TLS]
+    SR_DATAGRAM_BACKEND: SR_UDP
+    SR_WEB_BACKEND: SR_NATIVE
+    SR_SERVER: SR_NATIVE
+    SR_MIDI_BACKEND: SR_NONE
+  windows-ship:
+    SR_PLATFORM: SR_WINDOWS
+    SR_CARTRIDGE: SR_LAUNCHER
+    SR_PROFILE: SR_RELEASE
+    SR_LOGGER_BACKEND: SR_SPDLOG
+    SR_OVERLAY_BACKEND: SR_NONE
+    SR_LISTEN: SR_NONE
+    SR_NETWORK_BACKEND: [SR_TCP, SR_TLS]
+    SR_DATAGRAM_BACKEND: SR_UDP
+    SR_WEB_BACKEND: SR_NATIVE
+    SR_SERVER: SR_NATIVE
+    SR_MIDI_BACKEND: SR_NONE
+  release:
+    SR_PROFILE: SR_RELEASE
+
+manifest:
+  path: manifest.yaml
+  section: engine
+  folds: {axis: platform, section: platforms}
+  axes:
+    gfx:      {token: SR_GFX_BACKEND,      values: {vulkan: SR_VULKAN}}
+    window:   {token: SR_WINDOW_BACKEND,   values: {glfw: SR_GLFW}}
+    platform: {token: SR_PLATFORM,         values: {posix: SR_POSIX, windows: SR_WINDOWS}}
+    overlay:  {token: SR_OVERLAY_BACKEND,  values: {none: SR_NONE}}
+    gui:      {token: SR_GUI_BACKEND,      values: {native: SR_NATIVE}}
+    sac:      {token: SR_SAC,              values: {native: SR_NATIVE, none: SR_NONE}}
+    logger:   {token: SR_LOGGER_BACKEND,   values: {spdlog: SR_SPDLOG}}
+    network:  {token: SR_NETWORK_BACKEND,  values: {unix: SR_UNIX, abstract: SR_ABSTRACT, tcp: SR_TCP, tcp6: SR_TCP6, sctp: SR_SCTP, vsock: SR_VSOCK, tls: SR_TLS, none: SR_NONE}}
+    datagram: {token: SR_DATAGRAM_BACKEND, values: {udp: SR_UDP, none: SR_NONE}}
+    listen:   {token: SR_LISTEN,           values: {unix: SR_UNIX, none: SR_NONE}}
+    midi:     {token: SR_MIDI_BACKEND,     values: {alsa: SR_ALSA, none: SR_NONE}}
+    web:      {token: SR_WEB_BACKEND,      values: {none: SR_NONE, native: SR_NATIVE}}
+    server:   {token: SR_SERVER,            values: {none: SR_NONE, native: SR_NATIVE}}
+    profile:  {token: SR_PROFILE,          values: {debug: SR_DEBUG, release: SR_RELEASE}}
+  compatibility:
+    platform:
+      web:
+        admits:
+          network:  [none]
+          datagram: [none]
+          listen:   [none]
+          web:      [none]
+          server:   [none]
+          window:   [web]
+          midi:     [none]
+      windows:
+        admits:
+          network:  [none, tcp, tcp6, tls]
+          datagram: [none, udp]
+          listen:   [none, unix]
+          web:      [none, native]
+          server:   [none, native]
+          midi:     [none]
+    network:
+      none:
+        admits:
+          listen: [none]
+
+libraries:
+  - name: store
+    path: src/store
+    archive: true
+  - name: durable
+    path: src/topics/durable
+    archive: true
+  - name: shell
+    path: src/shell/os
+    archive: true
+  - name: conduit
+    path: src/conduit
+    archive: true
+  - name: demo
+    path: cartridges/.test/demo
+    output_destinations:
+      - "cartridges/.test/demo"
+      - "cartridges/.test/sample"
+      - "tests/fixtures/daemons"
+      - "tests/fixtures/vital"
+      - "tests/fixtures/shell"
+      - "tests/fixtures/threaded"
+      - "tests/fixtures/splash"
+      - "tests/fixtures/neutral"
+      - "tests/fixtures/owned"
+      - "tests/fixtures/replace"
+      - "tests/fixtures/trusted"
+  - name: shadow
+    path: tests/fixtures/shadow
+    output_destinations:
+      - "tests/fixtures/shadow"
+  - name: box
+    path: cartridges/.test/box
+    output_destinations:
+      - "cartridges/.test/box"
+      - "tests/fixtures/lines"
+  - name: roster
+    path: cartridges/.test/roster
+    output_destinations:
+      - "cartridges/.test/roster"
+  - name: messages
+    path: cartridges/.test/messages
+    output_destinations:
+      - "cartridges/.test/messages"
+      - "tests/fixtures/relay"
+      - "tests/fixtures/cycle"
+      - "tests/fixtures/cyclic"
+      - "tests/fixtures/deaf"
+  - name: launcher
+    path: cartridges/.core/launcher
+    output_destinations:
+      - "cartridges/.core/launcher"
+  - name: monitor
+    path: cartridges/.core/launcher/monitor
+    output_destinations:
+      - "cartridges/.core/launcher/monitor"
+  - name: cgltf
+    path: libs/cgltf
+builds:
+  - name: Island
+    path: src/island
+    host: true
+    main: island.cpp
+    links:
+      - src/cartridge
+      - src/common
+      - src/console
+      - src/logger
+      - src/metrics
+      - src/network
+      - src/shell/engine
+      - src/topics
+    output_destinations:
+      - "build"
+    preloads:
+      - assets
+  - name: Reef
+    path: src/reef
+    host: true
+    links:
+      - src/cartridge
+      - src/common
+      - src/console
+      - src/logger
+      - src/metrics
+      - src/network
+      - src/shell/engine
+      - src/topics
+    output_destinations:
+      - "build"
+  - name: probe
+    path: src/test/probe
+    links:
+      - src/common
+  - name: datagram
+    path: src/test/datagram
+    links:
+      - src/common
+      - src/logger
+      - src/network
+  - name: lines
+    path: src/test/lines
+    links:
+      - src/common
+      - src/logger
+      - src/network
+  - name: streams
+    path: src/test/streams
+    links:
+      - src/common
+      - src/logger
+      - src/network
+  - name: reader
+    path: src/test/reader
+    links:
+      - src/common
+      - src/logger
+      - src/network
+  - name: gui
+    path: src/test/gui
+    links:
+      - src/common
+      - src/logger
+      - src/island/gui
+  - name: consoles
+    path: src/test/consoles
+    links:
+      - src/common
+      - src/logger
+      - src/console
+      - src/shell/os/spawn
+      - src/shell/os/line
+  - name: jetty
+    path: hosts/.test/jetty
+    host: true
+    links:
+      - src/cartridge
+      - src/common
+      - src/console
+      - src/logger
+      - src/metrics
+      - src/network
+      - src/shell/engine
+      - src/topics
+  - name: pty
+    path: src/test/pty
+    links:
+      - src/common
+      - src/shell/os/spawn
+  - name: text
+    path: src/test/text
+    links:
+      - src/common
+      - src/island/input
+  - name: worn
+    path: src/test/worn
+    links:
+      - src/common
+      - src/logger
+      - src/island/input
+      - src/island/window
+  - name: keys
+    path: src/test/keys
+    links:
+      - src/common
+      - src/shell/os/screen
+  - name: screen
+    path: src/test/screen
+    links:
+      - src/common
+      - src/shell/os/screen
+  - name: unicode
+    path: src/test/unicode
+    links:
+      - src/common
+  - name: string
+    path: src/test/string
+    links:
+      - src/common
+  - name: clock
+    path: src/test/clock
+    links:
+      - src/common
+  - name: tilemap
+    path: src/test/tilemap
+    links:
+      - src/common
+  - name: select
+    path: src/test/select
+    links:
+      - src/common
+  - name: scenes
+    path: src/test/scenes
+    links:
+      - src/common
+  - name: aabb
+    path: src/test/aabb
+    links:
+      - src/common
+  - name: view
+    path: src/test/view
+    links:
+      - src/common
+      - src/island/graphics/view
+  - name: topics
+    path: src/test/topics
+    links:
+      - src/common
+      - src/logger
+      - src/network
+      - src/topics
+  - name: metrics
+    path: src/test/metrics
+    links:
+      - src/common
+      - src/metrics
+  - name: store
+    path: src/test/store
+    links:
+      - src/common
+      - src/logger
+      - src/store
+  - name: durable
+    path: src/test/durable
+    links:
+      - src/common
+      - src/logger
+      - src/network
+      - src/store
+      - src/topics
+      - src/topics/durable
+  - name: threads
+    path: src/test/threads
+    links:
+      - src/common
+  - name: conduit
+    path: src/test/conduit
+    links:
+      - src/common
+      - src/logger
+      - src/conduit
+  - name: relations
+    path: src/test/relations
+    links:
+      - src/cartridge
+      - src/common
+      - src/logger
+      - src/network
+      - src/topics
+  - name: output
+    path: src/test/output
+    links:
+      - src/common
+      - src/logger
+      - src/island/audio
+  - name: input
+    path: src/test/input
+    links:
+      - src/common
+      - src/logger
+      - src/island/audio
+  - name: midi
+    path: src/test/midi
+    links:
+      - src/common
+      - src/logger
+      - src/island/midi
+  - name: reed
+    path: src/test/reed
+    links:
+      - src/common
+      - src/test/bounce
+  - name: clips
+    path: src/test/clips
+    links:
+      - src/common
+      - src/logger
+      - src/island/audio
+statics:
+  - selector: SR_CARTRIDGE
+    bundle: {group: engine, directive: SR_CARTRIDGE_BUNDLE}
+    options:
+      cartridges/.core/launcher: SR_LAUNCHER
+
+flags:
+  - selector: SR_PROFILE
+    options:
+      SR_DEBUG: []
+      SR_RELEASE: ["-O2", "-DNDEBUG"]
+
+variants:
+  - selector: SR_PLATFORM
+    options:
+      conduit/segment/posix: SR_POSIX
+      conduit/segment/windows: SR_WINDOWS
+      test/conduit/wire/posix: SR_POSIX
+      test/conduit/wire/windows: SR_WINDOWS
+      shell/os/spawn/posix: SR_POSIX
+      shell/os/spawn/windows: SR_WINDOWS
+      reef/halt/posix: SR_POSIX
+      reef/halt/windows: SR_WINDOWS
+      cartridge/relations.spawn.posix.cpp: SR_POSIX
+      cartridge/relations.spawn.web.cpp: SR_WEB
+      cartridge/relations.spawn.windows.cpp: SR_WINDOWS
+      cartridge/relations.spawn.windows.launch.cpp: SR_WINDOWS
+      cartridge/load/posix: SR_POSIX
+      cartridge/load/windows: SR_WINDOWS
+      common/platform/posix: [SR_POSIX, SR_WEB]
+      common/platform/windows: SR_WINDOWS
+      metrics/registry/memory.posix.cpp: [SR_POSIX, SR_WEB]
+      metrics/registry/memory.windows.cpp: SR_WINDOWS
+      island/terminal/backend/repl/posix: SR_POSIX
+      island/terminal/backend/repl/windows: SR_WINDOWS
+      island/window/backend/glfw/window.chrome.posix.cpp: SR_POSIX
+      island/window/backend/glfw/window.chrome.windows.cpp: SR_WINDOWS
+      network/backend/posix/wait/posix: SR_POSIX
+      network/backend/posix/wait/windows: SR_WINDOWS
+      network/web/backend/native/trust/posix: SR_POSIX
+      network/web/backend/native/trust/windows: SR_WINDOWS
+  - selector: SR_LINKAGE
+    options:
+      reef/load.static.cpp: SR_STATIC
+      src/test/relations/load.static.cpp: SR_STATIC
+  - selector: SR_GFX_BACKEND
+    options:
+      island/graphics/backend/vulkan: SR_VULKAN
+  - selector: SR_WINDOW_BACKEND
+    options:
+      /glfw: SR_GLFW
+      glfw3: SR_GLFW
+  - selector: SR_OVERLAY_BACKEND
+    options:
+      island/overlay/backend/none: SR_NONE
+  - selector: SR_GUI_BACKEND
+    options:
+      island/gui/backend/native: SR_NATIVE
+  - selector: SR_SAC
+    options:
+      island/gui/sac: SR_NATIVE
+  - selector: SR_LISTEN
+    options:
+      island/terminal/backend/unix: SR_UNIX
+      network/instances/unix: SR_UNIX
+  - selector: SR_LOGGER_BACKEND
+    options:
+      logger/backend/spdlog: SR_SPDLOG
+  - selector: SR_DATAGRAM_BACKEND
+    options:
+      network/backend/posix/udp: SR_UDP
+      test/datagram: SR_UDP
+  - selector: SR_NETWORK_BACKEND
+    options:
+      network/backend/posix/unix: SR_UNIX
+      network/backend/posix/abstract: SR_ABSTRACT
+      network/backend/posix/inet: [SR_TCP, SR_TCP6, SR_SCTP]
+      network/backend/posix/vsock: SR_VSOCK
+      network/backend/posix/tls: SR_TLS
+      network/backend/posix/sessions.peer.cpp: [SR_UNIX, SR_ABSTRACT]
+      network/backend/posix: [SR_UNIX, SR_ABSTRACT, SR_TCP, SR_TCP6, SR_SCTP, SR_VSOCK, SR_TLS]
+  - selector: SR_TOPICS
+    options:
+      topics/local: SR_LOCAL
+      topics/durable: SR_LOCAL
+  - selector: SR_METRICS
+    options:
+      metrics/registry: SR_REGISTRY
+  - selector: SR_MIDI_BACKEND
+    options:
+      island/midi/backend/alsa: SR_ALSA
+      island/midi/backend/none: SR_NONE
+  - selector: SR_WEB_BACKEND
+    options:
+      network/web/backend/native: SR_NATIVE
+  - selector: SR_SERVER
+    options:
+      network/web/server/: SR_NATIVE
+  - selector: SR_PLATFORM
+    options:
+      island/island.cpp: [SR_POSIX, SR_WINDOWS]
+      island/web.cpp: SR_WEB
+      island/terminal/backend/repl.cpp: [SR_POSIX, SR_WINDOWS]
+      cartridges/.test/meadow/tally.cpp: [SR_POSIX, SR_WINDOWS]
+      cartridges/.test/meadow/tally.web.cpp: SR_WEB
+      conduit: [SR_POSIX, SR_WINDOWS]
+      shell/os/spawn: [SR_POSIX, SR_WINDOWS]
+      test/streams: [SR_POSIX, SR_WINDOWS]
+      test/pty: SR_POSIX
+      hosts/.test/jetty: [SR_POSIX, SR_WEB]
+      test/store: [SR_POSIX, SR_WINDOWS]
+      test/durable: [SR_POSIX, SR_WINDOWS]
+      test/relations: [SR_POSIX, SR_WINDOWS]
+      reef: [SR_POSIX, SR_WINDOWS]
+      cartridges/.core/launcher/monitor: [SR_POSIX, SR_WEB]

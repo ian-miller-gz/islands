@@ -1,0 +1,90 @@
+
+style=assets/islands.gui
+style=cartridges/.core/launcher/assets/styles.gui
+
+panel shell style=clear anchor=stretch
+  panel rail style=sheet anchor=top|bottom x=16 y=40 w=272 h=16
+    panel crest style=box x=16 y=16 w=240 h=160
+      label crestnote style=muted size=18 text="Islands" x=90 y=70
+    button library style=place size=18 text="Library" x=16 y=192 w=240 h=32
+    button about style=place size=18 text="About" anchor=southwest x=16 y=-16 w=240 h=32
+  panel main style=sheet anchor=stretch x=304 y=40 w=16 h=16
+    button general style=place size=17 text="General" x=16 y=6 w=100 h=28
+    button core style=place size=17 text="Core" x=124 y=6 w=84 h=28
+    panel browser style=box anchor=stretch x=0 y=40 w=0 h=0
+      list tree style=clear anchor=stretch x=8 y=8 w=8 h=8 pitch=20 pad=2 mark=selected plain=leaf quick=true
+      label bare style=muted size=17 text="" x=16 y=12 visible=false
+      panel tick0 style=line x=0 y=0 w=17 h=1 visible=false
+      panel tick1 style=line x=0 y=0 w=17 h=1 visible=false
+      panel tick2 style=line x=0 y=0 w=17 h=1 visible=false
+      panel tick3 style=line x=0 y=0 w=17 h=1 visible=false
+      panel tick4 style=line x=0 y=0 w=17 h=1 visible=false
+      panel tick5 style=line x=0 y=0 w=17 h=1 visible=false
+      panel tick6 style=line x=0 y=0 w=17 h=1 visible=false
+      panel tick7 style=line x=0 y=0 w=17 h=1 visible=false
+      panel tick8 style=line x=0 y=0 w=17 h=1 visible=false
+      panel tick9 style=line x=0 y=0 w=17 h=1 visible=false
+      panel tick10 style=line x=0 y=0 w=17 h=1 visible=false
+      panel tick11 style=line x=0 y=0 w=17 h=1 visible=false
+      panel tick12 style=line x=0 y=0 w=17 h=1 visible=false
+      panel tick13 style=line x=0 y=0 w=17 h=1 visible=false
+      panel tick14 style=line x=0 y=0 w=17 h=1 visible=false
+      panel tick15 style=line x=0 y=0 w=17 h=1 visible=false
+      panel tick16 style=line x=0 y=0 w=17 h=1 visible=false
+      panel tick17 style=line x=0 y=0 w=17 h=1 visible=false
+      panel tick18 style=line x=0 y=0 w=17 h=1 visible=false
+      panel tick19 style=line x=0 y=0 w=17 h=1 visible=false
+      panel tick20 style=line x=0 y=0 w=17 h=1 visible=false
+      panel tick21 style=line x=0 y=0 w=17 h=1 visible=false
+      panel tick22 style=line x=0 y=0 w=17 h=1 visible=false
+      panel tick23 style=line x=0 y=0 w=17 h=1 visible=false
+      panel rule0 style=line x=0 y=0 w=1 h=0 visible=false
+      panel rule1 style=line x=0 y=0 w=1 h=0 visible=false
+      panel rule2 style=line x=0 y=0 w=1 h=0 visible=false
+      panel rule3 style=line x=0 y=0 w=1 h=0 visible=false
+      panel rule4 style=line x=0 y=0 w=1 h=0 visible=false
+      panel rule5 style=line x=0 y=0 w=1 h=0 visible=false
+      panel rule6 style=line x=0 y=0 w=1 h=0 visible=false
+      panel rule7 style=line x=0 y=0 w=1 h=0 visible=false
+      panel rule8 style=line x=0 y=0 w=1 h=0 visible=false
+      panel rule9 style=line x=0 y=0 w=1 h=0 visible=false
+      panel rule10 style=line x=0 y=0 w=1 h=0 visible=false
+      panel rule11 style=line x=0 y=0 w=1 h=0 visible=false
+      button preview style=card anchor=northeast x=-16 y=16 w=440 h=420 z=1
+        label pname style=ink size=22 text="" x=20 y=16
+        label pfact0 style=muted size=16 x=20 y=54
+        label pfact1 style=muted size=16 x=20 y=76
+        label pfact2 style=muted size=16 x=20 y=98
+        label psummary style=ink size=17 wrap=40 x=20 y=130
+        button launch style=call size=20 text="Launch" anchor=southwest x=20 y=-20 w=220 h=48 z=2
+        button gear style=place size=18 text="Options" anchor=southwest x=252 y=-20 w=140 h=48 z=2
+      button watch style=card anchor=southeast x=-16 y=-16 w=440 h=272 z=1
+        label watching style=muted size=17 text="Running" x=20 y=16
+        list crew style=clear x=20 y=48 w=400 h=144 pitch=24 pad=6 mark=selected plain=post
+        label quiet style=muted size=16 text="" x=20 y=48 visible=false
+        label note style=muted size=16 anchor=southwest x=20 y=-30
+    button setup style=card anchor=center w=620 h=380 z=8 visible=false
+      label setupname style=ink size=22 text="Options" x=24 y=20
+      column boxes x=24 y=88 pad=8
+        button box0 style=entry w=572 h=28 visible=false
+          label boxword0 style=ink size=17 x=10 y=4
+          detail note0 style=note size=16 x=246 y=1 w=316 h=26 pad=4
+        button box1 style=entry w=572 h=28 visible=false
+          label boxword1 style=ink size=17 x=10 y=4
+          detail note1 style=note size=16 x=246 y=1 w=316 h=26 pad=4
+        button box2 style=entry w=572 h=28 visible=false
+          label boxword2 style=ink size=17 x=10 y=4
+          detail note2 style=note size=16 x=246 y=1 w=316 h=26 pad=4
+        button box3 style=entry w=572 h=28 visible=false
+          label boxword3 style=ink size=17 x=10 y=4
+          detail note3 style=note size=16 x=246 y=1 w=316 h=26 pad=4
+        button box4 style=entry w=572 h=28 visible=false
+          label boxword4 style=ink size=17 x=10 y=4
+          detail note4 style=note size=16 x=246 y=1 w=316 h=26 pad=4
+        button box5 style=entry w=572 h=28 visible=false
+          label boxword5 style=ink size=17 x=10 y=4
+          detail note5 style=note size=16 x=246 y=1 w=316 h=26 pad=4
+      button setupclose style=place size=18 text="Close" anchor=southeast x=-24 y=-24 w=150 h=34
+  button notice style=card anchor=center w=360 h=120 z=10 visible=false
+    label noticeline style=ink size=18 text="Islands Beta - ver. 0.1.0" x=24 y=24
+    button noticeclose style=place size=18 text="Close" anchor=southeast x=-24 y=-24 w=150 h=34

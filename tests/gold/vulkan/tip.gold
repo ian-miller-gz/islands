@@ -1,0 +1,19 @@
+gui build: PASS
+gui place: PASS
+tip wake: plate=0 label='' at=0,0 box=0x0
+tip almost: plate=0 label='' at=0,0 box=0x0
+tip rest: plate=1 label='the rack view - the armed instrument' at=134,84 box=160x28
+gui hint rises: PASS
+tip slide: plate=0 label='the rack view - the armed instrument' at=134,84 box=160x28
+tip stand: plate=0 label='the rack view - the armed instrument' at=134,84 box=160x28
+tip noted: plate=1 label='the silent door's noted line' at=134,184 box=128x28
+tip forgot: plate=0 label='the silent door's noted line' at=134,184 box=128x28
+tip cell: plate=1 label='1.0009765625' at=334,284 box=64x28
+gui cell answers its figure: PASS
+tip column: plate=0 label='1.0009765625' at=334,284 box=64x28
+tip name: plate=1 label='alpha - the row's full name' at=164,284 box=124x28
+tip corner: plate=1 label='aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb…' at=8,444 box=624x28
+tip away: plate=0 label='aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb…' at=8,444 box=624x28
+gui away hides: PASS
+gui place bare: PASS
+gui no plate never raises: PASS

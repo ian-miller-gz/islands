@@ -1,0 +1,57 @@
+gui bounds load: PASS
+gui place: PASS
+bounds undeclared: pan=0.0,0.0 across=open..open down=open..open zoom=1.0
+bounds free: pan=-50.0,-30.0 across=open..open down=open..open zoom=1.0
+gui free: PASS
+gui declare: PASS
+bounds declared: pan=0.0,0.0 across=0.0..400.0 down=0.0..open zoom=1.0
+gui snapped in: PASS
+bounds walled: pan=120.0,5000.0 across=0.0..400.0 down=0.0..open zoom=1.0
+gui stopped: PASS
+gui open below: PASS
+bounds floored: pan=30.0,0.0 across=0.0..400.0 down=0.0..open zoom=1.0
+gui on the floor: PASS
+bounds grabbed: pan=30.0,0.0 across=0.0..400.0 down=0.0..open zoom=1.0
+bounds dragging: pan=90.0,0.0 across=0.0..400.0 down=0.0..open zoom=1.0
+gui carried: PASS
+bounds against the wall: pan=120.0,0.0 across=0.0..400.0 down=0.0..open zoom=1.0
+gui held at the wall: PASS
+bounds pulled back: pan=80.0,0.0 across=0.0..400.0 down=0.0..open zoom=1.0
+gui no banked slack: PASS
+bounds let go: pan=80.0,0.0 across=0.0..400.0 down=0.0..open zoom=1.0
+gui no snap back: PASS
+bounds turned: pan=80.0,0.0 across=0.0..400.0 down=0.0..open zoom=1.0
+bounds re-centred: pan=120.0,130.0 across=0.0..400.0 down=0.0..open zoom=1.0
+gui re-centre walled: PASS
+gui zoom out: PASS
+bounds zoomed out: pan=0.0,130.0 across=0.0..400.0 down=0.0..open zoom=0.5
+gui parked: PASS
+gui zoom in: PASS
+bounds zoomed in: pan=260.0,0.0 across=0.0..400.0 down=0.0..open zoom=2.0
+gui further: PASS
+gui zoom back: PASS
+bounds zoom restored: pan=120.0,0.0 across=0.0..400.0 down=0.0..open zoom=1.0
+gui settled again: PASS
+gui open again: PASS
+bounds unwalled: pan=120.0,0.0 across=open..open down=open..open zoom=1.0
+gui stayed: PASS
+bounds free again: pan=-400.0,-400.0 across=open..open down=open..open zoom=1.0
+gui refuses a stranger: PASS
+gui a stranger's walls are open: PASS
+stretch authored nothing: pan=0.0,0.0 measured=320.0x40.0
+gui measured: PASS
+gui wall the sheet: PASS
+stretch declared: pan=0.0,0.0 measured=320.0x40.0
+stretch grabbed: pan=0.0,0.0 measured=320.0x40.0
+stretch dragging: pan=50.0,0.0 measured=320.0x40.0
+gui carried: PASS
+stretch against the wall: pan=80.0,0.0 measured=320.0x40.0
+gui held at the measured wall: PASS
+stretch pulled back: pan=40.0,0.0 measured=320.0x40.0
+gui no banked slack: PASS
+stretch parked: pan=80.0,0.0 measured=320.0x40.0
+gui parked at the wall: PASS
+stretch reshaped: pan=0.0,0.0 measured=400.0x40.0
+gui settled by the resize: PASS
+stretch restored: pan=0.0,0.0 measured=320.0x40.0
+gui still inside: PASS

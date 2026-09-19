@@ -1,0 +1,5 @@
+name: demands
+entry: libdemo.so
+version: 3
+engine:
+  overlay: none

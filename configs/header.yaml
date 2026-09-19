@@ -1,0 +1,82 @@
+header: &header |2-
+   ===========================================================================
+   *              (C) Copyright 2025 - Islands-Engine - Ian Miller             *
+   =============================================================================
+   *  This program is free software: you can redistribute it and/or modify     *
+   *  it under the terms of the GNU Affero General Public License as           *
+   *  published by the Free Software Foundation, either version 3 of the       *
+   *  License, or (at your option) any later version.                          *
+   *                                                                           *
+   *  This program is distributed in the hope that it will be useful,          *
+   *  but WITHOUT ANY WARRANTY; without even the implied warranty of           *
+   *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            *
+   *  GNU Affero General Public License for more details.                      *
+   *                                                                           *
+   *  You should have received a copy of the GNU Affero General Public License *
+   *  along with this program.  If not, see <https://www.gnu.org/licenses/>.   *
+   ============================================================================
+identifier: &identifier 'SPDX-License-Identifier: AGPL-3.0-or-later'
+forms:
+  identifier: ['cartridges']
+languages:
+  python:
+    extensions: ['.py']
+    forms:
+      identifier:
+        move: []
+        regex:
+          -
+            - ^__copyright__\s*=\s*(""".*?"""|'''.*?''')\s*
+            - ''
+            - 0
+          -
+            - (?m)^#\s*SPDX-License-Identifier:[^\n]*\n*
+            - ''
+            - 0
+          -
+            - ^
+            - !concat ['# ', *identifier, "\n"]
+            - 1
+    move:
+      -
+        - ^
+        - '^\s*from\s+__future__\s+import\s+.*?(?:\r\n|\n|\r)\s*'
+        - 0
+    regex:
+      -
+        - ^__copyright__\s*=\s*(""".*?"""|'''.*?''')\s*
+        - ''
+        - 0
+      -
+        - ^
+        - !concat [__copyright__ = """\n, *header, '"""\n']
+        - 1
+  cpp:
+    extensions: ['.c', '.cpp', '.cc', '.h', '.hpp', '.tpp', '.ipp']
+    forms:
+      identifier:
+        move: []
+        regex:
+          -
+            - (?ms)^#pragma\s+region\s+COPYRIGHT[\s\S]*?#pragma\s+endregion\s*\n*
+            - ''
+            - 0
+          -
+            - (?m)^//\s*SPDX-License-Identifier:[^\n]*\n*
+            - ''
+            - 0
+          -
+            - ^
+            - !concat ['// ', *identifier, "\n"]
+            - 1
+    move: []
+    regex:
+      -
+        - (?ms)^#pragma\s+region\s+COPYRIGHT[\s\S]*?#pragma\s+endregion\s*\n*
+        - ''
+        - 0
+      -
+        - ^
+        - !concat ["#pragma region COPYRIGHT\n/*", *header, "*/\n#pragma endregion\n"]
+        - 1
+skip: ['.venv', 'venv', 'lib', 'lib64']

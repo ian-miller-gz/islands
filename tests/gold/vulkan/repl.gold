@@ -1,0 +1,67 @@
+`` INFO    - Initializing Logger...
+`` INFO    - ``/logs/islands.log
+`` INFO    - ``
+`` INFO  ~/island::main.initialize  - Logger initialized.
+`` INFO  ~/island::main.initialize  - Setting working directory to ``
+`` INFO  ~/island::main.initialize  - Working directory set.
+`` INFO  ~/island::main.routine  - Initializing process...
+`` INFO  ~/island/initialize::initialize  - Loading Cartridge...
+`` INFO  ~/cartridge::load  - No cartridge configured.
+`` INFO  ~/island/initialize::initialize  - Complete!
+`` INFO  ~/island/initialize::initialize  - Initializing Terminal...
+Available commands:
+  core:
+        help        | show this help
+        clear       | clears the terminal screen
+        exit        | closes this terminal
+        quit        | closes this program
+        reload      | reloads the cartridge
+        version     | reports this binary's compiled configuration
+        configure   | configures terminal behaviour and appearance
+        status      | reports this instance's identity and configuration
+  engine:
+        echo        | prints text
+        metrics     | reports frame timing and the recorded metric series
+        vsync       | reports or sets the presentation throttle (vsync [0|1])
+        log         | tails recent log lines into this console (log [N])
+        web         | transfers a URL through the declared web reach (web <url> [body])
+        instances   | lists peer instances or sends one a line (instances [send <pid> <line>])
+        topics      | lists the pub/sub topics or peeks one (topics [peek <name>])
+        window      | reports or sets the window (window [report|size <w>x<h>|fullscreen [on|off]])
+        screenshot  | captures the next frame to a file (screenshot <path>)
+  debug:
+        target      | aims the drive commands at a document
+        click       | synthesizes a press/release arc on a widget
+        doubleclick | synthesizes two arcs inside the double window
+        press       | presses a point on a widget and holds it standing
+        release     | puts the standing press down, travelling first if told
+        ask         | the off-hand still press on a node or a board spot
+        drag        | presses on a widget and pulls to another or an offset
+        wheel       | turns the wheel over a widget, with or without control
+        key         | feeds one composed key to the target document
+        type        | types text into the target document
+        read        | reads a widget's compiled rect and text
+        dialog      | raises the engine file dialog for driving
+
+Additional information might be available using "'command' --help"
+No frames rendered.
+No metrics recorded.
+`` INFO  ~/island/initialize::initialize  - Complete!
+`` INFO  ~/island/initialize::initialize  - Initializing Audio...
+`` INFO  ~/island/initialize::initialize  - Complete!
+`` INFO  ~/island/initialize::initialize  - Initializing Graphics...
+`` INFO  ~/island/graphics/vulkan::initialize  - Using Vulkan as graphics backend.
+`` INFO  ~/island/graphics/vulkan::initialize  - Window created: 640 x 480
+`` INFO  ~/island/graphics/vulkan::initialize  - Physical device selected
+`` INFO  ~/island/graphics/vulkan::initialize  - Swap chain created with 3 images
+`` INFO  ~/island/graphics/vulkan::initialize  - Vulkan backend initialized successfully
+`` INFO  ~/island/initialize::initialize  - Complete!
+`` INFO  ~/island/initialize::initialize  - Initializing Overlay...
+`` INFO  ~/island/overlay/backend::initialize  - Overlay disabled for this run.
+`` INFO  ~/island/initialize::initialize  - Complete!
+`` INFO  ~/island::main.routine  - Initialization successful.
+`` INFO  ~/island::main.routine  - Processing...
+`` INFO  ~/island::main.routine  - Processing ceased.
+`` INFO  ~/island::main.routine  - Closing process...
+`` INFO  ~/island::main.routine  - Close successful.
+`` INFO  ~/island::main.routine  - Process terminated.

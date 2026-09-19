@@ -1,0 +1,4 @@
+target islands.splash = document 0
+read swell rect=`` text=□
+read leave rect=`` text=x
+click leave hover=leave events=exit:band,enter:leave,press:leave,click:leave

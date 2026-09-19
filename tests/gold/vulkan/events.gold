@@ -1,0 +1,104 @@
+gui events build: PASS
+gui refuse unknown place: PASS
+gui place: PASS
+step wake: hover=- events=[] rewrites=40
+step enter: hover=first events=[first entered] rewrites=5
+step press: hover=first events=[first pressed] rewrites=5
+step release: hover=first events=[first clicked] rewrites=5
+gui clicked answers once: PASS
+gui clicked consumed: PASS
+step overlap: hover=second events=[first exited, second entered] rewrites=10
+step seize: hover=second events=[second pressed] rewrites=5
+step escape: hover=- events=[second exited] rewrites=5
+step abandon: hover=- events=[] rewrites=0
+gui release outside clicks nothing: PASS
+step shade: hover=- events=[] rewrites=0
+step prime: hover=first events=[first entered] rewrites=5
+step flick: hover=first events=[first pressed, first clicked] rewrites=5
+gui collapsed click lands: PASS
+step stray: hover=first events=[first pressed, first clicked] rewrites=5
+gui carried click lands: PASS
+gui re-place: PASS
+step outside: hover=- events=[first exited] rewrites=5
+step edge: hover=corner events=[corner entered] rewrites=5
+step hold: hover=corner events=[corner pressed] rewrites=5
+step loose: hover=corner events=[corner clicked] rewrites=5
+gui letterboxed click lands: PASS
+step beyond: hover=- events=[corner exited] rewrites=5
+gui grip states its axis: PASS
+gui across grip states its own: PASS
+gui free grip states the grant: PASS
+gui a free grip is across too: PASS
+gui stage: PASS
+gui drag feeds: PASS
+step carry: hover=- events=[split entered, split pressed, split exited, split moved] rewrites=5
+gui carried down: PASS
+gui held across: PASS
+gui carry moved: PASS
+gui moved consumed: PASS
+gui stage: PASS
+gui drag feeds: PASS
+step sideways: hover=- events=[split entered, split pressed, split clicked, split exited] rewrites=5
+gui refused axis stands: PASS
+gui no travel, no move: PASS
+gui no travel is a click: PASS
+gui stage: PASS
+gui drag feeds: PASS
+step rim: hover=- events=[split entered, split pressed, split exited, split moved] rewrites=5
+gui held by the parent: PASS
+gui stage: PASS
+gui drag feeds: PASS
+step slide: hover=- events=[rail entered, rail pressed, rail exited, rail moved] rewrites=5
+gui across grip carries: PASS
+gui across grip holds down: PASS
+gui across carry moved: PASS
+gui stage: PASS
+gui drag feeds: PASS
+step rove: hover=- events=[rover entered, rover pressed, rover exited, rover moved] rewrites=5
+gui roved across: PASS
+gui roved down: PASS
+gui rove moved: PASS
+gui stage: PASS
+gui drag feeds: PASS
+step lean: hover=- events=[rover entered, rover pressed, rover exited, rover moved] rewrites=5
+gui lesser pull rides: PASS
+gui greater pull arms: PASS
+gui stage: PASS
+gui drag feeds: PASS
+step corner: hover=- events=[rover entered, rover pressed, rover exited, rover moved] rewrites=5
+gui held at the east rim: PASS
+gui held at the foot: PASS
+gui unplaced never hovers: PASS
+gui unplaced never clicks: PASS
+gui unplaced sees no events: PASS
+gui re-place deck: PASS
+gui place spare: PASS
+step share: hover=first events=[first entered] rewrites=10
+gui shared spare hovers: PASS
+step claim: hover=first events=[] rewrites=5
+gui claimant still hovers: PASS
+gui claimed-away spare rests: PASS
+step under: hover=first events=[first pressed] rewrites=5
+gui claimed-away spare no event: PASS
+step lift: hover=first events=[first clicked] rewrites=5
+gui claimed-away spare no click: PASS
+gui shadow load: PASS
+gui place: PASS
+shadow rest: press=- target=- stroke=- pan=0.0,0.0
+shadow covered: press=- target=- stroke=- pan=0.0,0.0
+gui no stroke stands: PASS
+shadow uncovered: press=- target=- stroke=- pan=0.0,0.0
+gui the claimant clicks: PASS
+shadow box: press=field target=osc stroke=field pan=0.0,0.0
+gui the box strokes: PASS
+shadow dropped: press=- target=- stroke=- pan=0.0,0.0
+shadow ground: press=field target=- stroke=field pan=0.0,0.0
+shadow lifted: press=- target=- stroke=- pan=0.0,0.0
+shadow shadowed grab: press=- target=- stroke=- pan=0.0,0.0
+shadow shadowed drag: press=- target=- stroke=- pan=0.0,0.0
+gui the view never moved: PASS
+shadow shadowed let go: press=- target=- stroke=- pan=0.0,0.0
+shadow open grab: press=- target=- stroke=- pan=0.0,0.0
+shadow open drag: press=- target=- stroke=- pan=40.0,0.0
+gui the open view carried: PASS
+shadow released: press=- target=- stroke=- pan=40.0,0.0

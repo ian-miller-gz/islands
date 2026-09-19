@@ -1,0 +1,5 @@
+web 200 (44 bytes): hello, islands
+web 200 (34 bytes): chunked islands
+web 200 (44 bytes): hello, islands
+web 404 (0 bytes).
+web transfer refused: http://elsewhere.test is not in the declared allowlist; requested http://elsewhere.test/data

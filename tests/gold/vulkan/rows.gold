@@ -1,0 +1,20 @@
+gui undesignated seats no row: PASS
+gui the name adopts: PASS
+gui every row is seated: PASS
+gui the first row opens at the margin and is charged no gap: PASS
+gui the next stands on the sum above it: PASS
+gui a parting charges the gap: PASS
+gui and the row behind it does not: PASS
+gui the floor is the last row's far edge: PASS
+gui an empty stack is the margin deep: PASS
+gui a point inside a row names it: PASS
+gui a row's own top edge is inside it: PASS
+gui and its far edge is the next row's: PASS
+gui the margin names no row: PASS
+gui a gap names no row: PASS
+gui past the floor names no row: PASS
+gui the asked reach is the window's far edge: PASS
+gui the high-water reach grows with its spare: PASS
+gui and never comes back in: PASS
+gui re-adoption replaces whole: PASS
+gui the door closed again: PASS

@@ -1,0 +1,15 @@
+PASS dims 8x5 cell 16
+PASS solid at (56,24) block
+PASS open at (32,0) gap
+PASS open at (40,52) marker
+PASS solid at (112,72) floor
+PASS open past edge (200,8)
+PASS surface col0 = 0 wall
+PASS surface col3 = 1 block
+PASS surface col5 = 4 floor
+PASS follow left/top clamp 0,0
+PASS follow right/bot clamp 64,16
+PASS follow interior 64,24
+PASS window (0,0) 32x32 -> [0,0 2,2) tiles 2
+PASS window (48,16) 32x32 -> [3,1 5,3) tiles 2
+PASS window whole map tiles 19

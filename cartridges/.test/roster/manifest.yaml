@@ -1,0 +1,8 @@
+name: Roster
+entry: libroster.so
+version: 3
+host: reef
+listen: true
+
+engine:
+  platform: [posix, windows]

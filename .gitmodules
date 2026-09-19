@@ -1,0 +1,28 @@
+	branch = docking
+[submodule "submodules/SDL"]
+	path = submodules/SDL
+	url = https://github.com/libsdl-org/SDL.git
+[submodule "submodules/glfw"]
+	path = submodules/glfw
+	url = https://github.com/glfw/glfw.git
+[submodule "submodules/mbedtls"]
+	path = submodules/mbedtls
+	url = https://github.com/Mbed-TLS/mbedtls.git
+[submodule "submodules/spdlog"]
+	path = submodules/spdlog
+	url = https://github.com/gabime/spdlog.git
+[submodule "submodules/islands-tools"]
+	path = submodules/islands-tools
+	url = https://github.com/ian-miller-gz/islands-tools.git
+[submodule "submodules/stb"]
+	path = submodules/stb
+	url = https://github.com/nothings/stb.git
+[submodule "submodules/cgltf"]
+	path = submodules/cgltf
+	url = https://github.com/jkuhlmann/cgltf.git
+[submodule "submodules/vulkan"]
+	path = submodules/vulkan
+	url = https://github.com/KhronosGroup/Vulkan-Headers.git
+[submodule "submodules/sqlite"]
+	path = submodules/sqlite
+	url = https://github.com/sqlite/sqlite.git

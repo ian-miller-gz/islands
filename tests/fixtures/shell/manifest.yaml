@@ -1,0 +1,3 @@
+name: shell
+entry: libdemo.so
+version: 3

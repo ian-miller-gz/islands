@@ -1,0 +1,14 @@
+[tool.pytest.ini_options]
+cache_dir = ".cache/pytest"
+
+[tool.ruff]
+cache-dir = ".cache/ruff"
+line-length = 80
+
+[tool.ruff.format]
+indent-style = "space"
+quote-style = "single"
+line-ending = "lf"
+docstring-code-format = true
+skip-magic-trailing-comma = false
+preview = true

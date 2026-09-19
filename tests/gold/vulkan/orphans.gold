@@ -1,0 +1,33 @@
+gui orphans load: PASS
+orphans osc: none
+join osc.out>amp.in: made
+join amp.out>out: made
+orphans amp: out
+orphans out: none
+orphans osc: out amp
+orphans lfo: none
+orphans osc.out: out amp
+gui the chain's head takes the rest: PASS
+join feed.out>dry.in: made
+join feed.out>wet.in: made
+join dry.out>sum: made
+join wet.out>sum: made
+orphans dry: none
+orphans wet: none
+orphans feed: sum wet dry
+gui a fed sink survives one arm: PASS
+orphans dry: sum
+join top>gate: made
+join gate>tail: made
+orphans top: tail
+orphans gate: tail
+join one.out>two.in: made
+join two.out>one.in: made
+orphans one: none
+orphans two: none
+join seed>one.in: made
+orphans seed: one two
+orphans one: two
+orphans ghost: refused, 0 named
+gui an unknown document refuses: PASS
+gui and names nobody: PASS

@@ -1,0 +1,134 @@
+stages:
+  build:
+    directory: .
+    command: [python3, -m, make]
+    configuration: [--configuration]
+  pytest:
+    directory: .
+    command: [python3, -m, pytest, -q]
+    roots:
+    - tests/make
+    - tests/copyrighter
+    - tests/verify
+    - libs/cgltf/tests
+    - cartridges/.test/roster/tests
+    - cartridges/.test/messages/tests
+    - src/test/gui/tests
+    - tests/hosts
+    - tests/relations
+  golds:
+    directory: tests
+    command: [autest]
+    filters: [-f]
+
+weights:
+- header: src/common.hpp
+  lines: 65000
+- header: src/threads.hpp
+  lines: 58000
+
+hygiene:
+  roots: [tests/gold]
+  extensions: ['.gold']
+  forbidden:
+  - name: absolute path outside the repo
+    regex: '(^|[^`\w])/(home|tmp|usr|var|etc|opt|root|run|mnt|media)(/|$|\s)'
+  allowed_hosts:
+  - '^127\.'
+  - '^localhost$'
+  - '\.(test|example|invalid|localhost)$'
+  - '(^|\.)example\.(com|net|org)$'
+
+matrix:
+- release
+- coexist
+- bench
+
+
+changed:
+- prefix: tests/make/
+  pytest: [tests/make]
+- prefix: tests/copyrighter/
+  pytest: [tests/copyrighter]
+- prefix: tests/verify/
+  pytest: [tests/verify]
+- prefix: libs/cgltf/
+  pytest: [libs/cgltf/tests]
+- prefix: cartridges/.test/roster/
+  pytest: [cartridges/.test/roster/tests]
+- prefix: src/cartridge/
+  pytest: [tests/relations, cartridges/.test/messages/tests]
+  golds: [requirements]
+- prefix: tests/relations/
+  pytest: [tests/relations]
+- prefix: src/island/terminal/backend/
+  golds: [metrics.wire]
+- prefix: tests/fixtures/
+  pytest: [tests/relations, cartridges/.test/messages/tests]
+  golds: [requirements]
+- prefix: cartridges/.test/messages/
+  pytest: [cartridges/.test/messages/tests]
+  golds: [messages, metrics.wire]
+- prefix: hosts/
+  pytest: [tests/hosts]
+- prefix: tests/hosts/
+  pytest: [tests/hosts]
+- prefix: hosts/.test/jetty/
+  golds: [jetty]
+- prefix: cartridges/.test/box/
+  golds: [model]
+- prefix: src/island/graphics/
+  golds: [model]
+- prefix: src/island/gui/
+  pytest: [src/test/gui/tests]
+  golds: [gui, events, graph, wire, route, wheel, keyed, sac, letters, order, orphans,
+    saved, turn, beside, tip, lifecycle, rml]
+- prefix: src/test/gui/
+  pytest: [src/test/gui/tests]
+  golds: [gui, events, graph, wire, route, wheel, keyed, sac, letters, order, orphans,
+    saved, turn, beside, tip, rml]
+- prefix: src/threads/
+  golds: [threads]
+- prefix: src/test/threads/
+  golds: [threads]
+- prefix: src/test/clock/
+  golds: [clock]
+- prefix: src/test/tilemap/
+  golds: [tilemap]
+- prefix: src/test/select/
+  golds: [select]
+- prefix: src/test/scenes/
+  golds: [scenes]
+- prefix: src/test/aabb/
+  golds: [aabb]
+- prefix: src/topics/durable/
+  golds: [durable]
+- prefix: src/test/durable/
+  golds: [durable]
+- prefix: src/topics/
+  golds: [topics]
+- prefix: src/test/topics/
+  golds: [topics]
+- prefix: src/metrics/
+  golds: [metrics, metrics.wire]
+- prefix: src/test/metrics/
+  golds: [metrics]
+- prefix: src/island/audio/
+  golds: [clips]
+- prefix: src/test/clips/
+  golds: [clips]
+- prefix: src/island/midi/
+  golds: [midi]
+- prefix: src/test/midi/
+  golds: [midi]
+- prefix: src/reef/
+  pytest: [cartridges/.test/roster/tests, cartridges/.test/messages/tests]
+  golds: [messages, requirements]
+- prefix: src/network/web/
+  golds: [web, fetch, ftp, trusted]
+- prefix: src/test/lines/
+  golds: [lines]
+- prefix: src/store/
+  golds: [store]
+- prefix: src/test/store/
+  golds: [store]

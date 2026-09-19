@@ -1,0 +1,24 @@
+gui build: PASS
+gui place: PASS
+beside door: door at=200,100 box=120x40
+beside below: plate at=200,146 box=160x80
+beside above: flush at=120,64 box=200x30
+beside east: pane at=326,100 box=90x60
+beside room: plate room=200,280,146,254
+gui the seat reads back: PASS
+gui no seat is the zero seat: PASS
+beside carried: plate at=40,146 box=160x80
+beside carried: flush at=0,64 box=200x30
+beside foot: door at=40,430 box=120x40
+beside flipped: plate at=40,344 box=160x80
+gui the flipped plate stands whole: PASS
+beside clamped: plate at=40,20 box=160x460
+beside wall: door at=560,100 box=120x40
+beside west: pane at=464,100 box=90x60
+beside fitted: flush at=440,64 box=200x30
+gui a node cannot seat onto itself: PASS
+gui an unknown referent refuses: PASS
+gui the ring's last edge refuses: PASS
+gui the refused seat left the plate where it was: PASS
+gui the seat clears: PASS
+beside freed: plate at=0,0 box=160x80

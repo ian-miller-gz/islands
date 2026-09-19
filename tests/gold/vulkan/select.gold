@@ -1,0 +1,12 @@
+PASS cycle NONE -> 0
+PASS cycle 0 -> 1
+PASS cycle 2 -> 0 wrap
+PASS cycle empty -> NONE
+PASS pick name beta -> 1
+PASS pick index 2 -> 2
+PASS pick unknown -> NONE
+PASS pick out-of-range index -> NONE
+PASS listing lines 3
+PASS listing line0 = '0: alpha'
+PASS listing line1 marked
+PASS listing line2 unmarked

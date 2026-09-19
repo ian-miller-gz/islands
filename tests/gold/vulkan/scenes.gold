@@ -1,0 +1,13 @@
+PASS registered 3
+PASS current NONE at start
+PASS find play = 1
+PASS find unknown = NONE
+PASS enter menu ok
+PASS enter fired menu.enter
+PASS walk drove menu only
+PASS enter play ok
+PASS walk drove play, not menu again
+PASS enter unknown refused
+PASS refused left current at play
+PASS enter over ok
+PASS null-hook walk safe

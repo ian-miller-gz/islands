@@ -1,0 +1,35 @@
+#harbor {
+  position: absolute;
+  left: 40px;
+  top: 30px;
+  width: 240px;
+  height: 120px;
+  background-color: #102030e0;
+  border-width: 2px;
+  border-color: #8898a8ff;
+}
+#name {
+  position: absolute;
+  left: 14px;
+  top: 8px;
+  width: 120px;
+  height: 16px;
+  color: #f0e0c0ff;
+  white-space: nowrap;
+}
+#moor {
+  position: absolute;
+  left: 14px;
+  top: 60px;
+  width: 96px;
+  height: 28px;
+  background-color: #283038f0;
+}
+#flag {
+  position: absolute;
+  right: 10px;
+  top: 8px;
+  width: 24px;
+  height: 24px;
+  image-color: #ffffffff;
+}

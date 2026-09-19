@@ -1,0 +1,5 @@
+name: stranded
+entry: libdemo.so
+version: 3
+engine:
+  platform: web
