@@ -20,7 +20,8 @@ struct Scene {
   STRING::Hot panel;
 };
 
-constexpr Scene SCENES[] = {{IDS::LIBRARY, IDS::MAIN}};
+constexpr Scene SCENES[] = {
+  {IDS::LIBRARY, IDS::MAIN}, {IDS::STORE, IDS::OFFERS}};
 
 void refresh();
 
@@ -80,4 +81,8 @@ constexpr STRING::Hot UNFOLDED = "unfolded";
 constexpr STRING::Hot LEAF = "leaf";
 constexpr STRING::Hot SLAT = "slat";
 constexpr STRING::Hot TRACE = "trace";
+constexpr STRING::Hot MUTED = "muted";
+constexpr STRING::Hot MARK = "mark";
+constexpr STRING::Hot DROP = "drop";
+constexpr STRING::Hot GAUGE = "gauge";
 }  // namespace LAUNCHER::STYLES

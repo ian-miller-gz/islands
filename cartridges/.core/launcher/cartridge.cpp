@@ -6,6 +6,7 @@ static auto initialize(STRING::Hot assets) -> Status {
   if (LAUNCHER::document == GUI::NONE) return 1;
   LAUNCHER::IDLE::create();
   LAUNCHER::scan();
+  LAUNCHER::notice();
   LAUNCHER::WATCH::attach();
   return 0;
 }

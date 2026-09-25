@@ -16,7 +16,7 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.   *
  ============================================================================*/
 #pragma endregion
-#include <network/backend/selection.hpp>
+#include <network/selection.hpp>
 #if SR_NETWORK_CARRIES(SR_UNIX) && SR_NETWORK_CARRIES(SR_TLS)
 #include <sys/wait.h>
 #include <unistd.h>

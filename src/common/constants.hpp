@@ -21,7 +21,7 @@
 #include <common/types.hpp>
 
 namespace ENGINE {
-inline constexpr STRING::Hot VERSION = "0.1.0";
+extern const STRING::Hot VERSION;
 auto stated(int count, char **values) -> Flag;
 }  // namespace ENGINE
 

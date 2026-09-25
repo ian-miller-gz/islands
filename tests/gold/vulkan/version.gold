@@ -9,7 +9,7 @@
 `` INFO  ~/cartridge::load  - No cartridge configured.
 `` INFO  ~/island/initialize::initialize  - Complete!
 `` INFO  ~/island/initialize::initialize  - Initializing Terminal...
-Islands 0.1.0
+Islands ``
 gfx      | SR_VULKAN
 window   | SR_GLFW
 overlay  | SR_IMGUI

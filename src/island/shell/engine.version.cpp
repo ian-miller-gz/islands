@@ -25,7 +25,7 @@
 #include <format>
 #include <generated/profile.hpp>
 #include <logger/backend/selection.hpp>
-#include <network/backend/selection.hpp>
+#include <network/selection.hpp>
 
 #if !defined(SR_PROFILE)
 #error "SR_PROFILE is not defined; set it in configs/make.yaml (tokens:)."

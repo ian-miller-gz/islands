@@ -65,8 +65,8 @@ def _shared_config(selected: str) -> dict:
             {
                 "selector": "SR_NET",
                 "options": {
-                    "network/backend/posix/unix": "SR_UNIX",
-                    "network/backend/posix/inet": ["SR_TCP", "SR_TCP6"],
+                    "network/sockets/backend/unix": "SR_UNIX",
+                    "network/sockets/backend/inet": ["SR_TCP", "SR_TCP6"],
                 },
             }
         ],
@@ -75,8 +75,8 @@ def _shared_config(selected: str) -> dict:
 
 def test_variant_option_list_selects_for_any_member() -> None:
     init = Initializer()
-    inet = LocalPath("/p/network/backend/posix/inet/sessions.cpp")
-    unix = LocalPath("/p/network/backend/posix/unix/sessions.cpp")
+    inet = LocalPath("/p/network/sockets/backend/inet/sessions.cpp")
+    unix = LocalPath("/p/network/sockets/backend/unix/sessions.cpp")
 
     for token in ("SR_TCP", "SR_TCP6"):
         init._project_cfg = _shared_config(token)
@@ -146,7 +146,7 @@ def test_grouped_tokens_drive_variant_selection() -> None:
     config = _shared_config("ignored")
     config["tokens"] = {"net": {"SR_NET": "SR_TCP"}}
     init._project_cfg = config
-    inet = LocalPath("/p/network/backend/posix/inet/sessions.cpp")
+    inet = LocalPath("/p/network/sockets/backend/inet/sessions.cpp")
     assert init._is_active_variant(inet) is True
 
 

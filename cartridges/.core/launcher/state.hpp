@@ -58,6 +58,7 @@ inline Vector<Child> children;
 inline Vector<Control> controls;
 
 void scan();
+void notice();
 void identify(Entry &entry);
 void tick(Whole box);
 auto list(const String &directory, Whole depth) -> Vector<Entry>;
@@ -92,3 +93,4 @@ auto bare(const String &line) -> String;
 #include "state.layout.hpp"
 #include "state.watch.hpp"
 #include "state.idle.hpp"
+#include "store.hpp"

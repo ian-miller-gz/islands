@@ -20,7 +20,7 @@
 #include <mbedtls/ssl.h>
 
 #include <common.hpp>
-#include <network/backend/posix/descriptor.internal.hpp>
+#include <network/sockets/descriptor.internal.hpp>
 #include <network/web/server.internal.hpp>
 
 namespace NETWORK::WEB::SERVER {

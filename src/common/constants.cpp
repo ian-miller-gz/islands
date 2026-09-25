@@ -65,6 +65,7 @@ static String state(const String &directory) {
   return path.string();
 }
 
+const STRING::Hot ENGINE::VERSION = ENGINE_VERSION;
 const String COMMON::BINARY = COMMON::PLATFORM::executable();
 const String COMMON::HOME = home(COMMON::BINARY);
 const String COMMON::STATE = state(COMMON::HOME);
