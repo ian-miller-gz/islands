@@ -56,6 +56,8 @@ static void act(const String &id) {
   for (const Click &click : CLICKS)
     if (id == click.id) return click.run();
   if (::banked(id, LAUNCHER::IDS::BOX, at)) return LAUNCHER::tick(at);
+  if (::banked(id, LAUNCHER::IDS::INSTALL, at))
+    return LAUNCHER::STORE::install(at);
   for (const LAUNCHER::Scene &scene : LAUNCHER::SCENES)
     if (id == scene.call) return LAUNCHER::enter(scene.call);
   for (const LAUNCHER::Area &area : LAUNCHER::AREAS)
@@ -90,6 +92,7 @@ static void react() {
 void LAUNCHER::update() {
   reap();
   WATCH::poll();
+  STORE::poll();
   const GFX::Viewport viewport = GFX::WINDOWS::MAIN::viewport();
   GUI::place(document, viewport);
   if (!prompt(viewport)) {

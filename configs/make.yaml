@@ -580,8 +580,8 @@ variants:
       island/terminal/backend/repl/windows: SR_WINDOWS
       island/window/backend/glfw/window.chrome.posix.cpp: SR_POSIX
       island/window/backend/glfw/window.chrome.windows.cpp: SR_WINDOWS
-      network/backend/posix/wait/posix: SR_POSIX
-      network/backend/posix/wait/windows: SR_WINDOWS
+      network/sockets/wait/posix: SR_POSIX
+      network/sockets/wait/windows: SR_WINDOWS
       network/web/backend/native/trust/posix: SR_POSIX
       network/web/backend/native/trust/windows: SR_WINDOWS
   - selector: SR_LINKAGE
@@ -613,17 +613,17 @@ variants:
       logger/backend/spdlog: SR_SPDLOG
   - selector: SR_DATAGRAM_BACKEND
     options:
-      network/backend/posix/udp: SR_UDP
+      network/sockets/backend/udp: SR_UDP
       test/datagram: SR_UDP
   - selector: SR_NETWORK_BACKEND
     options:
-      network/backend/posix/unix: SR_UNIX
-      network/backend/posix/abstract: SR_ABSTRACT
-      network/backend/posix/inet: [SR_TCP, SR_TCP6, SR_SCTP]
-      network/backend/posix/vsock: SR_VSOCK
-      network/backend/posix/tls: SR_TLS
-      network/backend/posix/sessions.peer.cpp: [SR_UNIX, SR_ABSTRACT]
-      network/backend/posix: [SR_UNIX, SR_ABSTRACT, SR_TCP, SR_TCP6, SR_SCTP, SR_VSOCK, SR_TLS]
+      network/sockets/backend/unix: SR_UNIX
+      network/sockets/backend/abstract: SR_ABSTRACT
+      network/sockets/backend/inet: [SR_TCP, SR_TCP6, SR_SCTP]
+      network/sockets/backend/vsock: SR_VSOCK
+      network/sockets/backend/tls: SR_TLS
+      network/sockets/sessions.peer.cpp: [SR_UNIX, SR_ABSTRACT]
+      network/sockets: [SR_UNIX, SR_ABSTRACT, SR_TCP, SR_TCP6, SR_SCTP, SR_VSOCK, SR_TLS]
   - selector: SR_TOPICS
     options:
       topics/local: SR_LOCAL

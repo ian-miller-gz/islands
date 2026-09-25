@@ -92,3 +92,4 @@ auto bare(const String &line) -> String;
 #include "state.layout.hpp"
 #include "state.watch.hpp"
 #include "state.idle.hpp"
+#include "store.hpp"

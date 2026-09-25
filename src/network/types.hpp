@@ -19,7 +19,7 @@
 #pragma once
 
 #include <common.hpp>
-#include <network/backend/selection.hpp>
+#include <network/selection.hpp>
 
 namespace NETWORK {
 using Handle = Whole;

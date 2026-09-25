@@ -7,6 +7,7 @@ panel shell style=clear anchor=stretch
     panel crest style=box x=16 y=16 w=240 h=160
       label crestnote style=muted size=18 text="Islands" x=90 y=70
     button library style=place size=18 text="Library" x=16 y=192 w=240 h=32
+    button store style=place size=18 text="Store" x=16 y=232 w=240 h=32
     button about style=place size=18 text="About" anchor=southwest x=16 y=-16 w=240 h=32
   panel main style=sheet anchor=stretch x=304 y=40 w=16 h=16
     button general style=place size=17 text="General" x=16 y=6 w=100 h=28
@@ -85,6 +86,52 @@ panel shell style=clear anchor=stretch
           label boxword5 style=ink size=17 x=10 y=4
           detail note5 style=note size=16 x=246 y=1 w=316 h=26 pad=4
       button setupclose style=place size=18 text="Close" anchor=southeast x=-24 y=-24 w=150 h=34
+  panel offers style=sheet anchor=stretch x=304 y=40 w=16 h=16 visible=false
+    label storenote style=muted size=17 x=8 y=10 text="Cartridges offered from their own repositories - a description is the developer's, everything else the repository's own."
+    panel offerbox style=box anchor=stretch x=0 y=40 w=0 h=0
+      label headname style=ink size=17 text="Name" x=16 y=12
+      label headversion style=ink size=17 text="Version" x=260 y=12
+      label headdetail style=ink size=17 text="Description" x=380 y=12
+      label name0 style=ink size=17 x=16 y=53 visible=false
+      label release0 style=ink size=17 x=260 y=53 visible=false
+      label description0 style=muted size=17 x=380 y=53 visible=false
+      button install0 style=place size=17 text="Install" x=700 y=48 w=120 h=28 visible=false
+      label state0 style=muted size=17 x=836 y=53 visible=false
+      label name1 style=ink size=17 x=16 y=89 visible=false
+      label release1 style=ink size=17 x=260 y=89 visible=false
+      label description1 style=muted size=17 x=380 y=89 visible=false
+      button install1 style=place size=17 text="Install" x=700 y=84 w=120 h=28 visible=false
+      label state1 style=muted size=17 x=836 y=89 visible=false
+      label name2 style=ink size=17 x=16 y=125 visible=false
+      label release2 style=ink size=17 x=260 y=125 visible=false
+      label description2 style=muted size=17 x=380 y=125 visible=false
+      button install2 style=place size=17 text="Install" x=700 y=120 w=120 h=28 visible=false
+      label state2 style=muted size=17 x=836 y=125 visible=false
+      label name3 style=ink size=17 x=16 y=161 visible=false
+      label release3 style=ink size=17 x=260 y=161 visible=false
+      label description3 style=muted size=17 x=380 y=161 visible=false
+      button install3 style=place size=17 text="Install" x=700 y=156 w=120 h=28 visible=false
+      label state3 style=muted size=17 x=836 y=161 visible=false
+      label name4 style=ink size=17 x=16 y=197 visible=false
+      label release4 style=ink size=17 x=260 y=197 visible=false
+      label description4 style=muted size=17 x=380 y=197 visible=false
+      button install4 style=place size=17 text="Install" x=700 y=192 w=120 h=28 visible=false
+      label state4 style=muted size=17 x=836 y=197 visible=false
+      label name5 style=ink size=17 x=16 y=233 visible=false
+      label release5 style=ink size=17 x=260 y=233 visible=false
+      label description5 style=muted size=17 x=380 y=233 visible=false
+      button install5 style=place size=17 text="Install" x=700 y=228 w=120 h=28 visible=false
+      label state5 style=muted size=17 x=836 y=233 visible=false
+      label name6 style=ink size=17 x=16 y=269 visible=false
+      label release6 style=ink size=17 x=260 y=269 visible=false
+      label description6 style=muted size=17 x=380 y=269 visible=false
+      button install6 style=place size=17 text="Install" x=700 y=264 w=120 h=28 visible=false
+      label state6 style=muted size=17 x=836 y=269 visible=false
+      label name7 style=ink size=17 x=16 y=305 visible=false
+      label release7 style=ink size=17 x=260 y=305 visible=false
+      label description7 style=muted size=17 x=380 y=305 visible=false
+      button install7 style=place size=17 text="Install" x=700 y=300 w=120 h=28 visible=false
+      label state7 style=muted size=17 x=836 y=305 visible=false
   button notice style=card anchor=center w=360 h=120 z=10 visible=false
     label noticeline style=ink size=18 text="Islands Beta - ver. 0.1.0" x=24 y=24
     button noticeclose style=place size=18 text="Close" anchor=southeast x=-24 y=-24 w=150 h=34

@@ -28,7 +28,7 @@
 #include <island/window/backend/selection.hpp>
 #include <logger/backend/selection.hpp>
 #include <metrics/selection.hpp>
-#include <network/backend/selection.hpp>
+#include <network/selection.hpp>
 #include <network/web/backend/selection.hpp>
 #include <network/web/selection.hpp>
 #include <topics/selection.hpp>

@@ -8,7 +8,9 @@ version: 3
 gui:
   dialog: true
 summary: islands launcher
+web: https to raw.githubusercontent.com
 engine:
+  web: native
   platform: [posix, windows]
 platforms:
   windows:

@@ -9,7 +9,9 @@ constexpr STRING::Hot GENERAL = "general";
 constexpr STRING::Hot CORE = "core";
 constexpr STRING::Hot RAIL = "rail";
 constexpr STRING::Hot LIBRARY = "library";
+constexpr STRING::Hot STORE = "store";
 constexpr STRING::Hot MAIN = "main";
+constexpr STRING::Hot OFFERS = "offers";
 constexpr STRING::Hot BROWSER = "browser";
 constexpr STRING::Hot SHEET = "preview";
 constexpr STRING::Hot WATCH = "watch";
@@ -36,4 +38,12 @@ inline auto item(STRING::Hot list, Whole at) -> String {
   return String(list) + "." + std::to_string(at);
 }
 inline auto note(Whole at) -> String { return "note" + std::to_string(at); }
+constexpr STRING::Hot CALLED = "name";
+constexpr STRING::Hot VERSION = "release";
+constexpr STRING::Hot DETAIL = "description";
+constexpr STRING::Hot INSTALL = "install";
+constexpr STRING::Hot STANDING = "state";
+inline auto cell(STRING::Hot column, Whole at) -> String {
+  return String(column) + std::to_string(at);
+}
 }  // namespace LAUNCHER::IDS

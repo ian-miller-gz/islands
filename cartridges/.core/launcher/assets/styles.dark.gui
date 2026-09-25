@@ -11,3 +11,4 @@ style slat style=entry size=17 pad=14
 style trace color=#00000000 edge=#c9c5d6ff border=0 hover=#00000000 press=#00000000 size=15 pad=8
 style folded style=note z=0
 style unfolded style=card edge=#e2deeaff z=1
+style kept color=#2c4436ff edge=#9fd8b2ff border=1 hover=#2c4436ff press=#2c4436ff

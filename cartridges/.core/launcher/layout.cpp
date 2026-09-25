@@ -25,5 +25,6 @@ void LAUNCHER::refresh() {
   PREVIEW::refresh();
   SETUP::refresh();
   CREW::refresh();
+  STORE::refresh();
   FOOTER::refresh();
 }

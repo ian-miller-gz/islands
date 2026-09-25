@@ -38,16 +38,16 @@ def _initializer(selected) -> Initializer:
     "variants": [
       {"selector": "SR_NETWORK_BACKEND",
        "options": {
-         "network/backend/posix/unix": "SR_UNIX",
-         "network/backend/posix/inet": ["SR_TCP", "SR_TCP6", "SR_SCTP"],
-         "network/backend/posix/vsock": "SR_VSOCK"}}],
+         "network/sockets/backend/unix": "SR_UNIX",
+         "network/sockets/backend/inet": ["SR_TCP", "SR_TCP6", "SR_SCTP"],
+         "network/sockets/backend/vsock": "SR_VSOCK"}}],
   }
   return init
 
 
 def test_set_activates_every_member_subtree(tmp_path) -> None:
   init = _initializer(["SR_UNIX", "SR_TCP"])
-  base = tmp_path / "network" / "backend" / "posix"
+  base = tmp_path / "network" / "sockets" / "backend"
   assert init._is_active_variant(base / "unix")
   assert init._is_active_variant(base / "inet")
   assert not init._is_active_variant(base / "vsock")
@@ -55,7 +55,7 @@ def test_set_activates_every_member_subtree(tmp_path) -> None:
 
 def test_scalar_still_selects_one_subtree(tmp_path) -> None:
   init = _initializer("SR_UNIX")
-  base = tmp_path / "network" / "backend" / "posix"
+  base = tmp_path / "network" / "sockets" / "backend"
   assert init._is_active_variant(base / "unix")
   assert not init._is_active_variant(base / "inet")
 
