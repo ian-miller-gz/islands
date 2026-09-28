@@ -10,8 +10,10 @@ LAUNCHER = 'cartridges/.core/launcher'
 QUIET = ('--visible', '0', '--overlay', '0', '--window', 'console=0',
          '--midi', 'none')
 
-pytestmark = pytest.mark.skipif(
-  not os.access(ISLAND, os.X_OK), reason='no build/Island')
+pytestmark = [
+  pytest.mark.skipif(not os.access(ISLAND, os.X_OK), reason='no build/Island'),
+  pytest.mark.skipif(not (os.environ.get('DISPLAY') or os.environ.get('WAYLAND_DISPLAY')),
+                     reason='no display')]
 
 
 def run(runtime, *flags):

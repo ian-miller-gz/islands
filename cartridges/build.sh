@@ -14,6 +14,7 @@ cd "$root"
 bundle="${bundle%/}"
 manifest="$bundle/manifest.yaml"
 [ -f "$manifest" ] || { echo "No manifest at $manifest" >&2; exit 1; }
+if [ -x "$bundle/plugins.sh" ]; then "$bundle/plugins.sh"; fi
 
 toolchain="$(sed -n '/^toolchains:/,$p' configs/make.yaml |
                  sed -n "/^  ${platform:-none}:/,/^  [a-z]/p")"

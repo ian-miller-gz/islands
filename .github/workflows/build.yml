@@ -1,0 +1,52 @@
+name: build
+on:
+  workflow_call:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          submodules: recursive
+      - run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            git g++ cmake pkg-config python3 python3-venv python3-pip \
+            libx11-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev \
+            libxkbcommon-dev libxext-dev libxfixes-dev libxss-dev libxtst-dev \
+            libwayland-dev libgl-dev libasound2-dev libpulse-dev \
+            libvulkan1 mesa-vulkan-drivers
+      - run: |
+          [ -d cartridges/.core/launcher ] ||
+            git clone --quiet --branch stable --depth 1 https://github.com/ian-miller-gz/islands-launcher cartridges/.core/launcher
+      - id: zone
+        run: |
+          zone="$(sed -n 's/^\s*SR_PROFILE:\s*SR_\([A-Z]*\).*/\L\1/p' configs/make.yaml | head -1)"
+          echo "zone=${zone}" >> "$GITHUB_OUTPUT"
+          echo "pins=$(git submodule status | sha256sum | cut -c1-16)" >> "$GITHUB_OUTPUT"
+      - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830
+        with:
+          path: libs/${{ steps.zone.outputs.zone }}
+          key: libs-${{ steps.zone.outputs.zone }}-${{ hashFiles('libs/recipes/**') }}-${{ steps.zone.outputs.pins }}
+      - run: |
+          for recipe in libs/recipes/*.sh; do
+            name="$(basename "$recipe" .sh)"
+            [ "$name" = common ] && continue
+            ls "libs/${{ steps.zone.outputs.zone }}/$name"/*.a >/dev/null 2>&1 && continue
+            "$recipe" "${{ steps.zone.outputs.zone }}"
+          done
+      - run: |
+          python3 -m venv .venv
+          .venv/bin/python3 -m pip install --quiet pytest pyyaml -e submodules/islands-tools
+      - run: .venv/bin/python3 -m make
+      - run: |
+          roots="$(.venv/bin/python3 -c 'import yaml; print(" ".join(yaml.safe_load(open("configs/verify.yaml"))["stages"]["pytest"]["roots"]))')"
+          .venv/bin/python3 -m pytest -q $roots
+      - if: failure()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: logs-${{ github.run_id }}
+          path: logs/build

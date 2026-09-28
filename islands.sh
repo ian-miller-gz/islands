@@ -3,6 +3,13 @@ set -eu
 
 home="$(cd "$(dirname "$0")" && pwd)"
 
+launcher="$home/cartridges/.core/launcher"
+if [ ! -d "$launcher" ]; then
+  echo "Cloning the launcher into $launcher..." >&2
+  git clone --quiet --branch stable --depth 1 \
+    https://github.com/ian-miller-gz/islands-launcher "$launcher" || exit 1
+fi
+
 bundle=
 previous=
 for argument in "$@"; do

@@ -27,7 +27,7 @@ THREADED = {'single': [], 'threaded': ['--threads', '1']}
 LOOPBACKS = {'tcp': ('127.0.0.1', socket.AF_INET),
              'tcp6': ('::1', socket.AF_INET6),
              'tls': ('127.0.0.1', socket.AF_INET),
-             'vsock': (socket.VMADDR_CID_LOCAL, socket.AF_VSOCK)}
+             'vsock': (getattr(socket, 'VMADDR_CID_LOCAL', 1), socket.AF_VSOCK)}
 
 
 def port(service):

@@ -10,6 +10,7 @@ stages:
     - tests/make
     - tests/copyrighter
     - tests/verify
+    - tests/github
     - libs/cgltf/tests
     - cartridges/.test/roster/tests
     - cartridges/.test/messages/tests
@@ -52,6 +53,10 @@ changed:
   pytest: [tests/copyrighter]
 - prefix: tests/verify/
   pytest: [tests/verify]
+- prefix: .github/
+  pytest: [tests/github]
+- prefix: tests/github/
+  pytest: [tests/github]
 - prefix: libs/cgltf/
   pytest: [libs/cgltf/tests]
 - prefix: cartridges/.test/roster/

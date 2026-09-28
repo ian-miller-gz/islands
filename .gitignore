@@ -24,6 +24,7 @@ cartridges/*
 !cartridges/.templates/
 !cartridges/.test/
 !cartridges/build.sh
+cartridges/.core/launcher/
 hosts/*
 !hosts/.templates/
 !hosts/.test/
