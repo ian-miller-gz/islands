@@ -142,7 +142,7 @@ tokens:
 directives:
   engine:
     ENGINE_NAME: "Islands"
-    ENGINE_VERSION: "0.3.5"
+    ENGINE_VERSION: "0.3.8"
     ISLAND_NAME: "Island"
     REEF_NAME: "Reef"
     BUILD_NAME: "build"
