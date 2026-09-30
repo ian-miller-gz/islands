@@ -61,6 +61,12 @@ auto CARTRIDGE::GET::asset(STRING::Hot relative) -> String {
 
 auto CARTRIDGE::GET::cache() -> String { return CARTRIDGE::cache; }
 
+Vector<String> CARTRIDGE::arguments;
+
+auto CARTRIDGE::GET::arguments() -> const Vector<String> & {
+  return CARTRIDGE::arguments;
+}
+
 auto CARTRIDGE::GET::manifest(STRING::Hot key) -> String {
   auto found = keys.find(key);
   return found == keys.end() ? String() : found->second;

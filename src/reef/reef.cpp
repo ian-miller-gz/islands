@@ -35,7 +35,8 @@ static Flag staged = false;
 
 static auto parse(int count, char **values) -> Status {
 #if SR_CARTRIDGE == SR_NONE
-  for (int at = 1; at + 1 < count; at += 2) {
+  int at = 1;
+  for (; at + 1 < count && String(values[at]) != "--"; at += 2) {
     const String flag = values[at];
     if (flag == "--cartridge") CARTRIDGE::path = values[at + 1];
     if (flag == "--log") LOGGER::FILTERS::add(values[at + 1]);
@@ -44,6 +45,9 @@ static auto parse(int count, char **values) -> Status {
       staged = true;
     }
   }
+  if (at < count && String(values[at]) == "--")
+    for (at += 1; at < count; at += 1)
+      CARTRIDGE::arguments.push_back(values[at]);
   if (CARTRIDGE::configured()) return 0;
   std::cout << "Usage: " << REEF_NAME << " --cartridge <bundle-directory>"
             << std::endl;

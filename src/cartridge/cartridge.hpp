@@ -29,6 +29,8 @@ namespace CARTRIDGE {
 constexpr Flag DYNAMIC = SR_CARTRIDGE == SR_NONE;
 
 extern String path;
+
+extern Vector<String> arguments;
 constexpr STRING::Hot NONE = "none";
 
 extern String assets;

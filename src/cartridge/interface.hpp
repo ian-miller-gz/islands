@@ -47,6 +47,8 @@ auto cache() -> String;
 
 auto manifest(STRING::Hot key) -> String;
 
+auto arguments() -> const Vector<String> &;
+
 }  // namespace CARTRIDGE::GET
 
 namespace CARTRIDGE {

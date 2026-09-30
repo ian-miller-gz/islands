@@ -71,7 +71,10 @@ if [ -n "$platform" ]; then
 fi
 [ -n "$name" ] || name="lib$(basename "$bundle")$suffix"
 
-mapfile -t sources < <(find "$bundle" -name '*.cpp' | sort)
+prune=()
+while IFS= read -r nested; do prune+=(-path "$nested" -prune -o); done < <(
+  find "$bundle" -mindepth 2 -name manifest.yaml -printf '%h\n' | sort)
+mapfile -t sources < <(find "$bundle" "${prune[@]}" -name '*.cpp' -print | sort)
 [ "${#sources[@]}" -gt 0 ] || { echo "No .cpp files under $bundle" >&2; exit 1; }
 
 isys=""

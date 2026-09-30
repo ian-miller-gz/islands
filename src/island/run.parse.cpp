@@ -38,6 +38,7 @@
 #include <string>
 
 static constexpr STRING::Hot DIGITS = "0123456789";
+static constexpr STRING::Hot BREAK = "--";
 static Flag pinned = false;
 static Flag tapped = false;
 static Flag webbed = false;
@@ -136,7 +137,14 @@ static void apply(const String &flag, const String &value) {
 
 void ISLAND::RUN::parse(int count, char **values) {
   inherit();
-  for (int i = 1; i + 1 < count; i += 2) apply(values[i], values[i + 1]);
+  int at = 1;
+  while (at + 1 < count && String(values[at]) != BREAK) {
+    apply(values[at], values[at + 1]);
+    at += 2;
+  }
+  if (at < count && String(values[at]) == BREAK)
+    for (at += 1; at < count; at += 1)
+      CARTRIDGE::arguments.push_back(values[at]);
 }
 
 static void splash() {
