@@ -16,6 +16,7 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.   *
  ============================================================================*/
 #pragma endregion
+#include <filesystem>
 #include <island/gui/parse.internal.hpp>
 
 static auto imported(
@@ -34,6 +35,13 @@ static auto imported(
   return define(cursor, fields, level, site);
 }
 
+static auto found(const String &path, const String &site) -> String {
+  IO::STREAMS::Input given(path);
+  if (given) return path;
+  const String sheet = site.substr(0, site.rfind(':'));
+  return (std::filesystem::path(sheet).parent_path() / path).string();
+}
+
 static auto dressed(const String &path) -> String {
   if (GUI::GET::theme() != GUI::DARK) return path;
   if (!path.ends_with(".gui")) return path;
@@ -48,7 +56,8 @@ auto GUI::PARSE::include(
   if (level != 0) return refuse(site + ": the include is top-level");
   if (fields.size() != 1)
     return refuse(site + ": the include stands alone on its line");
-  const String path = ::dressed(fields.front().substr(STYLE.size()));
+  const String path =
+    ::dressed(::found(fields.front().substr(STYLE.size()), site));
   IO::STREAMS::Input file(path);
   if (!file) return refuse(site + ": cannot read the sheet '" + path + "'");
   String line;

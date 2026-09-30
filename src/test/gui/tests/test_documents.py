@@ -205,6 +205,13 @@ def test_a_sheet_holds_style_definitions_only(tmp_path, line, name):
   assert not nodes(done.stdout), "a refused document must print no nodes"
 
 
+def test_a_sheet_beside_the_document_reads_by_its_name(tmp_path):
+  sheet(tmp_path)
+  done, _ = parse(tmp_path, "style=theme.gui\nlabel a style=ink w=4\n")
+  assert done.returncode == 0, done.stdout
+  assert "color=#11223344" in nodes(done.stdout)["a"]
+
+
 def test_a_missing_sheet_refuses(tmp_path):
   done, path = parse(tmp_path, f"style={tmp_path}/absent.gui\nlabel a w=4\n")
   assert done.returncode != 0
