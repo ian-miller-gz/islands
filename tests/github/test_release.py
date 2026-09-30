@@ -55,9 +55,11 @@ def test_config_reads_the_version_and_the_tools_requirement():
   assert release.stated('compiler: g++\n') is None
 
 
-def test_stable_takes_x_y_0_only():
+def test_stable_takes_x_y_0_or_a_patch_on_its_line():
   assert release.stable_shape((0, 4, 0)) == []
   assert release.stable_shape((0, 4, 1))
+  assert release.stable_shape((0, 4, 1), (0, 4, 0)) == []
+  assert release.stable_shape((0, 5, 1), (0, 4, 0))
 
 
 def test_stable_raises_the_minor():
@@ -67,6 +69,8 @@ def test_stable_raises_the_minor():
   assert release.stable_advance((0, 3, 0), (0, 3, 0))
   assert release.stable_advance((0, 2, 0), (0, 3, 0))
   assert '0.3.0' in release.stable_advance((0, 3, 0), (0, 3, 0))[0]
+  assert release.stable_advance((0, 4, 3), (0, 4, 0)) == []
+  assert release.stable_advance((0, 4, 0), (0, 4, 3))
 
 
 def test_stable_waits_a_week():

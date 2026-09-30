@@ -142,14 +142,18 @@ def content(head):
   return head
 
 
-def stable_shape(release):
-  if release[2] != 0:
-    return [f'stable {name(release)} carries a patch number']
+def stable_shape(release, previous=None):
+  if release[2] != 0 and (previous is None or release[:2] != previous[:2]):
+    return [f'stable {name(release)} carries a patch number off its line']
   return []
 
 
 def stable_advance(release, previous):
-  if previous is not None and release[:2] <= previous[:2]:
+  if previous is None:
+    return []
+  if release[:2] == previous[:2]:
+    return [] if release > previous else [f'{name(release)} does not pass stable {name(previous)}']
+  if release[:2] < previous[:2]:
     return [f'minor unraised from stable {name(previous)}']
   return []
 
@@ -212,8 +216,10 @@ def check_stable(before, head, now):
   release = version(head)
   previous = numbered(before) if exists(before) else None
   promoted = content(head)
-  return (stable_shape(release) + stable_advance(release, previous)
-          + promotion(head, promoted, tip('latest')) + soak(committed(promoted), now))
+  patch = previous is not None and release[:2] == previous[:2]
+  return (stable_shape(release, previous) + stable_advance(release, previous)
+          + promotion(head, promoted, tip('latest'))
+          + ([] if patch else soak(committed(promoted), now)))
 
 
 def check_latest(before, head):
