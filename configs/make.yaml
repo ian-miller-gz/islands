@@ -1,5 +1,5 @@
 
-tools: 0.3.1
+tools: 0.4.1
 compiler: g++
 standard: c++23
 
@@ -142,7 +142,7 @@ tokens:
 directives:
   engine:
     ENGINE_NAME: "Islands"
-    ENGINE_VERSION: "0.4.1"
+    ENGINE_VERSION: "0.4.2"
     ISLAND_NAME: "Island"
     REEF_NAME: "Reef"
     BUILD_NAME: "build"
