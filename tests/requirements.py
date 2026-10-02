@@ -2,6 +2,7 @@ import os
 import signal
 import subprocess
 import sys
+import time
 
 import driver
 
@@ -77,11 +78,28 @@ def policy(binary, flags):
         else f'unexpected exit {run.returncode}\n' + output)
 
 
+def absent(binary, flags):
+  home = driver.home()
+  started = time.monotonic()
+  run = engine(binary, flags, home, 'absent', frames=1)
+  output, _ = run.communicate(timeout=driver.DEADLINE)
+  took = time.monotonic() - started
+  hosts = driver.hosts(home)
+  print('absent:', 'skipped without a start'
+        if run.returncode == 0 and 'has no entry' in output
+        and 'unavailable.' in output and 'started.' not in output
+        and not hosts and took < 4
+        else f'unexpected exit {run.returncode} after {took:.1f}s, '
+             f'{len(hosts)} host(s)\n' + output)
+  driver.reap(home)
+
+
 def main():
   binary, flags = sys.argv[1], sys.argv[2:]
   lenient(binary, flags)
   vital(binary, flags)
   policy(binary, flags)
+  absent(binary, flags)
   return 0
 
 
