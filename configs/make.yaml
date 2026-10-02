@@ -294,6 +294,7 @@ libraries:
       - "tests/fixtures/owned"
       - "tests/fixtures/replace"
       - "tests/fixtures/trusted"
+      - "tests/fixtures/absent"
   - name: shadow
     path: tests/fixtures/shadow
     output_destinations:

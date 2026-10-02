@@ -5,3 +5,4 @@ died: the run continued
 vital: refused while unreachable
 vital: the death ended the run
 policy: the typo was refused
+absent: skipped without a start
