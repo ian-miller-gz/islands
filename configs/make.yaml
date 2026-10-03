@@ -142,7 +142,7 @@ tokens:
 directives:
   engine:
     ENGINE_NAME: "Islands"
-    ENGINE_VERSION: "0.4.4"
+    ENGINE_VERSION: "0.4.5"
     ISLAND_NAME: "Island"
     REEF_NAME: "Reef"
     BUILD_NAME: "build"
@@ -294,6 +294,7 @@ libraries:
       - "tests/fixtures/owned"
       - "tests/fixtures/replace"
       - "tests/fixtures/trusted"
+      - "tests/fixtures/absent"
   - name: shadow
     path: tests/fixtures/shadow
     output_destinations:
