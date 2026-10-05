@@ -17,6 +17,7 @@
  ============================================================================*/
 #pragma endregion
 #include <network/reach.hpp>
+#include <network/sessions.hpp>
 
 #if SR_NETWORK_BACKEND != SR_NONE
 
@@ -63,9 +64,25 @@ auto NETWORK::GET::preferred() -> Transport {
   return protocol ? protocol->transport : choice;
 }
 
-auto NETWORK::connect(const Wire &wire) -> Reach {
+auto NETWORK::dial(const Wire &wire) -> Reach {
   const Protocol *protocol = chosen();
   return {protocol ? protocol->dial(wire.address) : NONE, wire.address};
+}
+
+auto NETWORK::dial(const String &service) -> Reach {
+  const Protocol *protocol = chosen();
+  if (!protocol) return {};
+  return dial(Wire{protocol->resolve(service)});
+}
+
+auto NETWORK::connect(const Wire &wire) -> Reach {
+  Reach reached = dial(wire);
+  if (
+    reached.handle != NONE &&
+    SESSIONS::settle(reached.handle, SESSIONS::PATIENCE) ==
+      SESSIONS::State::CLOSED)
+    reached.handle = NONE;
+  return reached;
 }
 
 auto NETWORK::connect(const String &service) -> Reach {

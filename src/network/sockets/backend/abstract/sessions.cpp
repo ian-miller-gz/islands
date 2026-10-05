@@ -27,7 +27,7 @@
 #include <network/sockets/sessions.internal.hpp>
 #define LOGGER_CATEGORY "~/network::sessions"
 
-static auto dial(NETWORK::Descriptor descriptor, const NETWORK::Anchor &anchor)
+static auto reached(NETWORK::Descriptor descriptor, const NETWORK::Anchor &anchor)
   -> Flag {
   const String &name = anchor.name;
   sockaddr_un address{};
@@ -44,7 +44,7 @@ auto NETWORK::SESSIONS::create(const Anchor &anchor) -> Handle {
   static auto &logger = LOGGER::get(LOGGER_CATEGORY);
   Descriptor descriptor =
     socket(AF_UNIX, SOCK_STREAM | SOCK_NONBLOCK | SOCK_CLOEXEC, 0);
-  if (descriptor == CLOSED || !dial(descriptor, anchor)) {
+  if (descriptor == CLOSED || !reached(descriptor, anchor)) {
     logger.debug(
       "Cannot connect to @%s: %s", anchor.name.c_str(), std::strerror(errno));
     if (descriptor != CLOSED) ::close(descriptor);

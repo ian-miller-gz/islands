@@ -22,7 +22,7 @@
 #include <network/sockets/tls.internal.hpp>
 #define LOGGER_CATEGORY "~/network::sessions"
 
-static auto dial(NETWORK::Descriptor descriptor, const NETWORK::Tunnel &tunnel)
+static auto reached(NETWORK::Descriptor descriptor, const NETWORK::Tunnel &tunnel)
   -> Flag {
   NETWORK::INET::Sockaddr address{};
   if (!NETWORK::INET::resolve({tunnel.host, tunnel.port}, address))
@@ -54,7 +54,7 @@ auto NETWORK::SESSIONS::create(const Tunnel &tunnel) -> Handle {
     INET::OPEN + tunnel.host + INET::SHUT + std::to_string(tunnel.port);
   Descriptor descriptor = opened(INET::FAMILY, SOCK_STREAM, INET::PROTOCOL);
   if (
-    descriptor == CLOSED || !dial(descriptor, tunnel) || !secured(descriptor)) {
+    descriptor == CLOSED || !reached(descriptor, tunnel) || !secured(descriptor)) {
     logger.debug("Cannot secure %s: %s", where.c_str(), failure().c_str());
     if (descriptor != CLOSED) close(descriptor);
     return NONE;

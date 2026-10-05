@@ -52,11 +52,11 @@ auto secret() -> String;
 
 inline auto readable(Descriptor descriptor) -> Flag {
   pollfd query{.fd = descriptor, .events = POLLIN, .revents = 0};
-  return NETWORK::poll(&query, 1, PATIENCE) > 0;
+  return NETWORK::poll(&query, 1, SESSIONS::PATIENCE) > 0;
 }
 
 inline auto writable(Descriptor descriptor) -> Flag {
   pollfd query{.fd = descriptor, .events = POLLOUT, .revents = 0};
-  return NETWORK::poll(&query, 1, PATIENCE) > 0;
+  return NETWORK::poll(&query, 1, SESSIONS::PATIENCE) > 0;
 }
 }  // namespace NETWORK::TLS

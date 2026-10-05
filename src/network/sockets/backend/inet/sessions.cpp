@@ -17,33 +17,38 @@
  ============================================================================*/
 #pragma endregion
 #include <logger.hpp>
-#include <network/sockets/dial.internal.hpp>
 #include <network/sockets/inet.internal.hpp>
 #include <network/sockets/sessions.internal.hpp>
 #define LOGGER_CATEGORY "~/network::sessions"
 
-static auto dial(NETWORK::Descriptor descriptor, const NETWORK::Socket &socket)
-  -> Flag {
-  NETWORK::INET::Sockaddr address{};
-  if (!NETWORK::INET::resolve(socket, address)) return false;
-  if (
-    connect(
-      descriptor, reinterpret_cast<const sockaddr *>(&address),
-      sizeof(address)) == 0)
-    return true;
-  return NETWORK::failing() == NETWORK::PENDING && NETWORK::settled(descriptor);
-}
-
+// An inet dial never waits: a connect that completes at once opens the
+// session, one that is still in progress adopts it dialing, and the
+// registry's settle() reads the verdict later — a glance per frame from a
+// frame loop, or a bounded wait from a caller that must have the answer
+// now (NETWORK::connect).
 auto NETWORK::SESSIONS::create(const Socket &socket) -> Handle {
   static auto &logger = LOGGER::get(LOGGER_CATEGORY);
   String where =
     INET::OPEN + socket.host + INET::SHUT + std::to_string(socket.port);
+  INET::Sockaddr address{};
   Descriptor descriptor = opened(INET::FAMILY, SOCK_STREAM, INET::PROTOCOL);
-  if (descriptor == CLOSED || !dial(descriptor, socket)) {
-    logger.debug("Cannot connect to %s: %s", where.c_str(), failure().c_str());
+  if (descriptor == CLOSED || !INET::resolve(socket, address)) {
+    logger.debug("Cannot dial %s: %s", where.c_str(), failure().c_str());
     if (descriptor != CLOSED) close(descriptor);
     return NONE;
   }
-  logger.debug("Connected to %s", where.c_str());
-  return adopt(descriptor);
+  if (
+    connect(
+      descriptor, reinterpret_cast<const sockaddr *>(&address),
+      sizeof(address)) == 0) {
+    logger.debug("Connected to %s", where.c_str());
+    return adopt(descriptor);
+  }
+  if (failing() != PENDING) {
+    logger.debug("Cannot connect to %s: %s", where.c_str(), failure().c_str());
+    close(descriptor);
+    return NONE;
+  }
+  logger.debug("Dialing %s", where.c_str());
+  return adopt(descriptor, nullptr, true);
 }

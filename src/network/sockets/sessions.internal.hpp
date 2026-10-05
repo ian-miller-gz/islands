@@ -31,8 +31,12 @@ struct Codec {
 
 inline Vector<Descriptor> descriptors;
 inline Vector<const Codec *> codecs;
+inline Vector<Flag> dialing;
+inline Vector<int64_t> since;
 
-auto adopt(Descriptor descriptor, const Codec *codec = nullptr) -> Handle;
+auto adopt(
+  Descriptor descriptor, const Codec *codec = nullptr, Flag pending = false)
+  -> Handle;
 
 inline auto fetch(Handle session) -> Descriptor {
   return session < descriptors.size() ? descriptors[session] : CLOSED;

@@ -42,11 +42,15 @@ static auto await(const NETWORK::Wire &where) -> NETWORK::Handle {
   }
 }
 
-// A bundle the host cannot load here (no entry file for this platform, as the
-// launcher's monitor on Windows) is unavailable at once: starting a host for
-// it would only burn the deadline.
+// A bundle the host cannot load here (no entry file for this platform) is
+// unavailable at once: starting a host for it would only burn the deadline.
+// The bundle folded into the reef host (SR_REEF_BUNDLE, the launcher's
+// monitor on a static delivery) needs no entry file: the host carries it.
 static auto present(const String &bundle) -> Flag {
   static auto &logger = LOGGER::get(LOGGER_CATEGORY);
+#ifdef SR_REEF_BUNDLE
+  if (bundle == SR_REEF_BUNDLE) return true;
+#endif
   const auto manifest = CARTRIDGE::MANIFEST::read(bundle);
   const String entry = CARTRIDGE::MANIFEST::entry(bundle, manifest);
   std::error_code ec;
