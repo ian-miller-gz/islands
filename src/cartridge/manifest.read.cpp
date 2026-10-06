@@ -24,7 +24,11 @@
 auto CARTRIDGE::MANIFEST::read(const String &directory) -> Manifest {
   Manifest manifest;
   IO::STREAMS::Input file(directory + "/" + NAME);
-  if (file) parse(file, manifest, false);
+  // A reader on this platform wants the platform's own fold: the entry a
+  // `platforms:` delta respells (lib<name>.dll on Windows) is the file the
+  // launcher looks for and the requirement probes, exactly as the loader
+  // folds it.
+  if (file) parse(file, manifest, true);
   return manifest;
 }
 

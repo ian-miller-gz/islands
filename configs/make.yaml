@@ -149,7 +149,7 @@ tokens:
 directives:
   engine:
     ENGINE_NAME: "Islands"
-    ENGINE_VERSION: "0.4.7"
+    ENGINE_VERSION: "0.4.8"
     BUILD_NAME: "build"
     # ISLAND_NAME and REEF_NAME are the builds' own (`named:` below): each
     # host's name as the active toolchain delivers it.
@@ -216,9 +216,15 @@ configurations:
     SR_WEB_BACKEND: SR_NATIVE
     SR_SERVER: SR_NATIVE
     SR_MIDI_BACKEND: SR_NONE
+  # The shipped Windows cell is the shared delivery: islands.dll holds the
+  # engine, islands.exe and Reef.exe import it, and every bundle that claims
+  # the windows fold ships as its own lib<name>.dll — the launcher, its
+  # monitor, and whatever the store installs. A static fold could load no
+  # bundle at run time, which is the one thing a store cannot do without.
   windows-ship:
     SR_PLATFORM: SR_WINDOWS
-    SR_CARTRIDGE: SR_LAUNCHER
+    SR_LINKAGE: SR_SHARED
+    SR_CARTRIDGE: SR_NONE
     SR_PROFILE: SR_RELEASE
     SR_LOGGER_BACKEND: SR_SPDLOG
     SR_OVERLAY_BACKEND: SR_NONE

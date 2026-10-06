@@ -37,6 +37,12 @@ seat=""
 engine=""
 profile="$(sed -n 's/^[[:space:]]*SR_PROFILE:[[:space:]]*\(SR_[A-Z]*\).*/\1/p' \
              configs/make.yaml | head -n1)"
+# The built cell's own profile stands over the tokens' default: a bundle
+# links the prebuilt archives of the zone the host was built against (the
+# release zone under a ship cell), as pmake's own bundle line does.
+built="$(sed -n 's/^#define SR_PROFILE[[:space:]]*\(SR_[A-Z]*\).*/\1/p' \
+           build/include/generated/profile.hpp 2>/dev/null | head -n1)"
+[ -z "$built" ] || profile="$built"
 zone="libs/$(printf '%s' "${profile#SR_}" | tr '[:upper:]' '[:lower:]')"
 if [ -n "$platform" ]; then
   cxx="$(scalar compiler '    ')"
