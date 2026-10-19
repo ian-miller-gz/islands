@@ -24,7 +24,7 @@
 
 namespace CARTRIDGE {
 
-constexpr Whole VERSION = 3;
+constexpr Whole VERSION = 4;
 
 struct Window {
   STRING::Hot title;

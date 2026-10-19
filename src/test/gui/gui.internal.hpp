@@ -22,6 +22,7 @@
 #include <island/gui/nga.hpp>
 #include <island/gui/sac.hpp>
 #include <island/input.hpp>
+#include <span>
 
 Status check(STRING::Hot name, Flag passed);
 Status state(GUI::Handle document);
@@ -140,3 +141,17 @@ Status grow();
 void step(STRING::Hot name);
 
 Status travel();
+
+Status knob();
+
+namespace KNOB {
+struct Step {
+  Float x;
+  Float y;
+  Flag down;
+  STRING::Hot leg;
+};
+void look(GUI::Handle document, STRING::Hot leg);
+void walk(GUI::Handle document, std::span<const Step> steps);
+auto measure(GUI::Handle document) -> Status;
+}  // namespace KNOB

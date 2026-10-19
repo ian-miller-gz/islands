@@ -1,0 +1,118 @@
+gui knob load: PASS
+gui place: PASS
+gui focus: PASS
+gui graphic: PASS
+leg rest
+value knob 0.300
+value notch 0.250
+value slide 0.300
+seated -
+reading knob 32.0 slide 12.0
+gui reading east: PASS
+leg 1 press
+value knob 0.300
+value notch 0.250
+value slide 0.300
+seated -
+leg 1 click
+value knob 0.300
+value notch 0.250
+value slide 0.300
+seated knob
+leg 1 entered
+value knob 0.300
+value notch 0.250
+value slide 0.300
+seated -
+leg 1 typed
+value knob 0.800
+value notch 0.250
+value slide 0.300
+seated -
+leg 2 press
+value knob 0.800
+value notch 0.250
+value slide 0.300
+seated -
+leg 2 up
+value knob 1.000
+value notch 0.250
+value slide 0.300
+seated -
+leg 2 release
+value knob 1.000
+value notch 0.250
+value slide 0.300
+seated -
+leg 3 press
+value knob 1.000
+value notch 0.250
+value slide 0.300
+seated -
+leg 3 across
+value knob 1.000
+value notch 0.250
+value slide 0.300
+seated -
+leg 3 down
+value knob 0.700
+value notch 0.250
+value slide 0.300
+seated -
+leg 3 release
+value knob 0.700
+value notch 0.250
+value slide 0.300
+seated -
+leg 4 first
+value knob 0.700
+value notch 0.250
+value slide 0.300
+seated -
+leg 4 once
+value knob 0.700
+value notch 0.250
+value slide 0.300
+seated knob
+leg 4 again
+value knob 0.700
+value notch 0.250
+value slide 0.300
+seated knob
+leg 4 rested
+value knob 0.300
+value notch 0.250
+value slide 0.300
+seated knob
+gui unseat: PASS
+leg 5 press
+value knob 0.300
+value notch 0.250
+value slide 0.300
+seated -
+leg 5 short
+value knob 0.300
+value notch 0.250
+value slide 0.300
+seated -
+gathered notch
+leg 5 past
+value knob 0.300
+value notch 0.500
+value slide 0.300
+seated -
+leg 5 release
+value knob 0.300
+value notch 0.500
+value slide 0.300
+seated -
+leg 6 press
+value knob 0.300
+value notch 0.500
+value slide 0.250
+seated -
+leg 6 release
+value knob 0.300
+value notch 0.500
+value slide 0.250
+seated -

@@ -168,7 +168,7 @@ auto GUI::type(Handle document, Whole index, const INPUT::KEYS::Event &event)
 auto GUI::typeable(const Node &node) -> Flag {
   return node.kind == "field" ||
          (node.kind == "dial" && !flagged(node.properties) &&
-          !node.properties.graphic);
+          node.properties.graphic != Dial::BAR);
 }
 
 void GUI::seat(Handle document, Document &entry, Whole hit) {

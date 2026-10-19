@@ -29,6 +29,8 @@ void hex(Float channel, String &text);
 
 auto shade(const GFX::Color &color) -> String;
 
+auto graphic(Dial::Graphic graphic) -> STRING::Hot;
+
 auto joins(Handle document) -> String;
 
 }  // namespace GUI::TRANSLATE

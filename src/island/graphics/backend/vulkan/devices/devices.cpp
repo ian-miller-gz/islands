@@ -22,33 +22,23 @@
 
 #if SR_GFX_BACKEND == SR_VULKAN
 
-// The pick ranks what the instance enumerates: a discrete GPU first, then
-// an integrated one (a laptop's), a virtual one, and last a CPU rasterizer
-// (lavapipe, the headless proof's). A device qualifies when one of its
-// queue families both draws and presents to the surface; the swapchain
-// extension is the device creation's to refuse. Geometry shaders are not
-// required: the engine compiles vertex, fragment and compute stages alone.
-static auto rank(const vk::raii::PhysicalDevice &device) -> Whole {
-  switch (device.getProperties().deviceType) {
-    case vk::PhysicalDeviceType::eDiscreteGpu: return 4;
-    case vk::PhysicalDeviceType::eIntegratedGpu: return 3;
-    case vk::PhysicalDeviceType::eVirtualGpu: return 2;
-    case vk::PhysicalDeviceType::eCpu: return 1;
-    default: return 0;
-  }
+static auto suitable(const vk::raii::PhysicalDevice &device) -> Bool {
+  return device.getProperties().deviceType ==
+           vk::PhysicalDeviceType::eDiscreteGpu &&
+         device.getFeatures().geometryShader;
 }
 
-static auto index(const vk::raii::PhysicalDevice &device) -> Integer {
+static auto index(const vk::raii::PhysicalDevice &device) -> Whole {
   auto &surface = GFX::BACKEND::VULKAN::instance.surface;
   auto families = device.getQueueFamilyProperties();
   for (Whole i = 0; i < families.size(); i += 1) {
     if (
       (families[i].queueFlags & vk::QueueFlagBits::eGraphics) &&
       device.getSurfaceSupportKHR(i, *surface)) {
-      return static_cast<Integer>(i);
+      return i;
     }
   }
-  return GFX::BACKEND::VULKAN::UNHELD;
+  throw std::runtime_error("no graphics + present queue family");
 }
 
 static auto device(const vk::raii::PhysicalDevice &physical, Whole family)
@@ -71,23 +61,14 @@ static auto device(const vk::raii::PhysicalDevice &physical, Whole family)
 
 void GFX::BACKEND::DEVICES::Gpu::initialize() {
   auto &instance = GFX::BACKEND::VULKAN::instance;
-  Whole best = 0;
-  Integer chosen = GFX::BACKEND::VULKAN::UNHELD;
   for (const auto &found : instance.handle.enumeratePhysicalDevices()) {
-    auto able = index(found);
-    if (able == GFX::BACKEND::VULKAN::UNHELD) continue;
-    auto worth = rank(found);
-    if (!*physical || worth > best) {
+    if (suitable(found)) {
       physical = found;
-      best = worth;
-      chosen = able;
+      break;
     }
   }
-  if (!*physical) {
-    throw std::runtime_error(
-      "no suitable GPU device: none draws and presents to this window");
-  }
-  family = static_cast<Whole>(chosen);
+  if (!*physical) throw std::runtime_error("no suitable GPU device");
+  family = index(physical);
   logical = device(physical, family);
   queue = logical.getQueue(family, 0);
 }

@@ -65,6 +65,9 @@ auto doubles(Pointer &aim, Whole index, Whole row) -> Flag;
 auto flagged(const Properties &properties) -> Flag;
 void turn(Handle document, Document &entry, Whole index, Float value);
 void drag(Handle document, Document &entry, Float x, Float y);
+
+auto spin(Handle document, Document &entry, Whole index, Float x, Float y)
+  -> Flag;
 auto flip(Handle document, Document &entry, Whole hit) -> Flag;
 void restore(Handle document, Document &entry, Whole hit);
 auto nudge(Handle document, Whole index, const INPUT::KEYS::Event &event)

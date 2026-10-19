@@ -141,7 +141,7 @@ auto tokens(GUI::Handle document, const GUI::Node &node) -> String {
          " most=" + T::number(node.properties.most) +
          " resting=" + T::number(node.properties.resting) +
          " steps=" + std::to_string(node.properties.steps) +
-         " graphic=" + (node.properties.graphic ? "true" : "false") +
+         " graphic=" + T::graphic(node.properties.graphic) +
          " value=" + T::number(GUI::GET::value(document, id)) +
          " port=" + ::facing(node.properties) +
          " pinned=" + ::axised(node.properties) +

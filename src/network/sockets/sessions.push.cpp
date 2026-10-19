@@ -21,7 +21,6 @@
 auto NETWORK::SESSIONS::push(Handle session, const String &data) -> Flag {
   Descriptor descriptor = fetch(session);
   if (descriptor == CLOSED) return false;
-  if (dialing[session] && settle(session) != State::OPEN) return false;
   if (const Codec *codec = codecs[session])
     return codec->push(descriptor, data);
   for (Whole sent = 0; sent < data.size();) {

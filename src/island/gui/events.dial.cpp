@@ -57,7 +57,8 @@ void GUI::drag(Handle document, Document &entry, Float x, Float y) {
   if (entry.nodes[index].properties.seated) return;
   const auto &properties = entry.nodes[index].properties;
   const Float pull = x - pointer.grab.x;
-  const Flag slider = properties.graphic && !flagged(properties) &&
+  if (spin(document, entry, index, x, y)) return;
+  const Flag slider = properties.graphic == Dial::BAR && !flagged(properties) &&
                       properties.most > properties.least;
   if (!slider && !pointer.dragged && std::abs(pull) < GUI::THRESHOLD) return;
   if (!pointer.dragged) pointer.armed = PARENTLESS;
@@ -93,7 +94,7 @@ auto GUI::flip(Handle document, Document &entry, Whole hit) -> Flag {
 void GUI::restore(Handle document, Document &entry, Whole hit) {
   if (entry.nodes[hit].kind != "dial") return;
   if (flagged(entry.nodes[hit].properties)) return;
-  if (entry.nodes[hit].properties.graphic) return;
+  if (entry.nodes[hit].properties.graphic == Dial::BAR) return;
   if (!doubles(entry.pointer, hit, 0)) return;
   entry.pointer.armed = PARENTLESS;
   turn(document, entry, hit, entry.nodes[hit].properties.resting);

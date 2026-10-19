@@ -32,7 +32,9 @@ constexpr Curve CURVES[] = {
 };
 constexpr Whole SHAPES = sizeof(CURVES) / sizeof(*CURVES);
 
-auto piece(
+}  // namespace
+
+auto GUI::KINDS::piece(
   GUI::Position from, GUI::Position to, Float thickness,
   const GFX::Color &ink) -> GUI::Element {
   if (from.x == to.x && from.y == to.y) return {};
@@ -45,8 +47,6 @@ auto piece(
     GUI::FULL,
     ink};
 }
-
-}  // namespace
 
 void GUI::KINDS::stroke(
   const GUI::Node &node, const GUI::Slot &slot, GUI::Element *elements) {
@@ -64,7 +64,7 @@ void GUI::KINDS::stroke(
     const Float along = static_cast<Float>(at + 1) / count;
     const Position to = {
       slot.x + run * along, slot.y + drop * std::pow(curve(along), bow)};
-    elements[at] = ::piece(from, to, thickness, ink);
+    elements[at] = piece(from, to, thickness, ink);
     from = to;
   }
 }

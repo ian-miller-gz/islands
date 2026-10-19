@@ -1,6 +1,0 @@
-# A bundle with no entry file: the host cannot load it on any platform.
-name: Ghost
-entry: libghost.so
-version: 3
-host: reef
-listen: true

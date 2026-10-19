@@ -167,7 +167,7 @@ static const GUI::KINDS::Entry TABLE[] = {
     .hover = shade(0x2b, 0x6c, 0xb0, 0x80),
     .press = shade(0x2b, 0x6c, 0xb0, 0xc0),
     .pad = 4.0f},
-   8,
+   8 + GUI::KINDS::PIECES + 1,
    {0.0f, 0.0f},
    false,
    false,

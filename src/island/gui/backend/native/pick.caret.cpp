@@ -17,6 +17,7 @@
  ============================================================================*/
 #pragma endregion
 #include <island/gui/backend/native/native.hpp>
+#include <island/gui/backend/native/kinds.internal.hpp>
 #include <island/graphics/text/text.hpp>
 
 namespace NATIVE = GUI::BACKEND::NATIVE;
@@ -32,7 +33,7 @@ auto GUI::BACKEND::caret(Handle document, Whole node, Float x) -> Whole {
   const auto &slot = found->second.slots[node];
   const Float advance = GFX::TEXT::GET::advance(NATIVE::lettered(entry, slot));
   if (advance <= 0.0f) return end;
-  const Float from = slot.x + entry.properties.pad * slot.scale.w;
+  const Float from = slot.x + GUI::KINDS::inset(entry, slot);
   const Float across = (x - from) / advance;
   if (across <= 0.0f) return 0;
   const auto landed = static_cast<Whole>(across + HALF);

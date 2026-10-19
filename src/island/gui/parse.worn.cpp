@@ -117,17 +117,17 @@ auto GUI::PARSE::apply(
     properties.wrap = columns;
     return 0;
   }
+  if (key == "graphic") return read(value, properties.graphic);
   if (
     key == "visible" || key == "open" || key == "clip" || key == "quick" ||
-    key == "scroll" || key == "graphic") {
+    key == "scroll") {
     Flag flag = false;
     if (read(value, flag) != 0) return 1;
-    (key == "visible"  ? properties.visible
-     : key == "open"   ? properties.open
-     : key == "clip"   ? properties.clip
-     : key == "quick"  ? properties.quick
-     : key == "scroll" ? properties.scroll
-                       : properties.graphic) = flag;
+    (key == "visible" ? properties.visible
+     : key == "open"  ? properties.open
+     : key == "clip"  ? properties.clip
+     : key == "quick" ? properties.quick
+                      : properties.scroll) = flag;
     return 0;
   }
   if (key == "axis") {

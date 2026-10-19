@@ -2,4 +2,4 @@ name: box
 entry: libbox.so
 assets: assets
 cache: cache
-version: 3
+version: 4

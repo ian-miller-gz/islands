@@ -102,6 +102,7 @@ auto read(const String &value, Stretch &out) -> Status;
 auto read(const String &value, Axis &out) -> Status;
 auto read(const String &value, Carry &out) -> Status;
 auto read(const String &value, Shape &out) -> Status;
+auto read(const String &value, Dial::Graphic &out) -> Status;
 auto read(const String &value, GFX::SPRITES::Frame &out) -> Status;
 
 auto refuse(const String &message) -> Status;

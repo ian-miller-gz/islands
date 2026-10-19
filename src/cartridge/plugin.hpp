@@ -48,6 +48,11 @@ struct Port {
   String type;
 };
 
+struct Voice {
+  String name;
+  Whole note = 0;
+};
+
 struct Plug {
   auto (*create)(Whole rate, Whole channels) -> void *;
 
@@ -71,6 +76,8 @@ struct Plug {
 
   Vector<Port> ins;
   Vector<Port> outs;
+
+  auto (*voices)(void *instance) -> Vector<Voice>;
 };
 
 }  // namespace AUDIO::PLUGIN

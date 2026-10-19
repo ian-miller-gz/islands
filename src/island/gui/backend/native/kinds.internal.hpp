@@ -18,6 +18,7 @@
 #pragma endregion
 #pragma once
 #include <island/gui/backend/native/native.internal.hpp>
+#include <numbers>
 
 namespace GUI::KINDS {
 
@@ -42,6 +43,9 @@ enum : Whole {
 };
 
 constexpr Whole SEGMENTS = 16;
+
+constexpr Whole PIECES = 24;
+constexpr Float SWEEP = 1.5f * std::numbers::pi_v<Float>;
 
 struct Entry {
   STRING::Hot name;
@@ -69,7 +73,17 @@ void item(const Node &node, const Slot &slot, Element *elements);
 void field(const Node &node, const Slot &slot, Element *elements);
 void dial(const Node &node, const Slot &slot, Element *elements);
 
+using Paint = void (*)(const Node &, const Slot &, Element *);
+extern const Paint PAINTS[];
+
 void stroke(const Node &node, const Slot &slot, Element *elements);
+
+auto piece(Position from, Position to, Float thickness, const GFX::Color &ink)
+  -> Element;
+
+void ring(const Node &node, const Slot &slot, Element *elements);
+
+auto inset(const Node &node, const Slot &slot) -> Float;
 
 auto seats(const Document &entry, Whole index) -> Whole;
 

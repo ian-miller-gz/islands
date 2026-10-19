@@ -39,7 +39,7 @@ static void letter(
                        : node.properties.color);
   const Flag lined = kind.interactive && !kind.centered && !kind.folding;
   const Float inset =
-    (kind.folding || lined ? node.properties.pad : 0.0f) * slot.scale.w;
+    kind.folding || lined ? GUI::KINDS::inset(node, slot) : 0.0f;
   const auto scissor = NATIVE::crop(chrome, slot.clipper, pass);
   Float y = slot.y + (lined ? 0.0f : inset);
   if (kind.centered || lined)

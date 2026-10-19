@@ -126,11 +126,12 @@ struct Value {
 };
 
 struct Dial {
+  enum Graphic : Whole { NONE, BAR, DIAL };
   Float least = 0.0f;
   Float most = 0.0f;
   Float resting = 0.0f;
   Whole steps = 0;
-  Flag graphic = false;
+  Graphic graphic = NONE;
 };
 
 struct Visibility {
@@ -310,7 +311,7 @@ struct Properties {
   Float most = 0.0f;
   Float resting = 0.0f;
   Whole steps = 0;
-  Flag graphic = false;
+  Dial::Graphic graphic = Dial::NONE;
   Whole port = 0;
   STRING::Cold kind;
   Flag mute = false;

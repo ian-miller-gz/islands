@@ -7,21 +7,15 @@ import threading
 
 
 def echo(ear):
-  # Every connection is echoed in turn: a fixture dials more than once.
-  while True:
-    try:
-      link, _ = ear.accept()
-    except OSError:
-      return
-    with link:
-      data = b''
-      while not data.endswith(b'\n'):
-        chunk = link.recv(4096)
-        if not chunk:
-          break
-        data += chunk
-      if data:
-        link.sendall(data)
+  link, _ = ear.accept()
+  with link:
+    data = b''
+    while not data.endswith(b'\n'):
+      chunk = link.recv(4096)
+      if not chunk:
+        return
+      data += chunk
+    link.sendall(data)
 
 
 def reserve():
@@ -51,8 +45,7 @@ def main():
   else:
     port = reserve()
   try:
-    return subprocess.run(
-      [binary, path, str(port), str(reserve())], timeout=30).returncode
+    return subprocess.run([binary, path, str(port)], timeout=30).returncode
   finally:
     unix.close()
     if loop is not None:

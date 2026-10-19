@@ -1,6 +1,6 @@
 name: cycle
 entry: libmessages.so
-version: 3
+version: 4
 host: reef
 listen: true
 requires: tests/fixtures/cyclic

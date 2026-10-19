@@ -82,7 +82,7 @@ void GUI::KINDS::marks(
   const Float scale = BACKEND::NATIVE::lettered(node, slot);
   const Float advance = GFX::TEXT::GET::advance(scale);
   const Float step = GFX::TEXT::GET::line(scale);
-  const Float x = slot.x + properties.pad * slot.scale.w;
+  const Float x = slot.x + inset(node, slot);
   const Float y = slot.y + (slot.h - step) / 2;
   const Whole first = properties.caret < properties.selection
                         ? properties.caret
@@ -117,24 +117,8 @@ void GUI::KINDS::field(
 
 void GUI::KINDS::dial(
   const GUI::Node &node, const GUI::Slot &slot, GUI::Element *elements) {
-  constexpr Float DONGLE = 3.0f;
-  const auto &properties = node.properties;
-  box(slot, properties, properties.color, elements);
-  const Float rim = properties.border;
-  const Float x = slot.x + rim;
-  const Float y = slot.y + rim;
-  const Float width = slot.w - 2 * rim;
-  const Float height = slot.h - 2 * rim;
-  Float from = x;
-  Float span = 0.0f;
-  if (properties.graphic && properties.most > properties.least) {
-    const Float across = (properties.value - properties.least) /
-                         (properties.most - properties.least);
-    span = width * std::clamp(across, 0.0f, 1.0f);
-  } else if (properties.graphic) {
-    from = x + (width - DONGLE) / 2;
-    span = DONGLE;
-  }
-  elements[5] = {from, y, span, height, GUI::FULL, properties.press};
+  box(slot, node.properties, node.properties.color, elements);
+  std::fill_n(elements + 5, entry(node).quads - 5, GUI::Element{});
   marks(node, slot, elements + 6);
+  PAINTS[node.properties.graphic](node, slot, elements);
 }

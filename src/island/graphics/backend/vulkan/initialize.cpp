@@ -44,16 +44,8 @@ void GFX::BACKEND::initialize() {
   logger.debug("Instance, surface, and validation ready.");
   GFX::STATE::gpu.initialize();
   logger.info("Physical device selected");
-  {
-    const auto properties = GFX::STATE::gpu.physical.getProperties();
-    logger.debug(
-      "Device: %s (%s, driver %u, Vulkan %u.%u, queue family %u)",
-      properties.deviceName.data(),
-      vk::to_string(properties.deviceType).c_str(), properties.driverVersion,
-      VK_API_VERSION_MAJOR(properties.apiVersion),
-      VK_API_VERSION_MINOR(properties.apiVersion),
-      static_cast<unsigned>(GFX::STATE::gpu.family));
-  }
+  logger.debug(
+    "Device: %s", GFX::STATE::gpu.physical.getProperties().deviceName.data());
 
   VULKAN::swapchain.initialize();
   logger.info(

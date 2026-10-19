@@ -2,4 +2,4 @@ name: demo
 entry: libdemo.so
 assets: assets
 cache: cache
-version: 3
+version: 4
