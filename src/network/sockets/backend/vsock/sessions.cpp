@@ -27,7 +27,7 @@
 #include <network/sockets/vsock.internal.hpp>
 #define LOGGER_CATEGORY "~/network::sessions"
 
-static auto dial(NETWORK::Descriptor descriptor, const NETWORK::Context &peer)
+static auto reached(NETWORK::Descriptor descriptor, const NETWORK::Context &peer)
   -> Flag {
   NETWORK::VSOCK::Sockaddr address{};
   if (!NETWORK::VSOCK::resolve(peer, address)) return false;
@@ -44,7 +44,7 @@ auto NETWORK::SESSIONS::create(const Context &peer) -> Handle {
   String where = std::to_string(peer.cid) + ":" + std::to_string(peer.port);
   Descriptor descriptor =
     ::socket(VSOCK::FAMILY, SOCK_STREAM | SOCK_NONBLOCK | SOCK_CLOEXEC, 0);
-  if (descriptor == CLOSED || !dial(descriptor, peer)) {
+  if (descriptor == CLOSED || !reached(descriptor, peer)) {
     logger.debug(
       "Cannot connect to %s: %s", where.c_str(), std::strerror(errno));
     if (descriptor != CLOSED) ::close(descriptor);

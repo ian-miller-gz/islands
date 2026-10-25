@@ -34,9 +34,15 @@ struct Reach {
   String wire;
 };
 
+// connect() answers with an open session or NONE, waiting out a dial's
+// patience when the transport cannot tell at once; dial() answers at once
+// with a session that may still be dialing (SESSIONS::settle reads it), so
+// a frame loop never waits on the wire.
 #if SR_NETWORK_BACKEND != SR_NONE
 auto connect(const String &service) -> Reach;
 auto connect(const Wire &wire) -> Reach;
+auto dial(const String &service) -> Reach;
+auto dial(const Wire &wire) -> Reach;
 auto listen(const String &service, Whole backlog = 1) -> Reach;
 auto listen(const Wire &wire, Whole backlog = 1) -> Reach;
 
@@ -49,6 +55,8 @@ auto supported(Transport transport) -> Flag;
 #else
 inline auto connect(const String &) -> Reach { return {}; }
 inline auto connect(const Wire &wire) -> Reach { return {NONE, wire.address}; }
+inline auto dial(const String &) -> Reach { return {}; }
+inline auto dial(const Wire &wire) -> Reach { return {NONE, wire.address}; }
 inline auto listen(const String &, Whole = 1) -> Reach { return {}; }
 inline auto listen(const Wire &wire, Whole = 1) -> Reach {
   return {NONE, wire.address};

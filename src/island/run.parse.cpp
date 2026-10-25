@@ -51,10 +51,16 @@ static Flag listened = false;
 static Vector<String> reach;
 
 static constexpr STRING::Hot UNMAPPED = "ISLANDS_VISIBLE";
+static constexpr STRING::Hot LOGGED = "ISLANDS_LOG";
 
+// The environment seeds what the flags then override: ISLANDS_LOG carries
+// a --log spec into a process that no flag reaches, the one a launcher
+// spawns on Windows with its console sunk.
 static void inherit() {
   const char *pin = std::getenv(UNMAPPED);
   if (pin && *pin) WINDOW::visible = String(pin) != "0";
+  const char *spec = std::getenv(LOGGED);
+  if (spec && *spec) LOGGER::FILTERS::add(spec);
 }
 
 static void visible(Flag on) {
