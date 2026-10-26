@@ -142,7 +142,7 @@ tokens:
 directives:
   engine:
     ENGINE_NAME: "Islands"
-    ENGINE_VERSION: "0.4.13"
+    ENGINE_VERSION: "0.4.14"
     ISLAND_NAME: "Island"
     REEF_NAME: "Reef"
     BUILD_NAME: "build"
@@ -681,4 +681,9 @@ variants:
       test/durable: [SR_POSIX, SR_WINDOWS]
       test/relations: [SR_POSIX, SR_WINDOWS]
       reef: [SR_POSIX, SR_WINDOWS]
-      cartridges/.core/launcher/monitor: [SR_POSIX, SR_WEB]
+      # The public launcher's monitor (islands-launcher 0.2) splits its roster
+      # probe per platform in two files; the rows precede the bundle's own,
+      # since the first match answers.
+      cartridges/.core/launcher/monitor/sweep.posix.cpp: [SR_POSIX, SR_WEB]
+      cartridges/.core/launcher/monitor/sweep.windows.cpp: SR_WINDOWS
+      cartridges/.core/launcher/monitor: [SR_POSIX, SR_WEB, SR_WINDOWS]
