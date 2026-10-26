@@ -203,6 +203,9 @@ Status turn() {
   ::press(INPUT::KEYS::RIGHT);
   ::look("nudged");
   ::press(INPUT::KEYS::DOWN);
+  ::look("lowered");
+  status |= check("reach", GUI::edit(::bench, "free", false) == 0);
+  ::press(INPUT::KEYS::DOWN);
   ::look("hands");
   status |=
     check("pull refuses a stranger", GUI::drag(::bench, "ghost", 0, 0, 1) != 0);

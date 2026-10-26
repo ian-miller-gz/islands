@@ -7,7 +7,6 @@ import threading
 
 
 def echo(ear):
-  # Every connection is echoed in turn: a fixture dials more than once.
   while True:
     try:
       link, _ = ear.accept()

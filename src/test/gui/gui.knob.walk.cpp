@@ -16,14 +16,43 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.   *
  ============================================================================*/
 #pragma endregion
+#include <island/gui/backend/native/kinds.internal.hpp>
+#include <island/gui/backend/native/kinds.ring.hpp>
+#include <algorithm>
+#include <cmath>
 #include <iomanip>
 #include <iostream>
 #include <test/gui/gui.internal.hpp>
 
 namespace {
 
-constexpr STRING::Hot CELLS[] = {"knob", "notch", "slide"};
+constexpr STRING::Hot CELLS[] = {"knob", "notch", "slide", "pan"};
+constexpr STRING::Hot KNOBS[] = {"knob", "notch", "pan"};
 constexpr Float SCALE = 2.0f;
+constexpr Float HALF = 0.5f;
+constexpr Float DEGREES = 180.0f / std::numbers::pi_v<Float>;
+constexpr Float EPSILON = 0.01f;
+
+auto degrees(Float along) -> Float {
+  return (along - ::HALF) * GUI::KINDS::SWEEP * ::DEGREES;
+}
+
+void arced(GUI::Handle document, STRING::Hot cell) {
+  Whole node = GUI::PARENTLESS;
+  GUI::find(document, cell, node);
+  const auto &properties =
+    GUI::STATE::documents[document].nodes[node].properties;
+  const auto arcs = GUI::KINDS::arcs(properties);
+  const auto filled = std::ranges::find(arcs, true, &GUI::KINDS::Arc::filled);
+  const Float span = properties.most - properties.least;
+  const Float value = ::degrees(
+    std::clamp((properties.value - properties.least) / span, 0.0f, 1.0f));
+  const Float end = ::degrees(filled->to);
+  std::cout << "arcs " << arcs[0].pieces << "/" << filled->pieces << "/"
+            << arcs.back().pieces << " end " << end;
+  if (std::abs(end - value) > ::EPSILON) std::cout << " adrift " << value;
+  std::cout << std::endl;
+}
 
 auto holder(GUI::Handle document) -> String {
   for (const auto &node : GUI::STATE::documents[document].nodes)
@@ -42,6 +71,7 @@ void KNOB::look(GUI::Handle document, STRING::Hot leg) {
     std::cout << "value " << cell << " " << GUI::GET::value(document, cell)
               << std::endl;
   std::cout << "seated " << ::holder(document) << std::endl;
+  for (const auto cell : ::KNOBS) ::arced(document, cell);
 }
 
 void KNOB::walk(GUI::Handle document, std::span<const Step> steps) {

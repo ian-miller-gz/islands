@@ -21,11 +21,6 @@
 #include <network/sockets/sessions.internal.hpp>
 #define LOGGER_CATEGORY "~/network::sessions"
 
-// An inet dial never waits: a connect that completes at once opens the
-// session, one that is still in progress adopts it dialing, and the
-// registry's settle() reads the verdict later — a glance per frame from a
-// frame loop, or a bounded wait from a caller that must have the answer
-// now (NETWORK::connect).
 auto NETWORK::SESSIONS::create(const Socket &socket) -> Handle {
   static auto &logger = LOGGER::get(LOGGER_CATEGORY);
   String where =

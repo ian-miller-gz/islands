@@ -52,3 +52,8 @@ auto NETWORK::WEB::NATIVE::shape(
   mbedtls_ssl_conf_ca_chain(&config, &roots, nullptr);
   return true;
 }
+
+auto NETWORK::WEB::NATIVE::random(unsigned char *bytes, Whole size) -> Flag {
+  auto *source = generator();
+  return source && mbedtls_ctr_drbg_random(source, bytes, size) == 0;
+}

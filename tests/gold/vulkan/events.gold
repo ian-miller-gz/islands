@@ -68,6 +68,29 @@ gui drag feeds: PASS
 step corner: hover=- events=[rover entered, rover pressed, rover exited, rover moved] rewrites=5
 gui held at the east rim: PASS
 gui held at the foot: PASS
+gui stage: PASS
+gui doubleclick feeds: PASS
+step double: hover=- events=[split entered, split pressed, split clicked, split pressed, split clicked, split activated, split exited] rewrites=5
+gui grip activated: PASS
+gui activated consumed: PASS
+step split: hover=split events=[] rewrites=5
+shape down
+gui grip shape: PASS
+step held: hover=- events=[] rewrites=5
+shape down
+gui held shape: PASS
+step off: hover=- events=[] rewrites=0
+shape arrow
+gui rest shape: PASS
+step rail: hover=rail events=[] rewrites=5
+shape across
+gui grip shape: PASS
+step held: hover=- events=[] rewrites=5
+shape across
+gui held shape: PASS
+step off: hover=- events=[] rewrites=0
+shape arrow
+gui rest shape: PASS
 gui unplaced never hovers: PASS
 gui unplaced never clicks: PASS
 gui unplaced sees no events: PASS

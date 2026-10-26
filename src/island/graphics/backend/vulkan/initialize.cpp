@@ -35,7 +35,7 @@ void GFX::BACKEND::initialize() {
     CARTRIDGE::GET::title().c_str(), GFX::WINDOWS::MAIN::width,
     GFX::WINDOWS::MAIN::height);
   WINDOW::GET::size(&GFX::WINDOWS::MAIN::width, &GFX::WINDOWS::MAIN::height);
-  GFX::STATE::scale = WINDOW::GET::scale();
+  GFX::rescale();
   logger.info(
     "Window created: %d x %d", GFX::WINDOWS::MAIN::width,
     GFX::WINDOWS::MAIN::height);

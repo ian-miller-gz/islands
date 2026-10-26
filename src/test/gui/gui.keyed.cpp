@@ -64,6 +64,14 @@ auto empty(GUI::Handle document) -> Flag {
   return keyed.action == INPUT::KEYS::TEXT && keyed.codepoint == 0;
 }
 
+auto escape() -> Status {
+  ::letter(INPUT::KEYS::ESCAPE, false);
+  ::look("escaped");
+  const Status status =
+    check("escape seat", GUI::GET::editing(::desk) == "name");
+  return status | check("escape once", ::empty(::desk));
+}
+
 }  // namespace
 
 Status keyed() {
@@ -90,6 +98,7 @@ Status keyed() {
   status |= check("seat", GUI::edit(::desk, "name") == 0);
   ::letter('q', false);
   ::look("seated");
+  status |= ::escape();
   status |= check("release", GUI::edit(::desk, "") == 0);
   ::press(INPUT::KEYS::DELETE);
   GUI::poll();

@@ -83,5 +83,5 @@ Status travel() {
   status |= check("a free grip is across too", GET::axis(deck, "rover").across);
   status |= ::divided();
   status |= ::slid();
-  return status | ::roving();
+  return status | ::roving() | doubled() | shaped();
 }

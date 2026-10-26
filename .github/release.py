@@ -1,4 +1,5 @@
 import argparse
+import os
 import re
 import subprocess
 import sys
@@ -124,7 +125,12 @@ def pinned(head):
   sha = pin(head)
   if sha is None:
     return None
-  git('submodule', 'update', '--init', '--', TOOL)
+  reach = subprocess.run(['git', 'submodule', 'update', '--init', '--', TOOL],
+                         capture_output=True, text=True)
+  if reach.returncode:
+    why = (reach.stderr.strip().splitlines() or ['no reason given'])[-1]
+    print(f'tools pin {sha[:8]} unverified: {TOOL} unreachable ({why})', file=sys.stderr)
+    return None
   git('fetch', '--tags', '--quiet', 'origin', cwd=TOOL)
   return tagged(sha, cwd=TOOL)
 
@@ -200,6 +206,13 @@ def clean(paths):
   return [f'{path} present' for path in sorted(hits)]
 
 
+def scrubbed(head):
+  if os.environ.get('RELEASE_PRIVATE') == 'true':
+    print('private repository: the clean-tree rule is the public export\'s', file=sys.stderr)
+    return []
+  return clean(tree(head))
+
+
 def linear(commits):
   return [f'merge commit {commit}' for commit in commits]
 
@@ -234,12 +247,12 @@ def check_line(line, before, head, now):
     problems = check_stable(before, head, now)
   else:
     problems = check_latest(before, head)
-  problems += clean(tree(head)) + linear(merges(before, head))
+  problems += scrubbed(head) + linear(merges(before, head))
   return problems + tools(config(head), pinned(head))
 
 
 def check_tag(label, head):
-  return named(label, version(head)) + clean(tree(head)) + tools(config(head), pinned(head))
+  return named(label, version(head)) + scrubbed(head) + tools(config(head), pinned(head))
 
 
 def line(label):

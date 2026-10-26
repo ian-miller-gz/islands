@@ -34,10 +34,6 @@ struct Reach {
   String wire;
 };
 
-// connect() answers with an open session or NONE, waiting out a dial's
-// patience when the transport cannot tell at once; dial() answers at once
-// with a session that may still be dialing (SESSIONS::settle reads it), so
-// a frame loop never waits on the wire.
 #if SR_NETWORK_BACKEND != SR_NONE
 auto connect(const String &service) -> Reach;
 auto connect(const Wire &wire) -> Reach;

@@ -22,13 +22,6 @@
 #include <network/types.hpp>
 
 namespace NETWORK::SESSIONS {
-// A session's standing: DIALING while a non-blocking connect is still out
-// (an inet dial answers at once and resolves later), OPEN once the peer
-// accepted, CLOSED when it refused, timed out, or hung up. PATIENCE bounds
-// a dial, in milliseconds: a connecting-state wait and the deadline after
-// which an unanswered dial is given up (Winsock's poll never reports a
-// refused loopback connect on older Windows, so the deadline is the only
-// verdict there).
 enum class State { CLOSED, DIALING, OPEN };
 constexpr Integer PATIENCE = 1000;
 
@@ -41,10 +34,6 @@ auto create(const Tunnel &tunnel) -> Handle;
 auto receive(Handle session, String &data) -> Flag;
 auto send(Handle session, const String &data) -> Flag;
 auto push(Handle session, const String &data) -> Flag;
-// Resolves a dialing session: waits up to `patience` ms for the connect's
-// verdict (0 only looks), then answers the session's standing. A refused or
-// overdue dial is destroyed. Receiving or sending on a dialing session
-// settles it first, so a caller may also just keep polling.
 auto settle(Handle session, Integer patience = 0) -> State;
 void destroy(Handle session);
 #else

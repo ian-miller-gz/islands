@@ -17,19 +17,7 @@
  ============================================================================*/
 #pragma endregion
 #include <island/gui/parse.internal.hpp>
-
-static auto paint(
-  GUI::Handle document, STRING::Hot id, const String &key,
-  const String &value) -> Status {
-  auto color = GFX::COLORS::WHITE;
-  if (GUI::PARSE::read(value, color) != 0) return 1;
-  if (key == "color") return GUI::set(document, id, color);
-  if (key == "edge") return GUI::set(document, id, GUI::Edge{color});
-  if (key == "hover") return GUI::set(document, id, GUI::Hover{color});
-  if (key == "press") return GUI::set(document, id, GUI::Press{color});
-  if (key == "glow") return GUI::set(document, id, GUI::Glow{color});
-  return GUI::set(document, id, GUI::Wash{color});
-}
+#include <island/gui/parse.inks.hpp>
 
 static auto picture(
   GUI::Handle document, STRING::Hot id, const String &value,
@@ -52,10 +40,7 @@ auto GUI::PARSE::adorn(
     GUI::Stretch stretch;
     return read(value, stretch) != 0 ? 1 : set(document, id, stretch);
   }
-  if (
-    key == "color" || key == "edge" || key == "hover" || key == "press" ||
-    key == "glow" || key == "wash")
-    return paint(document, id, key, value);
+  if (inked(key)) return ink(document, id, key, value);
   if (key == "frame") {
     const auto colon = value.find(':');
     if (colon != String::npos) return picture(document, id, value, colon);

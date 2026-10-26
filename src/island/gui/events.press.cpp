@@ -20,11 +20,9 @@
 #include <island/gui/nga.internal.hpp>
 #include <island/gui/backend.hpp>
 
-namespace {
-
-auto aboard(
-  GUI::Handle document, const GUI::Document &entry, Whole deck, Float x,
-  Float y) -> GUI::Position {
+auto GUI::aboard(
+  Handle document, const Document &entry, Whole deck, Float x,
+  Float y) -> Position {
   const auto &worn = entry.nodes[deck].properties;
   const auto board = GUI::NGA::scaled(document, deck);
   const Float across = board.w * (worn.zoom.w > 0.0f ? worn.zoom.w : 1.0f);
@@ -34,14 +32,12 @@ auto aboard(
     worn.pan.x + (x - corner.x) / across, worn.pan.y + (y - corner.y) / down};
 }
 
-}  // namespace
-
 void GUI::stamp(Handle document, Document &entry, Whole hit, Float x, Float y) {
   const auto deck = decked(document, entry, x, y);
   if (deck == PARENTLESS) return;
   if (taken(entry, hit, deck)) return;
   const auto box = boxed(document, entry, deck, x, y);
-  const auto at = ::aboard(document, entry, deck, x, y);
+  const auto at = aboard(document, entry, deck, x, y);
   auto &pointer = entry.pointer;
   pointer.pressing = deck;
   pointer.press = {
@@ -55,7 +51,7 @@ void GUI::stroke(Handle document, Document &entry, Float x, Float y) {
   auto &pointer = entry.pointer;
   const auto deck = pointer.stroking;
   if (deck == PARENTLESS || !entry.nodes[deck].live) return;
-  const auto at = ::aboard(document, entry, deck, x, y);
+  const auto at = aboard(document, entry, deck, x, y);
   pointer.stroke.x = at.x;
   pointer.stroke.y = at.y;
 }

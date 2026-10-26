@@ -24,3 +24,7 @@ static Vector<INPUT::KEYS::Event> queued;
 void INPUT::KEYS::push(const Event &event) { queued.push_back(event); }
 
 auto INPUT::KEYS::drain() -> Vector<Event> { return std::exchange(queued, {}); }
+
+auto INPUT::KEYS::chorded(const Event &event) -> Flag {
+  return event.control || event.shift || event.alt;
+}

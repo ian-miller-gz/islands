@@ -27,8 +27,8 @@
 #include <network/sockets/sessions.internal.hpp>
 #define LOGGER_CATEGORY "~/network::sessions"
 
-static auto reached(NETWORK::Descriptor descriptor, const NETWORK::Anchor &anchor)
-  -> Flag {
+static auto reached(
+  NETWORK::Descriptor descriptor, const NETWORK::Anchor &anchor) -> Flag {
   const String &name = anchor.name;
   sockaddr_un address{};
   address.sun_family = AF_UNIX;

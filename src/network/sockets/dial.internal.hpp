@@ -21,13 +21,6 @@
 #include <network/sessions.hpp>
 #include <network/sockets/descriptor.internal.hpp>
 
-// The connecting-state reader shared by the transports whose non-blocking
-// connect answers EINPROGRESS instead of completing at once (inet, vsock,
-// tls; a unix-domain connect completes or fails immediately): poll(POLLOUT)
-// for up to `patience` ms, then getsockopt(SO_ERROR) reads the verdict. A
-// patience of 0 only looks, which is what a frame loop may afford; the
-// registry's settle() turns repeated looks into a session's standing.
-
 namespace NETWORK {
 enum class Dial { PENDING, OPEN, REFUSED };
 

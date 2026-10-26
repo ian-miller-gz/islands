@@ -53,7 +53,8 @@ auto innermost(
 
 auto GUI::decked(Handle document, const Document &entry, Float x, Float y)
   -> Whole {
-  return ::innermost(document, entry, "graph", PARENTLESS, x, y);
+  const auto deck = ::innermost(document, entry, "graph", PARENTLESS, x, y);
+  return veiled(entry, deck) ? PARENTLESS : deck;
 }
 
 auto GUI::boxed(

@@ -109,6 +109,9 @@ Status phantom();
 Status spun();
 
 Status pressed();
+Status hovered();
+
+Status veiling();
 
 Status walled();
 
@@ -142,7 +145,17 @@ void step(STRING::Hot name);
 
 Status travel();
 
+Status doubled();
+
+Status shaped();
+
 Status knob();
+
+Status reached();
+
+namespace RING {
+void look(GUI::Handle document, STRING::Hot leg);
+}  // namespace RING
 
 namespace KNOB {
 struct Step {
@@ -154,4 +167,5 @@ struct Step {
 void look(GUI::Handle document, STRING::Hot leg);
 void walk(GUI::Handle document, std::span<const Step> steps);
 auto measure(GUI::Handle document) -> Status;
+auto emit(GUI::Handle document) -> Status;
 }  // namespace KNOB

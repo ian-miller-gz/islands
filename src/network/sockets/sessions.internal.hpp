@@ -35,8 +35,8 @@ inline Vector<Flag> dialing;
 inline Vector<int64_t> since;
 
 auto adopt(
-  Descriptor descriptor, const Codec *codec = nullptr, Flag pending = false)
-  -> Handle;
+  Descriptor descriptor, const Codec *codec = nullptr,
+  Flag pending = false) -> Handle;
 
 inline auto fetch(Handle session) -> Descriptor {
   return session < descriptors.size() ? descriptors[session] : CLOSED;

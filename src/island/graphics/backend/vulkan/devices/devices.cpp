@@ -22,19 +22,18 @@
 
 #if SR_GFX_BACKEND == SR_VULKAN
 
-// The pick ranks what the instance enumerates: a discrete GPU first, then
-// an integrated one (a laptop's), a virtual one, and last a CPU rasterizer
-// (lavapipe, the headless proof's). A device qualifies when one of its
-// queue families both draws and presents to the surface; the swapchain
-// extension is the device creation's to refuse. Geometry shaders are not
-// required: the engine compiles vertex, fragment and compute stages alone.
 static auto rank(const vk::raii::PhysicalDevice &device) -> Whole {
   switch (device.getProperties().deviceType) {
-    case vk::PhysicalDeviceType::eDiscreteGpu: return 4;
-    case vk::PhysicalDeviceType::eIntegratedGpu: return 3;
-    case vk::PhysicalDeviceType::eVirtualGpu: return 2;
-    case vk::PhysicalDeviceType::eCpu: return 1;
-    default: return 0;
+    case vk::PhysicalDeviceType::eDiscreteGpu:
+      return 4;
+    case vk::PhysicalDeviceType::eIntegratedGpu:
+      return 3;
+    case vk::PhysicalDeviceType::eVirtualGpu:
+      return 2;
+    case vk::PhysicalDeviceType::eCpu:
+      return 1;
+    default:
+      return 0;
   }
 }
 

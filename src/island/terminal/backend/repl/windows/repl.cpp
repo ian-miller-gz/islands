@@ -26,21 +26,48 @@
 
 namespace TERMINAL::BACKEND::REPL {
 namespace {
-constexpr DWORD IMMEDIATE = 0;
 constexpr DWORD EMPTY = 0;
+constexpr wchar_t RETURN = L'\r';
+constexpr wchar_t FEED = L'\n';
+
+auto lined(HANDLE input) -> Flag {
+  DWORD queued = EMPTY;
+  if (!GetNumberOfConsoleInputEvents(input, &queued) || queued == EMPTY)
+    return false;
+  Vector<INPUT_RECORD> records(queued);
+  DWORD taken = EMPTY;
+  if (!PeekConsoleInputW(input, records.data(), queued, &taken)) return false;
+  for (DWORD at = 0; at < taken; ++at) {
+    const auto &record = records[at];
+    if (record.EventType != KEY_EVENT || !record.Event.KeyEvent.bKeyDown)
+      continue;
+    const auto &key = record.Event.KeyEvent;
+    if (key.wVirtualKeyCode == VK_RETURN) return true;
+    if (key.uChar.UnicodeChar == RETURN || key.uChar.UnicodeChar == FEED)
+      return true;
+  }
+  return false;
+}
 }  // namespace
 }  // namespace TERMINAL::BACKEND::REPL
 
 auto TERMINAL::BACKEND::REPL::pending() -> Flag {
   const HANDLE input = GetStdHandle(STD_INPUT_HANDLE);
   if (input == nullptr || input == INVALID_HANDLE_VALUE) return false;
-  if (GetFileType(input) == FILE_TYPE_PIPE) {
-    DWORD waiting = EMPTY;
-    if (!PeekNamedPipe(input, nullptr, 0, nullptr, &waiting, nullptr))
+  switch (GetFileType(input)) {
+    case FILE_TYPE_PIPE: {
+      DWORD waiting = EMPTY;
+      if (!PeekNamedPipe(input, nullptr, 0, nullptr, &waiting, nullptr))
+        return true;
+      return waiting > EMPTY;
+    }
+    case FILE_TYPE_CHAR:
+      return lined(input);
+    case FILE_TYPE_DISK:
       return true;
-    return waiting > EMPTY;
+    default:
+      return false;
   }
-  return WaitForSingleObject(input, IMMEDIATE) == WAIT_OBJECT_0;
 }
 
 auto TERMINAL::BACKEND::REPL::attached() -> Flag {

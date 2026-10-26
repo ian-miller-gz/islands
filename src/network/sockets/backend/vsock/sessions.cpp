@@ -27,8 +27,8 @@
 #include <network/sockets/vsock.internal.hpp>
 #define LOGGER_CATEGORY "~/network::sessions"
 
-static auto reached(NETWORK::Descriptor descriptor, const NETWORK::Context &peer)
-  -> Flag {
+static auto reached(
+  NETWORK::Descriptor descriptor, const NETWORK::Context &peer) -> Flag {
   NETWORK::VSOCK::Sockaddr address{};
   if (!NETWORK::VSOCK::resolve(peer, address)) return false;
   if (

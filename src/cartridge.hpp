@@ -19,6 +19,7 @@
 #pragma once
 
 #include <cartridge/axes.hpp>
+#include <cartridge/browse.hpp>
 #include <cartridge/cartridge.hpp>
 #include <cartridge/plugin.hpp>
 #include <cartridge/interface.hpp>

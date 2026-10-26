@@ -43,8 +43,6 @@ Status check(STRING::Hot name, Flag passed) {
 }
 
 #if SR_NETWORK_CARRIES(SR_UNIX) && SR_NETWORK_CARRIES(SR_TCP)
-// A dial is settled by glances: the session stands DIALING until the peer
-// answers, then OPEN; a refused dial closes. Neither glance waits.
 static auto settled(NETWORK::Handle session, NETWORK::SESSIONS::State wanted)
   -> Flag {
   using NETWORK::SESSIONS::State;
@@ -60,15 +58,13 @@ static auto settled(NETWORK::Handle session, NETWORK::SESSIONS::State wanted)
 Flag dialed(const NETWORK::Socket &open, const NETWORK::Socket &shut) {
   using NETWORK::SESSIONS::State;
   const auto live = NETWORK::SESSIONS::create(open);
-  const Flag answered =
-    live != NETWORK::NONE && settled(live, State::OPEN) &&
-    echoed(live, "over-dial");
+  const Flag answered = live != NETWORK::NONE && settled(live, State::OPEN) &&
+                        echoed(live, "over-dial");
   if (live != NETWORK::NONE) NETWORK::SESSIONS::destroy(live);
   const auto dead = NETWORK::SESSIONS::create(shut);
-  const Flag refused =
-    dead == NETWORK::NONE ||
-    (!settled(dead, State::OPEN) &&
-     NETWORK::SESSIONS::GET::state(dead) == State::CLOSED);
+  const Flag refused = dead == NETWORK::NONE ||
+                       (!settled(dead, State::OPEN) &&
+                        NETWORK::SESSIONS::GET::state(dead) == State::CLOSED);
   return answered && refused;
 }
 

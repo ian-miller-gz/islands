@@ -38,8 +38,6 @@ static auto stamp() -> int64_t {
     .count();
 }
 
-// Whether a dialing session must still be resolved before use: a glance at
-// the connect, which opens the session, keeps it dialing, or closes it.
 static auto unsettled(NETWORK::Handle session) -> Flag {
   using NETWORK::SESSIONS::State;
   if (!NETWORK::SESSIONS::dialing[session]) return false;
@@ -117,8 +115,7 @@ auto NETWORK::SESSIONS::settle(Handle session, Integer patience) -> State {
   if (verdict == Dial::PENDING && stamp() - since[session] < PATIENCE)
     return State::DIALING;
   logger.debug(
-    verdict == Dial::PENDING ? "Dial unanswered; giving up."
-                             : "Dial refused.");
+    verdict == Dial::PENDING ? "Dial unanswered; giving up." : "Dial refused.");
   destroy(session);
   return State::CLOSED;
 }

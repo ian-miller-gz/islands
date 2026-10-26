@@ -1,0 +1,4 @@
+name: absent
+entry: libdemo.so
+version: 4
+requires: tests/fixtures/ghost ensure

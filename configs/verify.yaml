@@ -87,11 +87,27 @@ changed:
 - prefix: src/island/gui/
   pytest: [src/test/gui/tests]
   golds: [gui, events, graph, wire, route, wheel, keyed, sac, letters, order, orphans,
-    saved, turn, beside, tip, lifecycle, rml]
+    saved, turn, beside, tip, lifecycle, rml, strokes, ring]
 - prefix: src/test/gui/
   pytest: [src/test/gui/tests]
   golds: [gui, events, graph, wire, route, wheel, keyed, sac, letters, order, orphans,
-    saved, turn, beside, tip, rml]
+    saved, turn, beside, tip, rml, strokes, ring]
+- prefix: assets/shaders/src/gui.
+  pytest: [src/test/gui/tests]
+  golds: [gui, events, graph, wire, route, wheel, keyed, sac, letters, order, orphans,
+    saved, turn, beside, tip, lifecycle, rml, strokes, ring]
+- prefix: assets/shaders/gui.
+  pytest: [src/test/gui/tests]
+  golds: [gui, events, graph, wire, route, wheel, keyed, sac, letters, order, orphans,
+    saved, turn, beside, tip, lifecycle, rml, strokes, ring]
+- prefix: tests/strokes.
+  golds: [strokes]
+- prefix: tests/gold/vulkan/strokes.
+  golds: [strokes]
+- prefix: tests/ring.
+  golds: [ring]
+- prefix: tests/gold/vulkan/ring.
+  golds: [ring]
 - prefix: src/threads/
   golds: [threads]
 - prefix: src/test/threads/

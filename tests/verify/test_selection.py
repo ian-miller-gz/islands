@@ -60,6 +60,6 @@ def test_project_table_reads_and_shapes() -> None:
     project = configuration()
     assert {"build", "pytest", "golds"} <= set(project["stages"])
     for entry in project["changed"]:
-        assert entry["prefix"].endswith(("/", ".yaml", "."))
+        assert entry["prefix"].endswith(("/", ".yaml", ".sh", "."))
         assert isinstance(entry.get("pytest", []), list)
         assert isinstance(entry.get("golds", []), list)

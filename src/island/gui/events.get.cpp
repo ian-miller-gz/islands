@@ -29,6 +29,11 @@ auto GUI::GET::hover(Handle document) -> STRING::Cold {
   return entry.nodes[hovered].id;
 }
 
+auto GUI::GET::spot(Handle document) -> Position {
+  if (!live(document)) return {};
+  return STATE::documents[document].pointer.spot;
+}
+
 static auto consume(Vector<STRING::Cold> &pending, STRING::Hot id) -> Flag {
   const auto found = std::find(pending.begin(), pending.end(), id);
   if (found == pending.end()) return false;
@@ -79,6 +84,8 @@ auto GUI::GET::moved(Handle document, STRING::Hot id) -> Flag {
 auto GUI::GET::polls() -> Whole { return STATE::polls; }
 
 auto GUI::GET::claimed() -> Handle { return STATE::claimed; }
+
+auto GUI::GET::focused() -> Handle { return STATE::focused; }
 
 auto GUI::GET::events(Handle document) -> const Vector<Event> & {
   static const Vector<Event> nothing;

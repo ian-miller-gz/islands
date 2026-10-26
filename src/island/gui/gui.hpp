@@ -279,6 +279,7 @@ struct Properties {
   Float fraction = 0.0f;
   Flag visible = true;
   Float z = 0.0f;
+  Flag modal = false;
   Float border = 0.0f;
   GFX::Color edge = GFX::COLORS::WHITE;
   GFX::Color hover = GFX::COLORS::WHITE;
@@ -306,6 +307,7 @@ struct Properties {
   Whole caret = 0;
   Whole selection = 0;
   Flag seated = false;
+  Flag reached = false;
   Float value = 0.0f;
   Float least = 0.0f;
   Float most = 0.0f;
@@ -322,9 +324,11 @@ struct Properties {
   Extent zoom = {1.0f, 1.0f};
   Walls walls;
   Flag banded = false;
+  Flag roaming = true;
   Position to;
   Whole shape = 0;
   Float bend = 0.0f;
+  GFX::Color track = GFX::COLORS::CLEAR;
 };
 
 auto load(STRING::Hot path) -> Handle;
@@ -451,10 +455,14 @@ auto release(Handle document, Float x, Float y) -> Status;
 
 auto travel(Handle document, Float x, Float y) -> Status;
 
+auto hover(Handle document, STRING::Hot id) -> Status;
+auto hover(Handle document, STRING::Hot id, Float x, Float y) -> Status;
+
 auto ask(Handle document, STRING::Hot id, Float x, Float y) -> Status;
 
-auto wheel(Handle document, STRING::Hot id, Float turns, Flag control)
-  -> Status;
+auto wheel(
+  Handle document, STRING::Hot id, Float turns, Flag control,
+  Flag shift = false) -> Status;
 
 auto key(Handle document, const INPUT::KEYS::Event &event) -> Status;
 
@@ -462,7 +470,7 @@ auto focus(Handle document, Flag on) -> Status;
 
 auto claim(Handle document, Flag on) -> Status;
 
-auto edit(Handle document, STRING::Hot id) -> Status;
+auto edit(Handle document, STRING::Hot id, Flag typing = true) -> Status;
 
 void poll();
 
@@ -580,6 +588,8 @@ auto caret(Handle document, STRING::Hot id) -> Caret;
 
 auto editing(Handle document) -> STRING::Cold;
 
+auto seated(Handle document) -> Flag;
+
 auto style(Handle document, STRING::Hot name) -> Properties;
 
 auto dirty(Handle document) -> Flag;
@@ -591,6 +601,8 @@ auto restructured(Handle document) -> Flag;
 auto generation(Handle document) -> Whole;
 
 auto hover(Handle document) -> STRING::Cold;
+
+auto spot(Handle document) -> Position;
 
 auto pressed(Handle document) -> Flag;
 
@@ -615,6 +627,8 @@ auto events(Handle document) -> const Vector<Event> &;
 auto polls() -> Whole;
 
 auto claimed() -> Handle;
+
+auto focused() -> Handle;
 
 auto under(Float x, Float y, Handle behind) -> Flag;
 

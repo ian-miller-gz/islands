@@ -22,11 +22,6 @@
 #include <string>
 #if SR_CARTRIDGE != SR_NONE
 
-// The reef host's static-delivery arm. A statics: fold with `host: Reef`
-// links a serving cartridge into this binary and names it SR_REEF_BUNDLE
-// (the launcher's monitor on Windows); the arm then binds the linked
-// entry the way the island host binds its own. Without such a fold the
-// arm refuses, as it always did.
 #ifdef SR_REEF_BUNDLE
 
 static auto locate() -> String {

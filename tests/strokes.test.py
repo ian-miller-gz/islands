@@ -4,7 +4,7 @@ import sys
 sys.path.insert(0, Test.TestDirectory)
 import islands
 
-Test.Summary = "The stroke kind: one run per shape word, read back as its pieces"
+Test.Summary = "The stroke kind: one run per shape, read back as its lines"
 
 Test.SkipIf(Condition(
   lambda: islands.token(

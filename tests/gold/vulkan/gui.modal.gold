@@ -1,0 +1,13 @@
+gui modal load: PASS
+gui place: PASS
+modal rest: hover=- turns=0.0
+modal under: hover=- turns=0.0
+modal inside: hover=inside turns=0.0
+modal deck: hover=- turns=0.0
+modal click under: refused
+modal click inside: clicked
+gui hide: PASS
+modal hidden: hover=- turns=0.0
+modal under: hover=under turns=0.0
+modal deck: hover=- turns=1.0
+modal click under: clicked

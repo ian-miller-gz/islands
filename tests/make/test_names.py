@@ -15,9 +15,6 @@ __copyright__ = """
  *  You should have received a copy of the GNU Affero General Public License *
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.   *
  ============================================================================"""
-# A toolchain's `names:` — the platform's own spelling of a build's binary
-# (Island delivered as islands on Windows, where the binary is the command)
-# — and the `named:` directive a build declares its delivered name through.
 from pathlib import Path as PyPath
 from types import SimpleNamespace
 

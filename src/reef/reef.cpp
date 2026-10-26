@@ -34,9 +34,6 @@ static const String category = "~/reef::";
 static Flag threads = false;
 static Flag staged = false;
 
-// A static host carries one bundle: --cartridge may name it (the launcher
-// spawns a reef with the bundle on the line, whichever delivery) and may
-// name nothing else.
 static auto carried(const String &bundle) -> Flag {
 #if SR_CARTRIDGE == SR_NONE
   CARTRIDGE::path = bundle;

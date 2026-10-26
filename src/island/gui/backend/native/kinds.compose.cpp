@@ -30,20 +30,6 @@ auto GUI::KINDS::washed(const GUI::Properties &properties, GFX::Color fill)
     fill.b * keep + wash.b * wash.a, fill.a};
 }
 
-void GUI::KINDS::box(
-  const GUI::Slot &slot, const GUI::Properties &properties,
-  const GFX::Color &fill, GUI::Element *elements) {
-  const auto rim = properties.border;
-  const auto &edge = properties.edge;
-  elements[0] = {slot.x, slot.y,    slot.w,
-                 slot.h, GUI::FULL, washed(properties, fill)};
-  elements[1] = {slot.x, slot.y, slot.w, rim, GUI::FULL, edge};
-  elements[2] = {slot.x, slot.y + slot.h - rim, slot.w, rim, GUI::FULL, edge};
-  elements[3] = {slot.x, slot.y + rim, rim, slot.h - 2 * rim, GUI::FULL, edge};
-  elements[4] = {slot.x + slot.w - rim, slot.y + rim, rim,
-                 slot.h - 2 * rim,      GUI::FULL,    edge};
-}
-
 void GUI::KINDS::panel(
   const GUI::Node &node, const GUI::Slot &slot, GUI::Element *elements) {
   box(slot, node.properties, node.properties.color, elements);

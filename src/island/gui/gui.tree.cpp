@@ -49,4 +49,5 @@ void GUI::clean(Handle document) {
   entry.dirties.clear();
   entry.dirty = false;
   entry.restructured = false;
+  veil(entry);
 }

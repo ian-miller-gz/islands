@@ -1,0 +1,5 @@
+name: Ghost
+entry: libghost.so
+version: 4
+host: reef
+listen: true

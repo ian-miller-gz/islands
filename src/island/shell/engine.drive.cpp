@@ -16,8 +16,8 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.   *
  ============================================================================*/
 #pragma endregion
-#include <island/shell/engine.internal.hpp>
-#include <island/gui/gui.hpp>
+#include <island/shell/engine.drive.internal.hpp>
+#include <algorithm>
 #include <format>
 #include <generated/profile.hpp>
 #include <generated/values.hpp>
@@ -41,6 +41,8 @@ constexpr STRING::Hot WORDS[] = {"enter",  "exit",     "press", "click",
 
 static_assert(std::size(WORDS) == GUI::Event::CUT + 1);
 
+}  // namespace
+
 auto resolve(::SHELL::Session &session) -> GUI::Handle {
   const auto document =
     STATE::target != GUI::NONE ? STATE::target : GUI::GET::document();
@@ -58,6 +60,8 @@ auto tail(GUI::Handle document, Whole from) -> String {
   }
   return text.empty() ? "-" : text;
 }
+
+namespace {
 
 struct Chord {
   STRING::Hot word;
@@ -240,59 +244,25 @@ void drag(::SHELL::Session &session) {
 
 void wheel(::SHELL::Session &session) {
   if (session.arguments.size() < 3)
-    return session.print("usage: wheel <id> <turns> [control]");
+    return session.print("usage: wheel <id> <turns> [control] [shift]");
   const auto document = resolve(session);
   if (document == GUI::NONE) return;
   const auto &id = session.arguments[1];
-  const Flag control =
-    session.arguments.size() > 3 && session.arguments[3] == "control";
+  const auto chords = session.arguments.begin() + 3;
+  const auto end = session.arguments.end();
+  const Flag control = std::find(chords, end, "control") != end;
+  const Flag shift = std::find(chords, end, "shift") != end;
   GUI::stage(document);
   const auto from = GUI::GET::events(document).size();
   if (
     GUI::wheel(
       document, id.c_str(), STRING::number<Float>(session.arguments[2]),
-      control) != 0)
+      control, shift) != 0)
     return session.print("wheel refused: " + id);
   session.print(std::format(
-    "wheel {} turns={:g} control={} events={}", id,
+    "wheel {} turns={:g} control={}{} events={}", id,
     STRING::number<Float>(session.arguments[2]), control ? "true" : "false",
-    tail(document, from)));
-}
-
-struct Stroke {
-  STRING::Hot name;
-  INPUT::KEYS::Action action;
-  Whole codepoint = 0;
-};
-
-constexpr Whole CASED = 'a' - 'A';
-constexpr Whole LETTER = 1;
-
-constexpr Stroke STROKES[] = {{"enter", INPUT::KEYS::ENTER},
-                              {"erase", INPUT::KEYS::ERASE},
-                              {"delete", INPUT::KEYS::DELETE},
-                              {"left", INPUT::KEYS::LEFT},
-                              {"right", INPUT::KEYS::RIGHT},
-                              {"up", INPUT::KEYS::UP},
-                              {"down", INPUT::KEYS::DOWN},
-                              {"home", INPUT::KEYS::HOME},
-                              {"end", INPUT::KEYS::END},
-                              {"prior", INPUT::KEYS::PRIOR},
-                              {"next", INPUT::KEYS::NEXT},
-                              {"tab", INPUT::KEYS::TEXT, INPUT::KEYS::TAB}};
-
-auto composed(const String &name, INPUT::KEYS::Event &event) -> Flag {
-  for (const auto &entry : STROKES) {
-    if (name != entry.name) continue;
-    event = {entry.action, entry.codepoint};
-    return true;
-  }
-  if (name.size() != LETTER) return false;
-  const Whole letter = static_cast<unsigned char>(name[0]);
-  event = {
-    INPUT::KEYS::TEXT,
-    letter >= 'a' && letter <= 'z' ? letter - CASED : letter};
-  return true;
+    shift ? " shift=true" : "", tail(document, from)));
 }
 
 void key(::SHELL::Session &session) {
@@ -300,33 +270,22 @@ void key(::SHELL::Session &session) {
     return session.print("usage: key <name> [ctrl] [shift] [alt]");
   const auto &name = session.arguments[1];
   INPUT::KEYS::Event event;
-  if (!composed(name, event)) return session.print("unknown key: " + name);
+  if (!DRIVE::composed(name, event))
+    return session.print("unknown key: " + name);
   for (Whole index = 2; index < session.arguments.size(); index += 1)
     if (!chorded(session.arguments[index], event))
       return session.print("unknown chord: " + session.arguments[index]);
+  if (composing()) {
+    fed(GUI::NONE, event);
+    return session.print("key " + name + said(event) + LANE);
+  }
   const auto document = resolve(session);
   if (document == GUI::NONE) return;
   GUI::stage(document);
   const auto from = GUI::GET::events(document).size();
-  GUI::key(document, event);
+  fed(document, event);
   session.print(
     "key " + name + said(event) + " events=" + tail(document, from));
-}
-
-void type(::SHELL::Session &session) {
-  if (session.arguments.size() < 2) return session.print("usage: type <text>");
-  const auto document = resolve(session);
-  if (document == GUI::NONE) return;
-  String text;
-  for (Whole index = 1; index < session.arguments.size(); index += 1) {
-    if (!text.empty()) text += ' ';
-    text += session.arguments[index];
-  }
-  GUI::stage(document);
-  const auto from = GUI::GET::events(document).size();
-  for (const Char letter : text)
-    GUI::key(document, {INPUT::KEYS::TEXT, static_cast<unsigned char>(letter)});
-  session.print("type events=" + tail(document, from));
 }
 
 void read(::SHELL::Session &session) {
@@ -354,6 +313,7 @@ auto debug() -> const Vector<::SHELL::Command> * {
      released},
     {"travel", "moves the standing press by an offset without lifting it",
      travelled},
+    {"hover", "rests the pointer on a widget with no button", hover},
     {"ask", "the off-hand still press on a node or a board spot", asked},
     {"drag", "presses on a widget and pulls to another or an offset", drag},
     {"wheel", "turns the wheel over a widget, with or without control", wheel},
