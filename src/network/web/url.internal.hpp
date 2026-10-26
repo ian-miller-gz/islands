@@ -29,8 +29,9 @@ struct Scheme {
 };
 
 constexpr Scheme SCHEMES[]{
-  {"http", 80, false}, {"https", 443, true}, {"ftp", 21, false},
-  {"ws", 80, false},   {"wss", 443, true},
+  {"http", 80, false},
+  {"https", 443, true},
+  {"ftp", 21, false},
 };
 
 struct Url {

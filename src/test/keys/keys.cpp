@@ -48,8 +48,6 @@ int main() {
   status |= check(
     "control",
     is({TEXT, 'C', true}, String(1, 3)) && is({TEXT, 'D', true}, String(1, 4)));
-  status |= check("comma", ENCODE::encode({TEXT, ',', true}).empty());
-  status |= check("digit", ENCODE::encode({TEXT, '1', true}).empty());
   status |= check(
     "cursors", ENCODE::encode({UP}, true) == "\x1bOA" &&
                  ENCODE::encode({HOME}, true) == "\x1bOH" &&

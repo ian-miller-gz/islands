@@ -47,7 +47,6 @@ struct Wheel {
   Flag control = false;
   Float across = 0.0f;
   Float down = 0.0f;
-  Flag shift = false;
 };
 
 struct Port {
@@ -63,10 +62,6 @@ struct Selected {
 
 struct Choosing {
   Flag band = false;
-};
-
-struct Roam {
-  Flag on = true;
 };
 
 struct Pan {
@@ -98,8 +93,6 @@ auto set(Handle document, STRING::Hot id, Zoom zoom) -> Status;
 auto set(Handle document, STRING::Hot id, Pinned pinned) -> Status;
 
 auto set(Handle document, STRING::Hot id, Choosing choosing) -> Status;
-
-auto set(Handle document, STRING::Hot id, Roam roam) -> Status;
 
 auto set(Handle document, STRING::Hot id, Bounds bounds) -> Status;
 
@@ -162,8 +155,6 @@ auto asked(Handle document) -> Ask;
 auto pressed(Handle document, STRING::Hot id) -> Ask;
 
 auto stroked(Handle document, STRING::Hot id) -> Ask;
-
-auto hovered(Handle document, STRING::Hot board) -> Ask;
 
 auto lifted(Handle document, STRING::Hot id) -> Ask;
 

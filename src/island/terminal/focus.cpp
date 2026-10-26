@@ -63,7 +63,7 @@ void edit(CONSOLES::Console &console, const INPUT::KEYS::Event &event) {
 
 void TERMINAL::FOCUS::route() {
   for (const auto &event : INPUT::KEYS::drain()) {
-    if (event.action == INPUT::KEYS::HOTKEY && !INPUT::KEYS::chorded(event)) {
+    if (event.action == INPUT::KEYS::HOTKEY) {
       summon(event.codepoint);
       continue;
     }

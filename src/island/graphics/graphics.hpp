@@ -23,6 +23,4 @@
 
 namespace GFX {
 extern Status cleanup();
-
-void rescale();
-}  // namespace GFX
+}

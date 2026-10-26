@@ -87,8 +87,6 @@ auto GUI::roam(Handle document, const INPUT::KEYS::Event &event) -> Flag {
   }
   for (const auto &step : ::STEPS) {
     if (step.action != event.action) continue;
-    if (!entry.nodes[deck].properties.roaming)
-      return record(entry, event), true;
     const Flag jump = step.across == 0.0f && step.down == 0.0f;
     const auto landed =
       jump ? ::edging(entry, deck, event.action == INPUT::KEYS::END)

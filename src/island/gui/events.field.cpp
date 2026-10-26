@@ -102,6 +102,17 @@ void copy(GUI::Handle document, Whole index) {
 
 }  // namespace
 
+auto GUI::ring(const Document &entry, Whole index) -> Whole {
+  const auto count = entry.nodes.size();
+  for (Whole step = 1; step <= count; step += 1) {
+    const auto at = (index + step) % count;
+    const auto &node = entry.nodes[at];
+    if (!node.live || !node.properties.visible) continue;
+    if (node.kind == "field" || node.kind == "dial") return at;
+  }
+  return index;
+}
+
 auto GUI::type(Handle document, Whole index, const INPUT::KEYS::Event &event)
   -> Flag {
   using namespace INPUT::KEYS;

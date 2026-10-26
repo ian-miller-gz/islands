@@ -52,7 +52,6 @@ void CARTRIDGE::adopt(const Manifest &manifest, const String &root) {
   height = manifest.height;
   web = manifest.web;
   server = manifest.server;
-  loopback = manifest.loopback;
   components = manifest.components;
   ::seed(manifest.windows);
   CONSOLES::DISPATCH::hotkey = manifest.console;

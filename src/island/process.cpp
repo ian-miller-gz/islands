@@ -28,7 +28,6 @@
 #include <island/run.hpp>
 #include <island/state.hpp>
 #include <island/terminal.hpp>
-#include <island/window/backend.hpp>
 #include <common.hpp>
 #include <logger.hpp>
 #include <metrics.hpp>
@@ -56,8 +55,6 @@ static Flag pump() {
   RELATIONS::process();
   pace();
   if (!poll()) return false;
-  if (WINDOW::GET::rescaled()) GFX::rescale();
-  WINDOW::NOTICE::poll();
   INPUT::process();
   hotkeys();
   RUN::advance();

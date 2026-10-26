@@ -6,204 +6,113 @@ leg rest
 value knob 0.300
 value notch 0.250
 value slide 0.300
-value pan 0.500
 seated -
-arcs 0/14/34 end -54.000
-arcs 0/12/36 end -67.500
-arcs 24/12/12 end 67.500
 reading knob 32.0 slide 12.0
 gui reading east: PASS
-gui emit: PASS
-gui track emit: PASS
-gui track trip: PASS
 leg 1 press
 value knob 0.300
 value notch 0.250
 value slide 0.300
-value pan 0.500
 seated -
-arcs 0/14/34 end -54.000
-arcs 0/12/36 end -67.500
-arcs 24/12/12 end 67.500
 leg 1 click
 value knob 0.300
 value notch 0.250
 value slide 0.300
-value pan 0.500
 seated knob
-arcs 0/14/34 end -54.000
-arcs 0/12/36 end -67.500
-arcs 24/12/12 end 67.500
 leg 1 entered
 value knob 0.300
 value notch 0.250
 value slide 0.300
-value pan 0.500
 seated -
-arcs 0/14/34 end -54.000
-arcs 0/12/36 end -67.500
-arcs 24/12/12 end 67.500
 leg 1 typed
 value knob 0.800
 value notch 0.250
 value slide 0.300
-value pan 0.500
 seated -
-arcs 0/38/10 end 81.000
-arcs 0/12/36 end -67.500
-arcs 24/12/12 end 67.500
 leg 2 press
 value knob 0.800
 value notch 0.250
 value slide 0.300
-value pan 0.500
 seated -
-arcs 0/38/10 end 81.000
-arcs 0/12/36 end -67.500
-arcs 24/12/12 end 67.500
 leg 2 up
 value knob 1.000
 value notch 0.250
 value slide 0.300
-value pan 0.500
 seated -
-arcs 0/48/0 end 135.000
-arcs 0/12/36 end -67.500
-arcs 24/12/12 end 67.500
 leg 2 release
 value knob 1.000
 value notch 0.250
 value slide 0.300
-value pan 0.500
 seated -
-arcs 0/48/0 end 135.000
-arcs 0/12/36 end -67.500
-arcs 24/12/12 end 67.500
 leg 3 press
 value knob 1.000
 value notch 0.250
 value slide 0.300
-value pan 0.500
 seated -
-arcs 0/48/0 end 135.000
-arcs 0/12/36 end -67.500
-arcs 24/12/12 end 67.500
 leg 3 across
 value knob 1.000
 value notch 0.250
 value slide 0.300
-value pan 0.500
 seated -
-arcs 0/48/0 end 135.000
-arcs 0/12/36 end -67.500
-arcs 24/12/12 end 67.500
 leg 3 down
 value knob 0.700
 value notch 0.250
 value slide 0.300
-value pan 0.500
 seated -
-arcs 0/34/14 end 54.000
-arcs 0/12/36 end -67.500
-arcs 24/12/12 end 67.500
 leg 3 release
 value knob 0.700
 value notch 0.250
 value slide 0.300
-value pan 0.500
 seated -
-arcs 0/34/14 end 54.000
-arcs 0/12/36 end -67.500
-arcs 24/12/12 end 67.500
 leg 4 first
 value knob 0.700
 value notch 0.250
 value slide 0.300
-value pan 0.500
 seated -
-arcs 0/34/14 end 54.000
-arcs 0/12/36 end -67.500
-arcs 24/12/12 end 67.500
 leg 4 once
 value knob 0.700
 value notch 0.250
 value slide 0.300
-value pan 0.500
 seated knob
-arcs 0/34/14 end 54.000
-arcs 0/12/36 end -67.500
-arcs 24/12/12 end 67.500
 leg 4 again
 value knob 0.700
 value notch 0.250
 value slide 0.300
-value pan 0.500
 seated knob
-arcs 0/34/14 end 54.000
-arcs 0/12/36 end -67.500
-arcs 24/12/12 end 67.500
 leg 4 rested
 value knob 0.300
 value notch 0.250
 value slide 0.300
-value pan 0.500
 seated knob
-arcs 0/14/34 end -54.000
-arcs 0/12/36 end -67.500
-arcs 24/12/12 end 67.500
 gui unseat: PASS
 leg 5 press
 value knob 0.300
 value notch 0.250
 value slide 0.300
-value pan 0.500
 seated -
-arcs 0/14/34 end -54.000
-arcs 0/12/36 end -67.500
-arcs 24/12/12 end 67.500
 leg 5 short
 value knob 0.300
 value notch 0.250
 value slide 0.300
-value pan 0.500
 seated -
-arcs 0/14/34 end -54.000
-arcs 0/12/36 end -67.500
-arcs 24/12/12 end 67.500
 gathered notch
 leg 5 past
 value knob 0.300
 value notch 0.500
 value slide 0.300
-value pan 0.500
 seated -
-arcs 0/14/34 end -54.000
-arcs 0/24/24 end 0.000
-arcs 24/12/12 end 67.500
 leg 5 release
 value knob 0.300
 value notch 0.500
 value slide 0.300
-value pan 0.500
 seated -
-arcs 0/14/34 end -54.000
-arcs 0/24/24 end 0.000
-arcs 24/12/12 end 67.500
 leg 6 press
 value knob 0.300
 value notch 0.500
 value slide 0.250
-value pan 0.500
 seated -
-arcs 0/14/34 end -54.000
-arcs 0/24/24 end 0.000
-arcs 24/12/12 end 67.500
 leg 6 release
 value knob 0.300
 value notch 0.500
 value slide 0.250
-value pan 0.500
 seated -
-arcs 0/14/34 end -54.000
-arcs 0/24/24 end 0.000
-arcs 24/12/12 end 67.500

@@ -70,7 +70,7 @@ auto zoomed(const String &value, GUI::NGA::Zoom &zoom) -> Status {
 
 auto GUI::PARSE::boarded(const String &key) -> Flag {
   return key == "port" || key == "pan" || key == "zoom" || key == "pinned" ||
-         key == "choosing" || key == "roam";
+         key == "choosing";
 }
 
 static auto chosen(const String &value, GUI::NGA::Choosing &choosing)
@@ -99,10 +99,6 @@ auto GUI::PARSE::board(
     NGA::Choosing choosing;
     return ::chosen(value, choosing) != 0 ? 1
                                           : NGA::set(document, id, choosing);
-  }
-  if (key == "roam") {
-    NGA::Roam roam;
-    return PARSE::read(value, roam.on) != 0 ? 1 : NGA::set(document, id, roam);
   }
   NGA::Zoom zoom;
   return ::zoomed(value, zoom) != 0 ? 1 : NGA::set(document, id, zoom);
@@ -135,7 +131,6 @@ auto GUI::PARSE::board(
     properties.banded = choosing.band;
     return 0;
   }
-  if (key == "roam") return PARSE::read(value, properties.roaming);
   NGA::Zoom zoom;
   if (::zoomed(value, zoom) != 0) return 1;
   properties.zoom = NGA::resolved(zoom);

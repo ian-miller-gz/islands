@@ -51,8 +51,6 @@ void push(const Event &event);
 
 auto drain() -> Vector<Event>;
 
-auto chorded(const Event &event) -> Flag;
-
 constexpr Whole TAB = '\t';
 constexpr Whole ESCAPE = 27;
 
@@ -85,7 +83,6 @@ struct Pointer {
   Float dy = 0;
   Float wheel = 0;
   Flag control = false;
-  Flag shift = false;
   Flag left = false;
   Edge rose;
   Edge fell;
@@ -106,7 +103,7 @@ void drag(Float dx, Float dy);
 
 void press(Button button, Flag down, Chord chord = {});
 
-void scroll(Float amount, Flag control, Flag shift);
+void scroll(Float amount, Flag control);
 
 void claim(Flag owned);
 

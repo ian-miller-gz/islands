@@ -91,3 +91,73 @@ def test_static_library_link_is_skipped() -> None:
     linker._library = lambda library: linked.append(library["name"])
     linker.libraries()
     assert linked == []
+
+
+def _hosted_config(selected: str) -> dict:
+    return {
+        "tokens": {"SR_CARTRIDGE": selected, "SR_NONE": 1, "SR_MEADOW": 2},
+        "libraries": [
+            {"name": "meadow", "path": "cartridges/.test/meadow", "output_destinations": ["cartridges/.test/meadow"]},
+            {"name": "scout", "path": "cartridges/.test/meadow/scout", "output_destinations": ["cartridges/.test/meadow/scout"]},
+            {"name": "demo", "path": "cartridges/.test/demo", "output_destinations": ["cartridges/.test/demo"]},
+        ],
+        "statics": [
+            {"selector": "SR_CARTRIDGE", "options": {"cartridges/.test/meadow": "SR_MEADOW"},
+             "bundle": {"group": "engine", "directive": "SR_CARTRIDGE_BUNDLE"}},
+            {"selector": "SR_CARTRIDGE", "host": "Reef",
+             "options": {"cartridges/.test/meadow/scout": "SR_MEADOW"},
+             "bundle": {"group": "engine", "directive": "SR_REEF_BUNDLE"}},
+        ],
+    }
+
+
+def _hosted_initializer(selected: str) -> Initializer:
+    init = Initializer.__new__(Initializer)
+    init._project_cfg = _hosted_config(selected)
+    return init
+
+
+def test_a_hosted_fold_names_its_build_and_a_nested_bundle_answers_to_its_own_row() -> None:
+    libraries = _hosted_initializer("SR_MEADOW")._libraries()
+    folds = {library["name"]: (library["static"], library["folds"]) for library in libraries}
+    assert folds == {"meadow": (True, None), "scout": (True, "Reef"), "demo": (False, None)}
+
+
+def test_a_nested_bundle_unselected_stays_dynamic_under_a_folded_parent() -> None:
+    config = _hosted_config("SR_MEADOW")
+    config["statics"][1]["options"] = {"cartridges/.test/meadow/scout": "SR_NONE"}
+    init = Initializer.__new__(Initializer)
+    init._project_cfg = config
+    marks = {library["name"]: library["static"] for library in init._libraries()}
+    assert marks == {"meadow": True, "scout": False, "demo": False}
+
+
+def test_every_selected_fold_declares_its_directive() -> None:
+    config = _hosted_config("SR_MEADOW")
+    init = Initializer.__new__(Initializer)
+    init._project_cfg = config
+    init.root = LocalPath("/project")
+    init._overlay(config)
+    assert config["directives"]["engine"] == {
+        "SR_CARTRIDGE_BUNDLE": "cartridges/.test/meadow",
+        "SR_REEF_BUNDLE": "cartridges/.test/meadow/scout"}
+
+
+def test_hosted_objects_fold_into_the_named_build_only(tmp_path) -> None:
+    meadow = tmp_path / BUILD_OBJECT_PATH / "cartridges" / ".test" / "meadow"
+    scout = meadow / "scout"
+    scout.mkdir(parents=True)
+    (meadow / "cartridge.o").write_bytes(b"")
+    (scout / "scout.o").write_bytes(b"")
+    make: SimpleNamespace = SimpleNamespace()
+    make.root = LocalPath(tmp_path)
+    make.mirror = BUILD_OBJECT_PATH
+    make.objects = {str(meadow / "cartridge.o"), str(scout / "scout.o")}
+    make.libraries = [
+        {"name": "meadow", "path": PyPath("cartridges/.test/meadow"), "static": True, "folds": None},
+        {"name": "scout", "path": PyPath("cartridges/.test/meadow/scout"), "static": True, "folds": "Reef"}]
+    make.builds = []
+    linker = Linker(make)
+    assert linker._statics("Island", True) == [str(meadow / "cartridge.o")]
+    assert linker._statics("Reef", False) == [str(scout / "scout.o")]
+    assert linker._statics() == [str(meadow / "cartridge.o")]

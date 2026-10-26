@@ -56,21 +56,3 @@ auto GUI::NGA::GET::asked(Handle document) -> Ask {
   if (!live(document)) return {};
   return STATE::documents[document].pointer.ask;
 }
-
-auto GUI::NGA::GET::hovered(Handle document, STRING::Hot board) -> Ask {
-  Whole deck = PARENTLESS;
-  if (find(document, board, deck) != 0) return {};
-  const auto &entry = STATE::documents[document];
-  const auto &pointer = entry.pointer;
-  const Flag away = STATE::claimed != NONE && STATE::claimed != document;
-  if (away || !pointer.inside || pointer.down || pointer.pressed != PARENTLESS)
-    return {};
-  const auto [x, y] = pointer.spot;
-  if (decked(document, entry, x, y) != deck) return {};
-  if (taken(entry, pointer.hovered, deck)) return {};
-  const auto box = boxed(document, entry, deck, x, y);
-  const auto at = aboard(document, entry, deck, x, y);
-  return {
-    entry.nodes[deck].id,
-    box == PARENTLESS ? STRING::Cold() : entry.nodes[box].id, at.x, at.y, true};
-}

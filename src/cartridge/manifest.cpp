@@ -60,9 +60,9 @@ auto CARTRIDGE::MANIFEST::reserved(const String &key) -> Flag {
          key == "version" || key == "overlay" || key == "logs" ||
          key == "listen" || key == "threads" || key == "metrics" ||
          key == "latch" || key == "stdin" || key == "web" || key == "server" ||
-         key == "loopback" || key == "console" || key == "fullscreen" ||
-         key == "decorated" || key == "splash" || key == "size" ||
-         key == "font" || key == "requires" || key == "host";
+         key == "console" || key == "fullscreen" || key == "decorated" ||
+         key == "splash" || key == "size" || key == "font" ||
+         key == "requires" || key == "host";
 }
 
 auto CARTRIDGE::MANIFEST::assign(
@@ -84,7 +84,6 @@ auto CARTRIDGE::MANIFEST::assign(
   if (key == "stdin") manifest.fed = value == "true" || value == "1";
   if (key == "web") manifest.web.push_back(value);
   if (key == "server") manifest.server.push_back(value);
-  if (key == "loopback") manifest.loopback = value == "true" || value == "1";
   if (key == "console")
     manifest.console =
       ordinal(value, INPUT::BINDINGS::keys["CONSOLES::DISPATCH::interpret"]);

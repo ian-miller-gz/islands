@@ -20,14 +20,30 @@
 #include <cartridge.hpp>
 #include <common.hpp>
 #include <logger.hpp>
+#include <metrics.hpp>
 #include <csignal>
 #include <filesystem>
+#include <format>
 #include <iostream>
 static const String category = "~/island::";
 
 static int initialize();
 static int loop();
 static void halt(int);
+
+// The exit tally, taken before the close resets the registry: each metric
+// series folded the way the shell's metrics command prints it, so a run
+// that never opened a console still tells where its frames went (the
+// cartridge, the fence, the present).
+static void tally(LOGGER::Category &logger) {
+  for (const auto &name : METRICS::GET::names()) {
+    const auto fold = METRICS::GET::fold(name.c_str());
+    logger.debug(std::format(
+      "{}: last={:.3f} min={:.3f} avg={:.3f} p99={:.3f} max={:.3f} n={}", name,
+      METRICS::GET::last(name.c_str()), fold.min, fold.mean, fold.p99,
+      fold.max, fold.samples));
+  }
+}
 
 int main(int argc, char **argv) {
   if (ENGINE::stated(argc, argv)) return 0;
@@ -78,6 +94,7 @@ static int loop() {
     while (!(ISLAND::STATE::restart || ISLAND::STATE::terminate))
       ISLAND::process();
     logger.info("Processing ceased.");
+    tally(logger);
     logger.info("Closing process...");
     ISLAND::close();
     logger.info("Close successful.");

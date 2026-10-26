@@ -48,7 +48,7 @@ toolchains:
     compile_flags: ["-D_WIN32_WINNT=0x0A00", "-DWIN32_LEAN_AND_MEAN"]
     link_flags: ["-static", "-Wl,--allow-multiple-definition"]
     library_flags: []
-    imports: [ws2_32, bcrypt, crypt32, psapi, gdi32, ole32, oleaut32, uuid, imm32, version, setupapi, winmm, shell32, advapi32]
+    imports: [ws2_32, bcrypt, crypt32, psapi, gdi32, ole32, oleaut32, uuid, imm32, version, setupapi, winmm]
     prebuilt:
       SR_DEBUG: libs/windows/debug
       SR_RELEASE: libs/windows/release
@@ -57,6 +57,13 @@ toolchains:
       directory: build/windows
       binary: .exe
       library: .dll
+    # Windows spells the island host `islands`: the portable package
+    # exposes the binary itself as the command (winget's Links folder,
+    # scoop's shim), so the file carries the command's name. The build
+    # keeps its name (Island — `host:` rows, the output map); the artifact
+    # and the ISLAND_NAME define the hosts spawn a sibling by follow.
+    names:
+      Island: islands
 
 tokens:
   gfx:
@@ -142,10 +149,10 @@ tokens:
 directives:
   engine:
     ENGINE_NAME: "Islands"
-    ENGINE_VERSION: "0.4.14"
-    ISLAND_NAME: "Island"
-    REEF_NAME: "Reef"
+    ENGINE_VERSION: "0.4.15"
     BUILD_NAME: "build"
+    # ISLAND_NAME and REEF_NAME are the builds' own (`named:` below): each
+    # host's name as the active toolchain delivers it.
 
 
 precompiled:
@@ -209,9 +216,15 @@ configurations:
     SR_WEB_BACKEND: SR_NATIVE
     SR_SERVER: SR_NATIVE
     SR_MIDI_BACKEND: SR_NONE
+  # The shipped Windows cell is the shared delivery: islands.dll holds the
+  # engine, islands.exe and Reef.exe import it, and every bundle that claims
+  # the windows fold ships as its own lib<name>.dll — the launcher, its
+  # monitor, and whatever the store installs. A static fold could load no
+  # bundle at run time, which is the one thing a store cannot do without.
   windows-ship:
     SR_PLATFORM: SR_WINDOWS
-    SR_CARTRIDGE: SR_LAUNCHER
+    SR_LINKAGE: SR_SHARED
+    SR_CARTRIDGE: SR_NONE
     SR_PROFILE: SR_RELEASE
     SR_LOGGER_BACKEND: SR_SPDLOG
     SR_OVERLAY_BACKEND: SR_NONE
@@ -330,6 +343,7 @@ builds:
     path: src/island
     host: true
     main: island.cpp
+    named: {group: engine, directive: ISLAND_NAME}
     links:
       - src/cartridge
       - src/common
@@ -346,6 +360,7 @@ builds:
   - name: Reef
     path: src/reef
     host: true
+    named: {group: engine, directive: REEF_NAME}
     links:
       - src/cartridge
       - src/common
@@ -381,18 +396,6 @@ builds:
       - src/network
   - name: reader
     path: src/test/reader
-    links:
-      - src/common
-      - src/logger
-      - src/network
-  - name: loopback
-    path: src/test/loopback
-    links:
-      - src/common
-      - src/logger
-      - src/network
-  - name: socket
-    path: src/test/socket
     links:
       - src/common
       - src/logger
@@ -562,6 +565,16 @@ statics:
     bundle: {group: engine, directive: SR_CARTRIDGE_BUNDLE}
     options:
       cartridges/.core/launcher: SR_LAUNCHER
+  # The reef host's own fold: a static delivery (Windows) loads no bundle
+  # at run time, so the launcher's monitor — the serving reef the launcher
+  # starts and polls — links into Reef.exe the way the launcher links into
+  # islands.exe. The `host:` names the build that folds it; SR_REEF_BUNDLE
+  # tells both hosts which bundle the reef carries.
+  - selector: SR_CARTRIDGE
+    host: Reef
+    bundle: {group: engine, directive: SR_REEF_BUNDLE}
+    options:
+      cartridges/.core/launcher/monitor: SR_LAUNCHER
 
 flags:
   - selector: SR_PROFILE
@@ -584,11 +597,6 @@ variants:
       cartridge/relations.spawn.web.cpp: SR_WEB
       cartridge/relations.spawn.windows.cpp: SR_WINDOWS
       cartridge/relations.spawn.windows.launch.cpp: SR_WINDOWS
-      cartridge/browse.posix.cpp: SR_POSIX
-      cartridge/browse.web.cpp: SR_WEB
-      cartridge/browse.windows.cpp: SR_WINDOWS
-      test/relations/relations.browse.cpp: SR_POSIX
-      test/relations/relations.browse.windows.cpp: SR_WINDOWS
       cartridge/load/posix: SR_POSIX
       cartridge/load/windows: SR_WINDOWS
       common/platform/posix: [SR_POSIX, SR_WEB]
@@ -599,10 +607,6 @@ variants:
       island/terminal/backend/repl/windows: SR_WINDOWS
       island/window/backend/glfw/window.chrome.posix.cpp: SR_POSIX
       island/window/backend/glfw/window.chrome.windows.cpp: SR_WINDOWS
-      island/window/notice/notice.posix.cpp: SR_POSIX
-      island/window/notice/notice.posix.bus.cpp: SR_POSIX
-      island/window/notice/notice.windows.cpp: SR_WINDOWS
-      island/window/notice/notice.web.cpp: SR_WEB
       network/sockets/wait/posix: SR_POSIX
       network/sockets/wait/windows: SR_WINDOWS
       network/web/backend/native/trust/posix: SR_POSIX
@@ -664,7 +668,6 @@ variants:
   - selector: SR_SERVER
     options:
       network/web/server/: SR_NATIVE
-      network/web/loopback/: SR_NATIVE
   - selector: SR_PLATFORM
     options:
       island/island.cpp: [SR_POSIX, SR_WINDOWS]
@@ -681,9 +684,9 @@ variants:
       test/durable: [SR_POSIX, SR_WINDOWS]
       test/relations: [SR_POSIX, SR_WINDOWS]
       reef: [SR_POSIX, SR_WINDOWS]
-      # The public launcher's monitor (islands-launcher 0.2) splits its roster
-      # probe per platform in two files; the rows precede the bundle's own,
-      # since the first match answers.
+      # The monitor's roster probe is the one platform seam it has: a
+      # POSIX signal on one side, a process handle on the other. The rows
+      # precede the bundle's own, since the first match answers.
       cartridges/.core/launcher/monitor/sweep.posix.cpp: [SR_POSIX, SR_WEB]
       cartridges/.core/launcher/monitor/sweep.windows.cpp: SR_WINDOWS
       cartridges/.core/launcher/monitor: [SR_POSIX, SR_WEB, SR_WINDOWS]

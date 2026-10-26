@@ -70,7 +70,6 @@ struct Manifest {
   Map<String, String> keys;
   Vector<String> web;
   Vector<String> server;
-  Flag loopback = false;
   Vector<WindowSpec> windows;
   Vector<Demand> demands;
   Vector<String> components;

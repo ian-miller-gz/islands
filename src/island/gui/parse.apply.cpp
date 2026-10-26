@@ -16,7 +16,6 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.   *
  ============================================================================*/
 #pragma endregion
-#include <island/gui/gui.internal.hpp>
 #include <island/gui/parse.internal.hpp>
 
 static auto shape(
@@ -118,13 +117,6 @@ auto GUI::PARSE::apply(
   if (key == "clip") {
     Clipping clipping;
     return read(value, clipping.clip) != 0 ? 1 : set(document, id, clipping);
-  }
-  if (key == "modal") {
-    Flag modal = false;
-    Whole node = PARENTLESS;
-    if (read(value, modal) != 0 || GUI::find(document, id, node) != 0) return 1;
-    GUI::STATE::documents[document].nodes[node].properties.modal = modal;
-    return GUI::mark(document, node);
   }
   if (key == "axis") {
     Axis axis;

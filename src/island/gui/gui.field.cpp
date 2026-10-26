@@ -20,13 +20,12 @@
 
 namespace {
 
-void wear(GUI::Handle document, Whole index, Flag reached, Flag seated) {
+void wear(GUI::Handle document, Whole index, Flag seated) {
   auto &entry = GUI::STATE::documents[document];
   if (index >= entry.nodes.size()) return;
   auto &properties = entry.nodes[index].properties;
-  if (properties.seated == seated && properties.reached == reached) return;
+  if (properties.seated == seated) return;
   properties.seated = seated;
-  properties.reached = reached;
   GUI::mark(document, index);
 }
 
@@ -38,8 +37,8 @@ void GUI::seat(Handle document, Whole index, Flag seated) {
   const auto held = entry.editing;
   entry.editing = index;
   entry.seated = seated;
-  if (held != index) ::wear(document, held, false, false);
-  ::wear(document, index, !seated, seated);
+  if (held != index) ::wear(document, held, false);
+  ::wear(document, index, seated);
 }
 
 auto GUI::set(Handle document, STRING::Hot id, Caret caret) -> Status {
@@ -62,7 +61,7 @@ auto GUI::GET::caret(Handle document, STRING::Hot id) -> Caret {
   return {properties.caret, properties.selection};
 }
 
-auto GUI::edit(Handle document, STRING::Hot id, Flag typing) -> Status {
+auto GUI::edit(Handle document, STRING::Hot id) -> Status {
   if (!live(document)) return 1;
   auto &entry = STATE::documents[document];
   if (*id == '\0') {
@@ -71,9 +70,9 @@ auto GUI::edit(Handle document, STRING::Hot id, Flag typing) -> Status {
   }
   Whole node = PARENTLESS;
   if (find(document, id, node) != 0) return 1;
-  if (!reachable(entry.nodes[node])) return 1;
   const auto &kind = entry.nodes[node].kind;
-  seat(document, node, kind == "field" || (typing && kind == "dial"));
+  if (kind != "field" && kind != "dial") return 1;
+  seat(document, node, true);
   return 0;
 }
 
@@ -83,9 +82,4 @@ auto GUI::GET::editing(Handle document) -> STRING::Cold {
   const auto node = entry.editing;
   if (node == PARENTLESS || !entry.nodes[node].live) return {};
   return entry.nodes[node].id;
-}
-
-auto GUI::GET::seated(Handle document) -> Flag {
-  if (GET::editing(document).empty()) return false;
-  return STATE::documents[document].seated;
 }

@@ -39,15 +39,6 @@ auto GUI::NGA::set(Handle document, STRING::Hot id, Choosing choosing)
   return mark(document, node);
 }
 
-auto GUI::NGA::set(Handle document, STRING::Hot id, Roam roam) -> Status {
-  Whole node = PARENTLESS;
-  if (find(document, id, node) != 0) return 1;
-  auto &properties = STATE::documents[document].nodes[node].properties;
-  if (properties.roaming == roam.on) return 0;
-  properties.roaming = roam.on;
-  return mark(document, node);
-}
-
 auto GUI::NGA::GET::choosing(Handle document, STRING::Hot id) -> Choosing {
   Whole node = PARENTLESS;
   if (find(document, id, node) != 0) return {};

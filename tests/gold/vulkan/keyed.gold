@@ -10,9 +10,6 @@ keyed letter: key=text code=113 control=false cursor=1 name='' seat=- aside=text
 keyed chorded: key=text code=100 control=true cursor=1 name='' seat=- aside=text
 gui seat: PASS
 keyed seated: key=text code=0 control=false cursor=1 name='q' seat=name aside=text
-keyed escaped: key=text code=27 control=false cursor=1 name='q' seat=name aside=text
-gui escape seat: PASS
-gui escape once: PASS
 gui release: PASS
 keyed stale: key=text code=0 control=false cursor=1 name='q' seat=- aside=text
 keyed deafened: key=down code=0 control=false cursor=0 name='q' seat=- aside=text

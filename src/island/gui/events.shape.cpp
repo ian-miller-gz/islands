@@ -17,48 +17,16 @@
  ============================================================================*/
 #pragma endregion
 #include <island/gui/events.internal.hpp>
-#include <island/gui/backend.hpp>
 #include <island/window/backend.hpp>
-
-namespace {
-
-const Whole GRIP = GUI::BACKEND::row("grip");
-
-constexpr WINDOW::Shape AXES[] = {WINDOW::DOWN, WINDOW::ACROSS, WINDOW::ARROW};
-
-auto axis(const GUI::Properties &properties) -> Whole {
-  return static_cast<Whole>(properties.across) +
-         static_cast<Whole>(properties.free);
-}
-
-auto wanted(const GUI::Node &node) -> WINDOW::Shape {
-  if (node.row == ::GRIP) return ::AXES[::axis(node.properties)];
-  return GUI::typeable(node) ? WINDOW::IBEAM : WINDOW::ARROW;
-}
-
-auto pulled(const GUI::Document &entry, Whole index) -> Flag {
-  return index != GUI::PARENTLESS && entry.nodes[index].live &&
-         entry.nodes[index].row == ::GRIP;
-}
-
-auto wanted(const GUI::Document &entry) -> WINDOW::Shape {
-  const auto pressed = entry.pointer.pressed;
-  if (::pulled(entry, pressed)) return ::wanted(entry.nodes[pressed]);
-  const auto hovered = entry.pointer.hovered;
-  if (hovered == GUI::PARENTLESS || !entry.nodes[hovered].live)
-    return WINDOW::ARROW;
-  return ::wanted(entry.nodes[hovered]);
-}
-
-}  // namespace
 
 void GUI::shape() {
   if (carried()) return;
-  WINDOW::Shape asked = WINDOW::ARROW;
+  Flag typing = false;
   for (const auto &entry : STATE::documents) {
     if (!entry.live || !entry.pointer.placed) continue;
-    const auto answer = ::wanted(entry);
-    if (answer != WINDOW::ARROW) asked = answer;
+    const auto hovered = entry.pointer.hovered;
+    if (hovered == PARENTLESS || !entry.nodes[hovered].live) continue;
+    if (typeable(entry.nodes[hovered])) typing = true;
   }
-  WINDOW::shape(asked);
+  WINDOW::shape(typing ? WINDOW::IBEAM : WINDOW::ARROW);
 }

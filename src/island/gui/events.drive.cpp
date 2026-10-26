@@ -45,7 +45,6 @@ auto landed(GUI::Handle document, STRING::Hot id, Aim &aim) -> Status {
   if (!GUI::live(document)) return 1;
   Whole node = GUI::PARENTLESS;
   if (GUI::find(document, id, node) != 0) return 1;
-  if (GUI::veiled(STATE::documents[document], node)) return 1;
   return aimed(document, node, aim);
 }
 
@@ -183,14 +182,13 @@ auto GUI::drag(
   return 0;
 }
 
-auto GUI::wheel(
-  Handle document, STRING::Hot id, Float turns, Flag control,
-  Flag shift) -> Status {
+auto GUI::wheel(Handle document, STRING::Hot id, Float turns, Flag control)
+  -> Status {
   Aim aim;
   if (::landed(document, id, aim) != 0) return 1;
   STATE::documents[document].pointer.fed = true;
   point(document, aim.x, aim.y, aim.inside, false);
-  roll(document, turns, control, shift);
+  if (!spin(document, turns)) crank(document, turns, control);
   return 0;
 }
 

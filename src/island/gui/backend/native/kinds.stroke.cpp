@@ -17,7 +17,6 @@
  ============================================================================*/
 #pragma endregion
 #include <island/gui/backend/native/kinds.internal.hpp>
-#include <island/gui/backend/native/kinds.snap.hpp>
 #include <algorithm>
 #include <cmath>
 
@@ -35,26 +34,18 @@ constexpr Whole SHAPES = sizeof(CURVES) / sizeof(*CURVES);
 
 }  // namespace
 
-auto GUI::KINDS::line(
+auto GUI::KINDS::piece(
   GUI::Position from, GUI::Position to, Float thickness,
   const GFX::Color &ink) -> GUI::Element {
-  const Float length = std::hypot(to.x - from.x, to.y - from.y);
-  if (length == 0.0f) return {};
-  const Float fringe = BACKEND::NATIVE::GET::pixel();
-  const Float width = std::max(thickness, fringe);
-  const GUI::Position axis = {
-    (to.x - from.x) / length, (to.y - from.y) / length};
-  const Float half = width / 2.0f;
-  GFX::Color tint = ink;
-  tint.a *= thickness / width;
+  if (from.x == to.x && from.y == to.y) return {};
+  const Float half = thickness / 2.0f;
   return {
-    .x = from.x + axis.y * half,
-    .y = from.y - axis.x * half,
-    .w = length,
-    .h = width,
-    .color = tint,
-    .axis = axis,
-    .fringe = fringe};
+    std::min(from.x, to.x) - half,
+    std::min(from.y, to.y) - half,
+    std::abs(to.x - from.x) + thickness,
+    std::abs(to.y - from.y) + thickness,
+    GUI::FULL,
+    ink};
 }
 
 void GUI::KINDS::stroke(
@@ -73,9 +64,7 @@ void GUI::KINDS::stroke(
     const Float along = static_cast<Float>(at + 1) / count;
     const Position to = {
       slot.x + run * along, slot.y + drop * std::pow(curve(along), bow)};
-    elements[at] = line(from, to, thickness, ink);
+    elements[at] = piece(from, to, thickness, ink);
     from = to;
   }
-  elements[0].caps += CAPS::NEAR;
-  elements[SEGMENTS - 1].caps += CAPS::FAR;
 }

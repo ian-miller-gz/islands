@@ -41,8 +41,6 @@ struct Pointer {
   Whole struck = 0;
   Float stamp = 0.0f;
   Position spot;
-  Flag inside = false;
-  Flag resting = false;
   Vector<STRING::Cold> clicks;
   Vector<STRING::Cold> selections;
   Vector<STRING::Cold> activations;

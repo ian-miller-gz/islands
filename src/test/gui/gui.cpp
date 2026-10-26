@@ -53,7 +53,6 @@ static Status run(int count, char **arguments) {
     if (String(arguments[1]) == "keyed") return keyed();
     if (String(arguments[1]) == "turn") return turn();
     if (String(arguments[1]) == "knob") return knob();
-    if (String(arguments[1]) == "ring") return reached();
     if (String(arguments[1]) == "graph") return graph();
     if (String(arguments[1]) == "phantom") return phantom();
     if (String(arguments[1]) == "pinned") return pinned();
@@ -62,8 +61,6 @@ static Status run(int count, char **arguments) {
     if (String(arguments[1]) == "route") return routed();
     if (String(arguments[1]) == "wheel") return spun();
     if (String(arguments[1]) == "pressed") return pressed();
-    if (String(arguments[1]) == "hovered") return hovered();
-    if (String(arguments[1]) == "modal") return veiling();
     if (String(arguments[1]) == "bounds") return walled();
     if (String(arguments[1]) == "reborn") return reborn();
     if (String(arguments[1]) == "order") return order();

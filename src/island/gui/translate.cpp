@@ -108,13 +108,18 @@ auto tokens(GUI::Handle document, const GUI::Node &node) -> String {
   const auto frame = GUI::GET::frame(document, id);
   return " x=" + T::number(position.x) + " y=" + T::number(position.y) +
          " w=" + T::number(extent.w) + " h=" + T::number(extent.h) +
-         " anchor=" + ::anchored(document, id) + " text=\"" +
+         " anchor=" + ::anchored(document, id) +
+         " color=" + T::shade(GUI::GET::color(document, id)) + " text=\"" +
          GUI::GET::text(document, id) + "\"" +
          ::picture(node.properties, frame) +
          " fraction=" + T::number(GUI::GET::fraction(document, id)) +
          " z=" + T::number(GUI::GET::depth(document, id)) +
          " border=" + T::number(GUI::GET::border(document, id)) +
-         T::inks(node.properties) +
+         " edge=" + T::shade(GUI::GET::edge(document, id)) +
+         " hover=" + T::shade(GUI::GET::hover(document, id)) +
+         " press=" + T::shade(GUI::GET::press(document, id)) +
+         " glow=" + T::shade(GUI::GET::glow(document, id)) +
+         " wash=" + T::shade(GUI::GET::wash(document, id)) +
          " pad=" + T::number(GUI::GET::pad(document, id)) +
          " wrap=" + std::to_string(GUI::GET::wrap(document, id)) +
          " size=" + T::number(GUI::GET::size(document, id)) +
@@ -141,7 +146,6 @@ auto tokens(GUI::Handle document, const GUI::Node &node) -> String {
          " port=" + ::facing(node.properties) +
          " pinned=" + ::axised(node.properties) +
          (node.properties.banded ? String(" choosing=band") : String()) +
-         (node.properties.roaming ? String() : String(" roam=false")) +
          " pan=" + T::number(node.properties.pan.x) + "," +
          T::number(node.properties.pan.y) +
          " zoom=" + ::scaled(node.properties) + ::sited(node.properties) +

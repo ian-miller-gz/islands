@@ -32,7 +32,6 @@ struct Connection {
   Descriptor descriptor = CLOSED;
   mbedtls_ssl_context *ssl = nullptr;
   String pending;
-  Flag hurried = false;
 };
 
 auto dial(const String &host, Whole port) -> Descriptor;
@@ -44,8 +43,6 @@ void close(Connection &channel);
 auto send(Connection &channel, const String &bytes) -> Flag;
 auto read(Connection &channel, String &bytes) -> Integer;
 auto receive(Connection &channel, String &bytes) -> Flag;
-auto drain(Connection &channel, String &bytes) -> Integer;
-auto random(unsigned char *bytes, Whole size) -> Flag;
 
 auto failed(const String &reason, const String &url) -> Result;
 

@@ -41,11 +41,6 @@ void seize(GUI::Handle document, GUI::Document &entry, Float x, Float y) {
   pointer.viewed = entry.nodes[pointer.panning].properties.pan;
 }
 
-void screen(GUI::Document &entry) {
-  auto &pointer = entry.pointer;
-  if (GUI::veiled(entry, pointer.asking)) pointer.asking = GUI::PARENTLESS;
-}
-
 auto still(GUI::Pointer &pointer, Float x, Float y) -> Flag {
   if (pointer.swept) return false;
   const Float across = x - pointer.onset.x;
@@ -108,10 +103,7 @@ void answer(GUI::Document &entry, Whole deck) {
 void GUI::sweep(Handle document, Float x, Float y, Flag down) {
   auto &entry = STATE::documents[document];
   auto &pointer = entry.pointer;
-  if (down && !pointer.panned) {
-    ::seize(document, entry, x, y);
-    ::screen(entry);
-  }
+  if (down && !pointer.panned) ::seize(document, entry, x, y);
   const auto deck = pointer.panning;
   const Flag released = !down && pointer.panned;
   pointer.panned = down;

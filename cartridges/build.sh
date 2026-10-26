@@ -4,10 +4,8 @@ set -euo pipefail
 here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 root="$(dirname "$here")"
 codegen=""
-list=""
 if [ "${1:-}" = "--optimized" ]; then codegen="-O2 -DNDEBUG"; shift; fi
-if [ "${1:-}" = "--sources" ]; then list=1; shift; fi
-usage="usage: cartridges/build.sh [--optimized] [--sources] <bundle-dir> [windows]"
+usage="usage: cartridges/build.sh [--optimized] <bundle-dir> [windows]"
 bundle="${1:?$usage}"
 platform="${2:-}"
 case "$platform" in "" | windows) ;; *) echo "$usage" >&2; exit 2 ;; esac
@@ -39,18 +37,13 @@ seat=""
 engine=""
 profile="$(sed -n 's/^[[:space:]]*SR_PROFILE:[[:space:]]*\(SR_[A-Z]*\).*/\1/p' \
              configs/make.yaml | head -n1)"
+# The built cell's own profile stands over the tokens' default: a bundle
+# links the prebuilt archives of the zone the host was built against (the
+# release zone under a ship cell), as pmake's own bundle line does.
+built="$(sed -n 's/^#define SR_PROFILE[[:space:]]*\(SR_[A-Z]*\).*/\1/p' \
+           build/include/generated/profile.hpp 2>/dev/null | head -n1)"
+[ -z "$built" ] || profile="$built"
 zone="libs/$(printf '%s' "${profile#SR_}" | tr '[:upper:]' '[:lower:]')"
-prune=()
-while IFS= read -r nested; do prune+=(-path "$nested" -prune -o); done < <(
-  find "$bundle" -mindepth 2 -name manifest.yaml -printf '%h\n' | sort)
-FOLDS="posix windows web"
-others=""
-for word in $FOLDS; do [ "$word" = "$fold" ] || others="$others|$word"; done
-mapfile -t sources < <(find "$bundle" "${prune[@]}" -name '*.cpp' -print |
-                         sort | grep -Ev "\.(${others#|})\.[^/]*\$")
-[ "${#sources[@]}" -gt 0 ] || { echo "No .cpp files under $bundle" >&2; exit 1; }
-if [ -n "$list" ]; then printf '%s\n' "${sources[@]}"; exit 0; fi
-
 if [ -n "$platform" ]; then
   cxx="$(scalar compiler '    ')"
   engine="$(scalar engine '    ')"
@@ -83,6 +76,12 @@ if [ -n "$platform" ]; then
   [ -z "$delta" ] || name="$delta"
 fi
 [ -n "$name" ] || name="lib$(basename "$bundle")$suffix"
+
+prune=()
+while IFS= read -r nested; do prune+=(-path "$nested" -prune -o); done < <(
+  find "$bundle" -mindepth 2 -name manifest.yaml -printf '%h\n' | sort)
+mapfile -t sources < <(find "$bundle" "${prune[@]}" -name '*.cpp' -print | sort)
+[ "${#sources[@]}" -gt 0 ] || { echo "No .cpp files under $bundle" >&2; exit 1; }
 
 isys=""
 for d in $(find src -name '*.hpp' -exec dirname {} \; | sort -u) \

@@ -34,9 +34,8 @@ int collect(void *context, unsigned char *bytes, size_t size) {
   auto *channel = static_cast<Connection *>(context);
   auto received =
     ::recv(channel->descriptor, reinterpret_cast<Char *>(bytes), size, 0);
-  if (received >= 0) return static_cast<int>(received);
-  return channel->hurried && failing() == AGAIN ? MBEDTLS_ERR_SSL_WANT_READ
-                                                : MBEDTLS_ERR_NET_RECV_FAILED;
+  return received >= 0 ? static_cast<int>(received)
+                       : MBEDTLS_ERR_NET_RECV_FAILED;
 }
 
 auto handshake(mbedtls_ssl_context *ssl) -> Flag {

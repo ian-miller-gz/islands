@@ -18,7 +18,6 @@
 #pragma endregion
 #include <island/gui/gui.internal.hpp>
 #include <island/gui/parse.internal.hpp>
-#include <island/gui/parse.inks.hpp>
 
 static auto gauge(
   GUI::Properties &properties, const String &key,
@@ -38,6 +37,20 @@ static auto gauge(
   if (key == "border") properties.border = number;
   if (key == "pad") properties.pad = number;
   if (key == "size") properties.size = number;
+  return 0;
+}
+
+static auto paint(
+  GUI::Properties &properties, const String &key,
+  const String &value) -> Status {
+  auto color = GFX::COLORS::WHITE;
+  if (GUI::PARSE::read(value, color) != 0) return 1;
+  if (key == "color") properties.color = color;
+  if (key == "edge") properties.edge = color;
+  if (key == "hover") properties.hover = color;
+  if (key == "press") properties.press = color;
+  if (key == "glow") properties.glow = color;
+  if (key == "wash") properties.wash = color;
   return 0;
 }
 
@@ -145,7 +158,10 @@ auto GUI::PARSE::adorn(
     properties.pins = stretch.edges;
     return 0;
   }
-  if (inked(key)) return ink(properties, key, value);
+  if (
+    key == "color" || key == "edge" || key == "hover" || key == "press" ||
+    key == "glow" || key == "wash")
+    return ::paint(properties, key, value);
   if (key == "frame") {
     const auto colon = value.find(':');
     if (colon != String::npos) return ::picture(properties, value, colon);

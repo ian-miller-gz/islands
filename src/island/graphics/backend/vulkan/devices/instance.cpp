@@ -20,11 +20,8 @@
 #include <island/graphics/backend/vulkan/devices/internal.hpp>
 #include <island/window/backend.hpp>
 #include <iostream>
-#define LOGGER_CATEGORY "~/island/graphics/vulkan::instance"
 
 #if SR_GFX_BACKEND == SR_VULKAN
-
-using namespace GFX::BACKEND::VULKAN;
 
 static VKAPI_ATTR vk::Bool32 VKAPI_CALL report(
   vk::DebugUtilsMessageSeverityFlagBitsEXT,
@@ -35,19 +32,23 @@ static VKAPI_ATTR vk::Bool32 VKAPI_CALL report(
   return vk::False;
 }
 
+static auto context() -> vk::raii::Context & {
+  static vk::raii::Context single;
+  return single;
+}
+
 static auto layers() -> Vector<STRING::Hot> {
+  Vector<STRING::Hot> found;
 #ifndef NDEBUG
-  if (INSTANCE::listed(INSTANCE::VALIDATION)) return {INSTANCE::VALIDATION};
-  LOGGER::get(LOGGER_CATEGORY).info("validation layer absent");
+  found.push_back("VK_LAYER_KHRONOS_validation");
 #endif
-  return {};
+  return found;
 }
 
 static auto gather() -> Vector<STRING::Hot> {
   Vector<STRING::Hot> found = WINDOW::GET::extensions();
 #ifndef NDEBUG
-  if (INSTANCE::offered(vk::EXTDebugUtilsExtensionName))
-    found.push_back(vk::EXTDebugUtilsExtensionName);
+  found.push_back(vk::EXTDebugUtilsExtensionName);
 #endif
   return found;
 }
@@ -57,8 +58,6 @@ static auto messenger(vk::raii::Instance &instance)
 #ifdef NDEBUG
   return vk::raii::DebugUtilsMessengerEXT(nullptr);
 #endif
-  if (!INSTANCE::offered(vk::EXTDebugUtilsExtensionName))
-    return vk::raii::DebugUtilsMessengerEXT(nullptr);
   vk::DebugUtilsMessengerCreateInfoEXT info{
     .messageSeverity = vk::DebugUtilsMessageSeverityFlagBitsEXT::eVerbose |
                        vk::DebugUtilsMessageSeverityFlagBitsEXT::eWarning |
@@ -85,7 +84,7 @@ void GFX::BACKEND::VULKAN::Instance::initialize() {
     .ppEnabledLayerNames = required.data(),
     .enabledExtensionCount = static_cast<uint32_t>(found.size()),
     .ppEnabledExtensionNames = found.data()};
-  handle = vk::raii::Instance(INSTANCE::context(), info);
+  handle = vk::raii::Instance(context(), info);
   debug = messenger(handle);
   surface = vk::raii::SurfaceKHR(handle, WINDOW::SURFACE::create(*handle));
 }

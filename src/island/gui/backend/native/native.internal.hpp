@@ -34,19 +34,11 @@ struct Element {
   Float h = 0.0f;
   GFX::SPRITES::Frame frame = FULL;
   GFX::Color color = GFX::COLORS::WHITE;
-  Position axis = {1.0f, 0.0f};
-  Float fringe = 0.0f;
-  Float caps = 0.0f;
 };
 
-namespace CAPS {
-constexpr Float NEAR = 1.0f;
-constexpr Float FAR = 2.0f;
-}  // namespace CAPS
-
 static_assert(
-  sizeof(Element) == 16 * sizeof(Float),
-  "the chrome element is the shader pair's 16-float ABI "
+  sizeof(Element) == 12 * sizeof(Float),
+  "the chrome element is the shader pair's 12-float ABI "
   "(assets/shaders/src/gui.vertex.hlsl)");
 
 struct Slot {

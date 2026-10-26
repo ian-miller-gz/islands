@@ -17,4 +17,3 @@ run.Processes.Default.ReturnCode = 0
 run.Processes.Default.Streams.stdout = islands.gold(
   Test.TestDirectory, islands.skin(Test.TestDirectory, config), 'knob.gold')
 islands.counted(Test, r'^gathered notch$', 1, 'knob.out')
-islands.counted(Test, r'^arcs \d+/\d+/\d+ end -?\d+\.\d+$', 66, 'knob.out')

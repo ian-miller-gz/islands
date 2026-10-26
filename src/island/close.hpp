@@ -51,8 +51,6 @@ static inline void ISLAND::close() {
   METRICS::reset();
   NETWORK::INSTANCES::close();
   NETWORK::WEB::SERVER::close();
-  NETWORK::WEB::LOOPBACK::close();
-  NETWORK::WEB::SOCKET::close();
   OVERLAY::close();
   GFX::close();
   TERMINAL::close();

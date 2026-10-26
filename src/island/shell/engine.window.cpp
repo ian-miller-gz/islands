@@ -21,14 +21,35 @@
 #include <island/graphics/windows.hpp>
 #include <island/shell/engine.internal.hpp>
 #include <island/window/backend.hpp>
+#include <charconv>
 #include <format>
 
 namespace {
+
+auto parse(const String &text, int &out) -> Flag {
+  auto [end, code] =
+    std::from_chars(text.data(), text.data() + text.size(), out);
+  return code == std::errc() && end == text.data() + text.size() && out > 0;
+}
 
 void report(::SHELL::Session &session) {
   session.print(std::format(
     "Window {}x{}, {}.", GFX::WINDOWS::MAIN::width, GFX::WINDOWS::MAIN::height,
     CARTRIDGE::decorated ? "decorated" : "borderless"));
+}
+
+void resize(::SHELL::Session &session) {
+  const auto &arguments = session.arguments;
+  if (arguments.size() < 3) return session.print("usage: window size <w>x<h>");
+  int width = 0, height = 0;
+  const auto cut = arguments[2].find('x');
+  if (
+    cut == String::npos || !parse(arguments[2].substr(0, cut), width) ||
+    !parse(arguments[2].substr(cut + 1), height))
+    return session.print("Unknown size: " + arguments[2]);
+  GFX::WINDOWS::MAIN::width = width;
+  GFX::WINDOWS::MAIN::height = height;
+  session.print(std::format("Window size {}x{}.", width, height));
 }
 
 void fullscreen(::SHELL::Session &session) {
@@ -49,7 +70,7 @@ void window(::SHELL::Session &session) {
   const String sub =
     session.arguments.size() > 1 ? session.arguments[1] : "report";
   if (sub == "report") return report(session);
-  if (sub == "size") return ISLAND::SHELL::resize(session);
+  if (sub == "size") return resize(session);
   if (sub == "fullscreen") return fullscreen(session);
   session.print("usage: window [report | size <w>x<h> | fullscreen [on|off]]");
 }

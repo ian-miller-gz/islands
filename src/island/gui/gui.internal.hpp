@@ -51,7 +51,6 @@ struct Document {
   Whole editing = PARENTLESS;
   Flag seated = false;
   Pointer pointer;
-  Whole modal = PARENTLESS;
   INPUT::KEYS::Event keyed;
 };
 
@@ -64,8 +63,6 @@ auto find(Handle document, STRING::Hot id, Whole &node) -> Status;
 auto mark(Handle document, Whole node) -> Status;
 
 void seat(Handle document, Whole index, Flag seated);
-
-auto reachable(const Node &node) -> Flag;
 
 auto settle(const Properties &properties, Float value) -> Float;
 
@@ -84,7 +81,6 @@ auto box(const Document &entry, Whole index) -> Whole;
 auto under(const Document &entry, Whole index, Whole root) -> Flag;
 
 void clean(Handle document);
-void veil(Document &entry);
 
 }  // namespace GUI
 

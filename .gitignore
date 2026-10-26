@@ -11,10 +11,13 @@ __pycache__/
 *.so.*
 libs/**/include/
 cartridges/**/posix/
+cartridges/**/windows/
 cartridges/**/web/
 hosts/**/posix/
+hosts/**/windows/
 hosts/**/web/
 tests/fixtures/*/posix/
+tests/fixtures/*/windows/
 tests/fixtures/*/web/
 cartridges/*/*/cache/*
 cartridges/*/*/*/cache/*

@@ -87,7 +87,6 @@ static auto land(
 }
 
 static void sample(GUI::Handle document, const INPUT::Pointer &pointer) {
-  if (GUI::rest(document, pointer)) return;
   auto &entry = STATE::documents[document];
   entry.pointer.chord = pointer.chord;
   const auto &rect = entry.pointer.placement;
@@ -151,9 +150,10 @@ void GUI::poll() {
         entry.pointer.holdin, true);
     } else if (entry.pointer.placed && owned) {
       ::sample(document, pointer);
-      roll(document, pointer.wheel, pointer.control, pointer.shift);
+      if (!spin(document, pointer.wheel))
+        crank(document, pointer.wheel, pointer.control);
     } else if (
-      !GUI::rest(document, pointer) && !entry.pointer.fed &&
+      !entry.pointer.fed &&
       (entry.pointer.hovered != PARENTLESS ||
        entry.pointer.pressed != PARENTLESS || entry.pointer.down)) {
       GUI::point(document, 0.0f, 0.0f, false, false);

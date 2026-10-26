@@ -17,23 +17,23 @@
  ============================================================================*/
 #pragma endregion
 #include <island/gui/backend/native/native.internal.hpp>
-#include <island/gui/backend/native/kinds.snap.hpp>
 #include <island/gui/nga.internal.hpp>
 #include <island/graphics/backend/resources.hpp>
+#include <island/graphics/text/text.hpp>
+#include <algorithm>
+#include <cmath>
 
 namespace NGA = GUI::NGA;
 
 namespace {
 
 auto seated(const NGA::Span &mark, const GFX::Color &ink) -> GUI::Element {
-  namespace NATIVE = GUI::BACKEND::NATIVE;
-  const Float side = NATIVE::snapped(mark.w, NATIVE::HAIRLINE);
-  return {NATIVE::snapped(mark.x),
-          NATIVE::snapped(mark.y),
-          side,
-          side,
-          GUI::FULL,
-          ink};
+  const Float held = GFX::TEXT::GET::scale();
+  const Float scale = held > 0.0f ? held : 1.0f;
+  const Float x = std::round(mark.x * scale);
+  const Float y = std::round(mark.y * scale);
+  const Float side = std::max(std::round(mark.w * scale), 1.0f);
+  return {x / scale, y / scale, side / scale, side / scale, GUI::FULL, ink};
 }
 
 }  // namespace

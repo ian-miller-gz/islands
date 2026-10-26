@@ -18,7 +18,6 @@
 #pragma endregion
 #pragma once
 #include <GLFW/glfw3.h>
-#include <common.hpp>
 
 namespace WINDOW::BACKEND::GLFW {
 extern GLFWwindow *window;
@@ -27,10 +26,4 @@ void track();
 void follow();
 void keep();
 void forget();
-
-using Key = int;
-
-auto chordable(Key key) -> Flag;
-
-void watch();
 }  // namespace WINDOW::BACKEND::GLFW

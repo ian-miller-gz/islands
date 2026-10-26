@@ -12,11 +12,3 @@ fixture = os.path.join(
 run = Test.AddTestRun('tree')
 run.Processes.Default.Command = fixture
 run.Processes.Default.ReturnCode = 0
-
-config = islands.backend(Test.TestDirectory)
-modal = Test.AddTestRun('modal')
-modal.Processes.Default.Command = f'{fixture} modal'
-modal.Processes.Default.ReturnCode = 0
-modal.Processes.Default.Streams.stdout = islands.gold(
-  Test.TestDirectory, islands.skin(Test.TestDirectory, config),
-  'gui.modal.gold')

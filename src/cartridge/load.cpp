@@ -48,7 +48,6 @@ CARTRIDGE::Coverage CARTRIDGE::font = CARTRIDGE::SLIM;
 Whole CARTRIDGE::fullscreen = INPUT::BINDINGS::keys["WINDOW::fullscreen"];
 Vector<String> CARTRIDGE::web;
 Vector<String> CARTRIDGE::server;
-Flag CARTRIDGE::loopback = false;
 Vector<String> CARTRIDGE::components;
 const CARTRIDGE::Interface *CARTRIDGE::bound = nullptr;
 Flag (*CARTRIDGE::shadowed)(STRING::Hot name) = nullptr;
@@ -123,7 +122,6 @@ void CARTRIDGE::unload() {
   height = 0;
   web.clear();
   server.clear();
-  loopback = false;
   components.clear();
   CONSOLES::DISPATCH::hotkey =
     INPUT::BINDINGS::keys["CONSOLES::DISPATCH::interpret"];

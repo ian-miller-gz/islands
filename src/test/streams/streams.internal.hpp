@@ -26,3 +26,5 @@ Flag echoed(NETWORK::Handle session, const String &message);
 Status check(STRING::Hot name, Flag passed);
 
 Flag served(const NETWORK::Tunnel &tunnel);
+
+Flag dialed(const NETWORK::Socket &open, const NETWORK::Socket &shut);

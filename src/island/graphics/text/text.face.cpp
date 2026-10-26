@@ -16,7 +16,7 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.   *
  ============================================================================*/
 #pragma endregion
-#include <island/graphics/text/text.fallback.internal.hpp>
+#include <island/graphics/text/text.internal.hpp>
 #include <logger.hpp>
 #include <cmath>
 #define LOGGER_CATEGORY "~/island/graphics/text::"
@@ -62,11 +62,11 @@ void GFX::TEXT::FACE::metrics(Float ratio, Font &font) {
   font.advance = std::round(static_cast<Float>(advance) * ratio);
 }
 
-auto GFX::TEXT::FACE::PRIMARY::covers(Whole code) -> Flag {
+auto GFX::TEXT::FACE::covers(Whole code) -> Flag {
   return opened && stbtt_FindGlyphIndex(&info, static_cast<int>(code)) != 0;
 }
 
-auto GFX::TEXT::FACE::PRIMARY::raster(
+auto GFX::TEXT::FACE::raster(
   Whole code, const Font &font, Glyph &glyph, Vector<Byte> &coverage) -> Flag {
   const auto point = static_cast<int>(code);
   int x0 = 0, y0 = 0, x1 = 0, y1 = 0, advance = 0, bearing = 0;

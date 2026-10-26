@@ -37,10 +37,10 @@ static auto ascii(int key) -> Whole {
 
 static void navigate(int key, int mods) {
   using namespace INPUT::KEYS;
-  const auto move = [mods](Action action, Whole code = 0) {
+  const auto move = [mods](Action action) {
     push(
-      {action, code, (mods & GLFW_MOD_CONTROL) != 0,
-       (mods & GLFW_MOD_SHIFT) != 0, (mods & GLFW_MOD_ALT) != 0});
+      {action, 0, (mods & GLFW_MOD_CONTROL) != 0, (mods & GLFW_MOD_SHIFT) != 0,
+       (mods & GLFW_MOD_ALT) != 0});
   };
   if (key == GLFW_KEY_LEFT) move(LEFT);
   if (key == GLFW_KEY_RIGHT) move(RIGHT);
@@ -51,15 +51,13 @@ static void navigate(int key, int mods) {
   if (key == GLFW_KEY_DELETE) move(DELETE);
   if (key == GLFW_KEY_PAGE_UP) move(PRIOR);
   if (key == GLFW_KEY_PAGE_DOWN) move(NEXT);
-  if (key >= GLFW_KEY_F1 && key <= GLFW_KEY_F12)
-    move(HOTKEY, static_cast<Whole>(key - GLFW_KEY_F1 + 1));
 }
 
 static void special(int key, int mods) {
   using namespace INPUT::KEYS;
   if (key == GLFW_KEY_TAB) push({TEXT, TAB});
   if (key == GLFW_KEY_ESCAPE) push({TEXT, ESCAPE});
-  if ((mods & GLFW_MOD_CONTROL) && WINDOW::BACKEND::GLFW::chordable(key))
+  if ((mods & GLFW_MOD_CONTROL) && key >= GLFW_KEY_A && key <= GLFW_KEY_Z)
     push({TEXT, static_cast<Whole>(key), true, (mods & GLFW_MOD_SHIFT) != 0});
 }
 
@@ -78,6 +76,9 @@ static void key(GLFWwindow *, int key, int, int action, int mods) {
   if (key == GLFW_KEY_BACKSPACE) INPUT::KEYS::push({INPUT::KEYS::ERASE});
   navigate(key, mods);
   special(key, mods);
+  if (key >= GLFW_KEY_F1 && key <= GLFW_KEY_F12)
+    INPUT::KEYS::push(
+      {INPUT::KEYS::HOTKEY, static_cast<Whole>(key - GLFW_KEY_F1 + 1)});
 }
 
 void WINDOW::BACKEND::GLFW::wire() {

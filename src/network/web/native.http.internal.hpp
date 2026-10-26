@@ -23,7 +23,6 @@ namespace NETWORK::WEB::NATIVE::HTTP {
 
 auto exchange(const Request &request, const Url &target) -> Result;
 
-auto authority(const Url &target) -> String;
 auto compose(const Request &request, const Url &target) -> String;
 auto interpret(const String &wire, const Url &target, Result &result) -> Flag;
 auto unchunk(const String &body, String &whole) -> Flag;

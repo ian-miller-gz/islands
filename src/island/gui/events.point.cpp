@@ -88,7 +88,7 @@ static void squeeze(
       if (deck == GUI::PARENTLESS || !entry.nodes[deck].properties.banded)
         GUI::NGA::select(document, entry, held);
       GUI::flip(document, entry, held);
-      GUI::doubled(document, entry, held);
+      GUI::restore(document, entry, held);
       GUI::seat(document, entry, held);
     }
     GUI::moor(document, entry);
@@ -103,14 +103,12 @@ void GUI::point(Handle document, Float x, Float y, Flag inside, Flag down) {
   auto &entry = STATE::documents[document];
   auto &pointer = entry.pointer;
   pointer.spot = {x, y};
-  pointer.inside = inside;
   const Flag captured =
     down && pointer.dragged && pointer.pressed != PARENTLESS &&
     entry.nodes[pointer.pressed].live && pointer.wiring == PARENTLESS;
-  const auto pick = !inside    ? PARENTLESS
-                    : captured ? pointer.pressed
-                               : BACKEND::pick(document, {x, y});
-  const auto hit = captured || !veiled(entry, pick) ? pick : PARENTLESS;
+  const auto hit = !inside    ? PARENTLESS
+                   : captured ? pointer.pressed
+                              : BACKEND::pick(document, {x, y});
   if (hit != pointer.hovered) {
     if (pointer.hovered != PARENTLESS && entry.nodes[pointer.hovered].live)
       record(entry, pointer.hovered, Event::EXITED);

@@ -95,7 +95,6 @@ auto walked(const String &host, const String &bundle) -> Status {
 
 }  // namespace
 
-auto browsed() -> Status;
 int main() {
   const String named = host();
   const String bundle = BUNDLE;
@@ -105,6 +104,5 @@ int main() {
   status |= fed(named, bundle);
   status |= released(named, bundle);
   status |= walked(named, bundle);
-  status |= browsed();
   return status;
 }

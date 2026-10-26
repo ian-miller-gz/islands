@@ -18,7 +18,6 @@
 #pragma endregion
 #pragma once
 #include <shell/engine/engine.hpp>
-#include <island/input.hpp>
 
 namespace ISLAND::SHELL {
 
@@ -28,11 +27,8 @@ void status(::SHELL::Session &session);
 
 auto commands() -> const Vector<::SHELL::Command> &;
 
-void resize(::SHELL::Session &session);
-
 auto debug() -> const Vector<::SHELL::Command> *;
 void dialog(::SHELL::Session &session);
-void hover(::SHELL::Session &session);
 
 auto settings() -> const Vector<::SHELL::ENGINE::Setting> &;
 
@@ -40,9 +36,5 @@ namespace LOGS {
 auto level() -> String;
 auto set(const String &value) -> Flag;
 }  // namespace LOGS
-
-namespace DRIVE {
-auto composed(const String &name, INPUT::KEYS::Event &event) -> Flag;
-}  // namespace DRIVE
 
 }  // namespace ISLAND::SHELL

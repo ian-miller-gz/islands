@@ -131,14 +131,6 @@ def test_a_released_tree_is_clean():
   assert len(hits) == len(private) + 4
 
 
-def test_a_private_repository_skips_the_clean_tree_rule(repo, monkeypatch):
-  (repo.path / 'README.md').write_text('private\n')
-  head = repo.commit('0.3.5', NOW - 60)
-  assert release.check_tag('0.3.5', head) == ['README.md present']
-  monkeypatch.setenv('RELEASE_PRIVATE', 'true')
-  assert release.check_tag('0.3.5', head) == []
-
-
 def test_release_lines_are_linear():
   assert release.linear([]) == []
   assert release.linear(['abc'])
@@ -149,22 +141,6 @@ def test_tools_requirement_is_a_tag_on_the_pin():
   assert release.tools(CONFIG, {'0.1.0'}) == []
   assert release.tools(CONFIG, {'0.2.0'})
   assert release.tools(CONFIG, set())
-
-
-def test_an_unreachable_tools_pin_leaves_the_requirement_unverified(repo, capsys):
-  (repo.path / '.gitmodules').write_text(
-    '[submodule "submodules/islands-tools"]\n\tpath = submodules/islands-tools\n'
-    f'\turl = {repo.path / "absent.git"}\n')
-  (repo.path / release.CONFIG).parent.mkdir(exist_ok=True)
-  (repo.path / release.CONFIG).write_text(CONFIG)
-  repo.git('add', '.gitmodules', release.CONFIG)
-  repo.git('update-index', '--add', '--cacheinfo', f'160000,{"1" * 40},{release.TOOL}')
-  repo.git('commit', '-q', '-m', '0.3.5', when=NOW - 60)
-  head = repo.git('rev-parse', 'HEAD')
-  assert release.pin(head) == '1' * 40
-  assert release.pinned(head) is None
-  assert 'unverified' in capsys.readouterr().err
-  assert release.check_tag('0.3.5', head) == []
 
 
 def test_a_bump_edits_the_version_line_alone():

@@ -60,9 +60,7 @@ void pieces(STRING::Hot id) {
             << GUI::GET::ends(::bench, id).to.y << std::endl;
   for (Whole at = 0; at < GUI::KINDS::SEGMENTS; at += 1)
     std::cout << "  " << at << " " << elements[at].x << "," << elements[at].y
-              << " " << elements[at].w << "x" << elements[at].h << " "
-              << elements[at].axis.x << "," << elements[at].axis.y << " "
-              << elements[at].fringe << " " << elements[at].caps << std::endl;
+              << " " << elements[at].w << "x" << elements[at].h << std::endl;
 }
 
 }  // namespace

@@ -30,9 +30,7 @@ constexpr STRING::Hot LAYOUT =
   "dial notch x=8 y=80 w=200 h=20 least=0 most=1 steps=4 resting=0.3 "
   "value=0.3 graphic=dial\n"
   "dial slide x=8 y=120 w=200 h=20 least=0 most=1 resting=0.3 value=0.3 "
-  "graphic=bar text=0.3\n"
-  "dial pan x=8 y=160 w=200 h=20 least=-1 most=1 value=0.5 graphic=dial "
-  "track=#c8b89aff\n";
+  "graphic=bar text=0.3\n";
 
 constexpr Step TYPE[] = {
   {100, 50, true, "1 press"}, {100, 50, false, "1 click"}};
@@ -91,7 +89,7 @@ Status knob() {
   status |= check("focus", GUI::focus(::bench, true) == 0);
   status |= check(
     "graphic", GUI::GET::dial(::bench, "knob").graphic == GUI::Dial::DIAL);
-  status |= KNOB::measure(::bench) | KNOB::emit(::bench);
+  status |= KNOB::measure(::bench);
   ::type();
   KNOB::walk(::bench, ::TURN);
   status |= check("unseat", GUI::edit(::bench, "") == 0);

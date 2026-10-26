@@ -60,46 +60,18 @@ void trace(Handle document, Document &entry, Float x);
 
 auto ring(const Document &entry, Whole index) -> Whole;
 
-auto reach(Handle document, Whole index, const INPUT::KEYS::Event &event)
-  -> Flag;
-
-auto shut(Handle document, Document &entry, const INPUT::KEYS::Event &event)
-  -> Flag;
-
 auto doubles(Pointer &aim, Whole index, Whole row) -> Flag;
 
 auto flagged(const Properties &properties) -> Flag;
 void turn(Handle document, Document &entry, Whole index, Float value);
 void drag(Handle document, Document &entry, Float x, Float y);
 
-constexpr Float FINE = 10.0f;
-
 auto spin(Handle document, Document &entry, Whole index, Float x, Float y)
-  -> Flag;
-
-auto quantize(
-  const Properties &properties, const INPUT::Chord &chord,
-  Float value) -> Float;
-
-void fill(Handle document, Document &entry, Whole index, Float x);
-
-auto cancel(Handle document, Document &entry, const INPUT::KEYS::Event &event)
   -> Flag;
 auto flip(Handle document, Document &entry, Whole hit) -> Flag;
 void restore(Handle document, Document &entry, Whole hit);
-void doubled(Handle document, Document &entry, Whole hit);
 auto nudge(Handle document, Whole index, const INPUT::KEYS::Event &event)
   -> Flag;
-
-auto turn(
-  Handle document, Document &entry, Whole index,
-  const INPUT::KEYS::Event &event) -> Flag;
-
-auto step(const Properties &properties) -> Float;
-
-auto nudge(Handle document, Float wheel, Flag shift) -> Flag;
-
-void roll(Handle document, Float wheel, Flag control, Flag shift);
 
 void shift(Handle document, Document &entry, Float x, Float y);
 void sweep(Handle document, Float x, Float y, Flag down);
@@ -110,15 +82,11 @@ void moor(Handle document, Document &entry);
 void carry(Handle document, Document &entry, Whole index, Flag on);
 auto carried() -> Flag;
 
-void crank(Handle document, Float wheel, Flag control, Flag shift);
+void crank(Handle document, Float wheel, Flag control);
 
 void stamp(Handle document, Document &entry, Whole hit, Float x, Float y);
 
 void stroke(Handle document, Document &entry, Float x, Float y);
-auto aboard(
-  Handle document, const Document &entry, Whole deck, Float x,
-  Float y) -> Position;
-auto rest(Handle document, const INPUT::Pointer &hand) -> Flag;
 
 namespace NGA {
 auto selectable(const Document &entry, Whole index) -> Flag;
@@ -163,7 +131,5 @@ auto spanned(
 void sever(Handle document, Document &entry, Float x, Float y);
 
 void shape();
-
-auto veiled(const Document &entry, Whole hit) -> Flag;
 
 }  // namespace GUI

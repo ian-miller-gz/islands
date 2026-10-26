@@ -17,6 +17,7 @@
  ============================================================================*/
 #pragma endregion
 #include <island/gui/events.internal.hpp>
+#include <island/gui/backend.hpp>
 #include <island/input.hpp>
 #include <algorithm>
 
@@ -26,13 +27,13 @@ namespace {
 
 constexpr Float RATE = 0.02f;
 
-auto handed(const GUI::Properties &properties, const INPUT::KEYS::Event &event)
-  -> Flag {
-  using namespace INPUT::KEYS;
-  if (properties.most > properties.least) return false;
-  if (properties.graphic != GUI::Dial::NONE) return false;
-  return event.action == UP || event.action == DOWN || event.action == PRIOR ||
-         event.action == NEXT;
+constexpr Float NUDGES = 100.0f;
+
+auto step(const GUI::Properties &properties) -> Float {
+  if (properties.most <= properties.least) return 1.0f;
+  const Float span = properties.most - properties.least;
+  if (properties.steps == 0) return span / NUDGES;
+  return span / static_cast<Float>(properties.steps);
 }
 
 }  // namespace
@@ -66,7 +67,13 @@ void GUI::drag(Handle document, Document &entry, Float x, Float y) {
     turn(document, entry, index, properties.value + pull * RATE);
     return;
   }
-  fill(document, entry, index, x);
+  const auto corner = BACKEND::origin(document, index);
+  const auto size = BACKEND::measured(document, index);
+  if (size.w <= 0.0f) return;
+  const Float across = (x - corner.x) / size.w;
+  turn(
+    document, entry, index,
+    properties.least + across * (properties.most - properties.least));
 }
 
 auto GUI::flagged(const Properties &properties) -> Flag {
@@ -97,6 +104,12 @@ auto GUI::nudge(Handle document, Whole index, const INPUT::KEYS::Event &event)
   -> Flag {
   using namespace INPUT::KEYS;
   auto &entry = STATE::documents[document];
+  if (
+    event.action == UP || event.action == DOWN || event.action == PRIOR ||
+    event.action == NEXT) {
+    seat(document, PARENTLESS, false);
+    return false;
+  }
   if (event.action == ENTER) {
     if (flip(document, entry, index)) return true;
     if (!typeable(entry.nodes[index])) return true;
@@ -107,9 +120,20 @@ auto GUI::nudge(Handle document, Whole index, const INPUT::KEYS::Event &event)
       GUI::Caret{static_cast<Whole>(end), 0});
     return true;
   }
-  if (::handed(entry.nodes[index].properties, event)) {
-    seat(document, PARENTLESS, false);
-    return false;
+  if (event.action == TEXT && event.codepoint == TAB) {
+    const auto next = ring(entry, index);
+    seat(document, next, entry.nodes[next].kind == "field");
+    return true;
   }
-  return turn(document, entry, index, event);
+  const auto &properties = entry.nodes[index].properties;
+  const Flag bound = properties.most > properties.least;
+  if (event.action == LEFT)
+    turn(document, entry, index, properties.value - ::step(properties));
+  if (event.action == RIGHT)
+    turn(document, entry, index, properties.value + ::step(properties));
+  if (event.action == HOME && bound)
+    turn(document, entry, index, properties.least);
+  if (event.action == END && bound)
+    turn(document, entry, index, properties.most);
+  return true;
 }

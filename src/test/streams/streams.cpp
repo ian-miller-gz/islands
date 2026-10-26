@@ -43,15 +43,48 @@ Status check(STRING::Hot name, Flag passed) {
 }
 
 #if SR_NETWORK_CARRIES(SR_UNIX) && SR_NETWORK_CARRIES(SR_TCP)
+// A dial is settled by glances: the session stands DIALING until the peer
+// answers, then OPEN; a refused dial closes. Neither glance waits.
+static auto settled(NETWORK::Handle session, NETWORK::SESSIONS::State wanted)
+  -> Flag {
+  using NETWORK::SESSIONS::State;
+  for (Whole i = 0; i < TRIES; i += 1) {
+    const State state = NETWORK::SESSIONS::settle(session);
+    if (state == wanted) return true;
+    if (state == State::CLOSED) return false;
+    std::this_thread::sleep_for(std::chrono::milliseconds(5));
+  }
+  return false;
+}
+
+Flag dialed(const NETWORK::Socket &open, const NETWORK::Socket &shut) {
+  using NETWORK::SESSIONS::State;
+  const auto live = NETWORK::SESSIONS::create(open);
+  const Flag answered =
+    live != NETWORK::NONE && settled(live, State::OPEN) &&
+    echoed(live, "over-dial");
+  if (live != NETWORK::NONE) NETWORK::SESSIONS::destroy(live);
+  const auto dead = NETWORK::SESSIONS::create(shut);
+  const Flag refused =
+    dead == NETWORK::NONE ||
+    (!settled(dead, State::OPEN) &&
+     NETWORK::SESSIONS::GET::state(dead) == State::CLOSED);
+  return answered && refused;
+}
+
 int main(int count, char **arguments) {
-  if (count < 3) return check("usage <socket path> <tcp port>", false);
+  if (count < 4)
+    return check("usage <socket path> <tcp port> <closed port>", false);
   const NETWORK::Endpoint local{arguments[1]};
   const NETWORK::Socket loop{
     "127.0.0.1", std::strtoul(arguments[2], nullptr, 10)};
+  const NETWORK::Socket shut{
+    "127.0.0.1", std::strtoul(arguments[3], nullptr, 10)};
   auto first = NETWORK::SESSIONS::create(local);
   auto second = NETWORK::SESSIONS::create(loop);
   Status status = check("unix", echoed(first, "over-unix"));
   status |= check("tcp", echoed(second, "over-tcp"));
+  status |= check("dial", dialed(loop, shut));
   if (first != NETWORK::NONE) NETWORK::SESSIONS::destroy(first);
   if (second != NETWORK::NONE) NETWORK::SESSIONS::destroy(second);
   return status;

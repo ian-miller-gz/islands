@@ -25,9 +25,7 @@
 
 namespace {
 
-constexpr int STANDARDS[] = {
-  GLFW_ARROW_CURSOR, GLFW_IBEAM_CURSOR, GLFW_RESIZE_EW_CURSOR,
-  GLFW_RESIZE_NS_CURSOR};
+constexpr int STANDARDS[] = {GLFW_ARROW_CURSOR, GLFW_IBEAM_CURSOR};
 GLFWcursor *cursors[std::size(STANDARDS)] = {};
 WINDOW::BACKEND::Shape standing = WINDOW::BACKEND::ARROW;
 GLFWcursor *picture = nullptr;
@@ -70,7 +68,6 @@ void WINDOW::BACKEND::wear(const Image &image, Whole hotx, Whole hoty) {
 }
 
 auto WINDOW::BACKEND::GET::worn() -> Flag { return picture != nullptr; }
-auto WINDOW::BACKEND::GET::shape() -> Shape { return standing; }
 
 void WINDOW::BACKEND::GLFW::forget() {
   for (auto *&cursor : cursors) {

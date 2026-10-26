@@ -31,7 +31,6 @@ static Float movedX = 0;
 static Float movedY = 0;
 static Float rolled = 0;
 static Flag chorded = false;
-static Flag shifted = false;
 static INPUT::Chord chord;
 static std::array<Flag, 3> buttons{};
 static INPUT::Edge rose;
@@ -63,10 +62,9 @@ void INPUT::POINTER::press(Button button, Flag down, Chord chord) {
   buttons[button] = down;
 }
 
-void INPUT::POINTER::scroll(Float amount, Flag control, Flag shift) {
+void INPUT::POINTER::scroll(Float amount, Flag control) {
   rolled += amount;
   if (control) chorded = true;
-  if (shift) shifted = true;
 }
 
 void INPUT::POINTER::claim(Flag owned) {
@@ -91,7 +89,6 @@ void INPUT::POINTER::frame() {
   state.dy = movedY;
   state.wheel = rolled;
   state.control = chorded;
-  state.shift = shifted;
   state.left = buttons[LEFT];
   state.rose = rose;
   state.fell = fell;
@@ -102,7 +99,6 @@ void INPUT::POINTER::frame() {
   movedY = 0;
   rolled = 0;
   chorded = false;
-  shifted = false;
   if (fell.on) chord = {};
   rose = {};
   fell = {};

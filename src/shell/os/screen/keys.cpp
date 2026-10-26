@@ -35,13 +35,6 @@ constexpr Code CODES[] = {
   {IN::DELETE, "\x1b[3~"}, {IN::PRIOR, "\x1b[5~"}, {IN::NEXT, "\x1b[6~"},
   {IN::ENTER, "\r"},       {IN::ERASE, "\x7f"},
 };
-
-constexpr Whole FOLD = 0x1f;
-
-auto folded(Whole codepoint) -> String {
-  if (codepoint < 'A' || codepoint > 'Z') return {};
-  return String(1, static_cast<Char>(codepoint & FOLD));
-}
 }  // namespace
 
 auto SHELL::OS::KEYS::encode(const IN::Event &event) -> String {
@@ -55,7 +48,8 @@ auto SHELL::OS::KEYS::encode(const IN::Event &event, Flag cursors) -> String {
   for (const auto &code : CODES)
     if (code.action == event.action) return code.sequence;
   if (event.action != IN::TEXT) return {};
-  if (event.control) return ::folded(event.codepoint);
+  if (event.control)
+    return String(1, static_cast<Char>(event.codepoint & 0x1f));
   if (event.codepoint == 0 || event.codepoint > 0x7f) return {};
   return String(1, static_cast<Char>(event.codepoint));
 }

@@ -62,7 +62,6 @@ void WINDOW::BACKEND::create(STRING::Hot title, int width, int height) {
   if (visible) glfwShowWindow(window);
   GLFW::wire();
   GLFW::track();
-  GLFW::watch();
 }
 
 Flag WINDOW::BACKEND::poll() {
