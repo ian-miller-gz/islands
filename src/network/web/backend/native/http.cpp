@@ -19,14 +19,14 @@
 #include <network/web/native.http.internal.hpp>
 
 namespace NETWORK::WEB::NATIVE::HTTP {
-namespace {
-constexpr STRING::Hot BREAK = "\r\n";
-
 auto authority(const Url &target) -> String {
   const Scheme *known = lookup(target.scheme);
   if (known && target.port == known->port) return target.host;
   return target.host + ":" + std::to_string(target.port);
 }
+
+namespace {
+constexpr STRING::Hot BREAK = "\r\n";
 
 auto field(const String &name, const String &value) -> String {
   return name + ": " + value + BREAK;

@@ -120,10 +120,15 @@ static auto steer(
 auto GUI::key(Handle document, const INPUT::KEYS::Event &event) -> Status {
   if (!live(document)) return 1;
   auto &entry = STATE::documents[document];
+  if (cancel(document, entry, event)) return 0;
+  if (shut(document, entry, event)) {
+    record(entry, event);
+    return 0;
+  }
   const auto cell = entry.editing;
   if (cell != PARENTLESS && entry.nodes[cell].live) {
     const Flag took =
-      entry.seated ? type(document, cell, event) : nudge(document, cell, event);
+      entry.seated ? type(document, cell, event) : reach(document, cell, event);
     if (took) return 0;
   }
   if (roam(document, event)) return 0;

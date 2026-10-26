@@ -84,8 +84,10 @@ auto INPUT::GET::pointer() -> const INPUT::Pointer & { return ::pointer; }
 static WINDOW::Image carried;
 static Whole hotx = 0;
 static Whole hoty = 0;
+static WINDOW::Shape standing = WINDOW::ARROW;
 
-void WINDOW::BACKEND::shape(Shape) {
+void WINDOW::BACKEND::shape(Shape wanted) {
+  ::standing = wanted;
   ::carried = {};
   ::hotx = 0;
   ::hoty = 0;
@@ -100,6 +102,7 @@ void WINDOW::BACKEND::wear(const Image &image, Whole hotx, Whole hoty) {
 }
 
 auto WINDOW::BACKEND::GET::worn() -> Flag { return ::carried.w != 0; }
+auto WINDOW::BACKEND::GET::shape() -> Shape { return ::standing; }
 
 auto worn() -> Worn { return {::carried.w, ::carried.h, ::hotx, ::hoty}; }
 

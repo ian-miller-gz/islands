@@ -1,5 +1,4 @@
 import os
-
 import re
 
 import autest.testers as testers
@@ -9,6 +8,7 @@ SKINS = {'SR_NATIVE': '', 'SR_RMLUI': 'rmlui'}
 FRAMES = 3
 WIDTH, HEIGHT = 640, 480
 TOLERANCE = 8
+counts = {}
 
 
 def root(directory):
@@ -168,12 +168,12 @@ def gold(directory, config, name):
 
 
 def counted(test, pattern, times, transcript='paced.out'):
-  expression = re.compile(pattern, re.M)
-
-  def counting(data):
-    found = len(expression.findall(data))
-    return (None if found == times else
-            f'{found} lines match {pattern}, not {times}')
-
-  test.Disk.File(transcript).Content += testers.FileContentCallback(
-    counting, f'{transcript} holds {times} lines matching {pattern}')
+  if (key := (test, transcript)) not in counts:
+    counts[key] = [], testers.FileContentCallback(lambda data: '\n'.join(
+      f'{found} lines match {held}, not {wanted}' for held, wanted in
+      counts[key][0] if (found := len(re.findall(held, data, re.M))) != wanted
+    ) or None, '')
+    test.Disk.File(transcript).Content += counts[key][1]
+  counts[key][0].append((pattern, times))
+  counts[key][1].Description = '; '.join(
+    f'{wanted} lines match {held}' for held, wanted in counts[key][0])

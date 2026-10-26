@@ -50,7 +50,9 @@ static void focus(GLFWwindow *, int focused) {
 static void wheel(GLFWwindow *held, double, double vertical) {
   const Flag control = glfwGetKey(held, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS ||
                        glfwGetKey(held, GLFW_KEY_RIGHT_CONTROL) == GLFW_PRESS;
-  INPUT::POINTER::scroll(static_cast<Float>(vertical), control);
+  const Flag shift = glfwGetKey(held, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS ||
+                     glfwGetKey(held, GLFW_KEY_RIGHT_SHIFT) == GLFW_PRESS;
+  INPUT::POINTER::scroll(static_cast<Float>(vertical), control, shift);
 }
 
 void WINDOW::BACKEND::GLFW::track() {

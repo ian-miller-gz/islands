@@ -23,7 +23,6 @@
 #include <common.hpp>
 #include <console.hpp>
 #include <logger.hpp>
-#include <cstdlib>
 #include <metrics.hpp>
 #include <network.hpp>
 #include <topics.hpp>
@@ -34,28 +33,12 @@ static const String category = "~/reef::";
 static Flag threads = false;
 static Flag staged = false;
 
-// A static host carries one bundle: --cartridge may name it (the launcher
-// spawns a reef with the bundle on the line, whichever delivery) and may
-// name nothing else.
-static auto carried(const String &bundle) -> Flag {
-#if SR_CARTRIDGE == SR_NONE
-  CARTRIDGE::path = bundle;
-  return true;
-#else
-  if (bundle == CARTRIDGE::GET::bundle()) return true;
-  std::cout << "This host carries " << CARTRIDGE::GET::bundle() << ", not "
-            << bundle << "." << std::endl;
-  return false;
-#endif
-}
-
 static auto parse(int count, char **values) -> Status {
-  if (const char *spec = std::getenv("ISLANDS_LOG"); spec && *spec)
-    LOGGER::FILTERS::add(spec);
+#if SR_CARTRIDGE == SR_NONE
   int at = 1;
   for (; at + 1 < count && String(values[at]) != "--"; at += 2) {
     const String flag = values[at];
-    if (flag == "--cartridge" && !carried(values[at + 1])) return 1;
+    if (flag == "--cartridge") CARTRIDGE::path = values[at + 1];
     if (flag == "--log") LOGGER::FILTERS::add(values[at + 1]);
     if (flag == "--threads") {
       threads = std::stoi(values[at + 1]) != 0;
@@ -66,12 +49,10 @@ static auto parse(int count, char **values) -> Status {
     for (at += 1; at < count; at += 1)
       CARTRIDGE::arguments.push_back(values[at]);
   if (CARTRIDGE::configured()) return 0;
-#if SR_CARTRIDGE == SR_NONE
   std::cout << "Usage: " << REEF_NAME << " --cartridge <bundle-directory>"
             << std::endl;
 #else
-  std::cout << "Static delivery folds no cartridge into this host."
-            << std::endl;
+  std::cout << "Static delivery does not reach this host." << std::endl;
 #endif
   return 1;
 }

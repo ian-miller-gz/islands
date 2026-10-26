@@ -39,10 +39,12 @@ auto GUI::spin(Handle document, Document &entry, Whole index, Float x, Float y)
   pointer.dragged = true;
   const Float span = properties.most - properties.least;
   Float moved = pull / ::TRAVEL * span;
+  if (pointer.chord.shift) moved /= FINE;
   if (properties.steps > 0) {
     const Float step = span / static_cast<Float>(properties.steps);
     moved = std::trunc(moved / step) * step;
   }
-  turn(document, entry, index, pointer.grabbed + moved);
+  const Float value = pointer.grabbed + moved;
+  turn(document, entry, index, quantize(properties, pointer.chord, value));
   return true;
 }

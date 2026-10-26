@@ -72,6 +72,8 @@ extern Vector<String> web;
 
 extern Vector<String> server;
 
+extern Flag loopback;
+
 extern Vector<String> components;
 
 struct Panel {

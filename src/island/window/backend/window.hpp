@@ -51,17 +51,21 @@ void close();
 
 void minimize();
 
+void raise();
+
 void drag(Flag on);
 
 void maximize(Flag on);
 
 void fullscreen(Flag on);
 
+void resize(Whole w, Whole h);
+
 void capture(Flag on);
 
 void clipboard(STRING::Hot text);
 
-enum Shape { ARROW, IBEAM };
+enum Shape { ARROW, IBEAM, ACROSS, DOWN };
 
 struct Image {
   Whole w = 0;
@@ -85,7 +89,13 @@ Flag worn();
 Flag maximized();
 String clipboard();
 
+auto shape() -> Shape;
+
+Flag focused();
+
 Native parent();
+
+auto rescaled() -> Flag;
 }  // namespace WINDOW::BACKEND::GET
 
 #if SR_GFX_BACKEND == SR_VULKAN
@@ -104,6 +114,20 @@ namespace WINDOW::BACKEND::GET {
 SDL_Window *handle();
 }  // namespace WINDOW::BACKEND::GET
 #endif
+
+namespace WINDOW {
+auto notify(STRING::Hot title) -> Status;
+void withdraw();
+}  // namespace WINDOW
+
+namespace WINDOW::NOTICE {
+constexpr Status UNMAPPED = 1;
+constexpr Status NOTIFIER = 2;
+constexpr Status BUS = 3;
+constexpr STRING::Hot REFUSALS[] = {
+  "", "window unmapped", "no notifier", "no bus"};
+void poll();
+}  // namespace WINDOW::NOTICE
 
 namespace WINDOW {
 using namespace ::WINDOW::BACKEND;

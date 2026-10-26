@@ -1,0 +1,25 @@
+gui hovered load: PASS
+gui place: PASS
+hovered off the board: board='' target='' at=0.0,0.0 hover=-
+hovered osc: board='deck' target='osc' at=50.0,30.0 hover=osc
+hovered osc again: board='deck' target='osc' at=50.0,30.0 hover=osc
+hovered env: board='deck' target='env' at=190.0,110.0 hover=env
+hovered bare: board='deck' target='' at=180.0,30.0 hover=-
+hovered away: board='' target='' at=0.0,0.0 hover=away
+hovered pressed: board='' target='' at=0.0,0.0 hover=osc
+hovered released: board='deck' target='osc' at=50.0,30.0 hover=osc
+gui claim: PASS
+hovered claimed away: board='' target='' at=0.0,0.0 hover=-
+gui unclaim: PASS
+hovered unclaimed: board='deck' target='osc' at=50.0,30.0 hover=osc
+gui hover: PASS
+hovered driven: board='deck' target='osc' at=50.0,30.0 hover=osc
+hovered driven rests: board='deck' target='osc' at=50.0,30.0 hover=osc
+gui offset: PASS
+hovered driven offset: board='deck' target='' at=140.0,150.0 hover=-
+hovered stirred: board='' target='' at=0.0,0.0 hover=-
+gui stranger refused: PASS
+gui press: PASS
+gui press refused: PASS
+gui release: PASS
+gui unknown: PASS

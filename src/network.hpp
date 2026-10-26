@@ -29,4 +29,6 @@
 #include <network/types.hpp>
 #include <network/wait.hpp>
 #include <network/web.hpp>
+#include <network/web/loopback.hpp>
 #include <network/web/server.hpp>
+#include <network/web/socket.hpp>

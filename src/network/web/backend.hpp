@@ -19,9 +19,18 @@
 #pragma once
 
 #include <network/web.hpp>
+#include <network/web/socket.hpp>
 
 namespace NETWORK::WEB::BACKEND {
 
 auto transfer(const Request &request) -> Result;
 
 }  // namespace NETWORK::WEB::BACKEND
+
+namespace NETWORK::WEB::BACKEND::SOCKET {
+using NETWORK::WEB::SOCKET::Socket;
+auto open(Socket socket, const String &url, String &error) -> Flag;
+auto send(Socket socket, const String &text) -> Flag;
+auto receive(Socket socket, Vector<String> &messages) -> Flag;
+void close(Socket socket);
+}  // namespace NETWORK::WEB::BACKEND::SOCKET

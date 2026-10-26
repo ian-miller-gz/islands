@@ -87,6 +87,13 @@ extern Swapchain swapchain;
 extern Frames frames;
 extern vk::raii::RenderPass pass;
 
+namespace INSTANCE {
+constexpr STRING::Hot VALIDATION = "VK_LAYER_KHRONOS_validation";
+auto context() -> vk::raii::Context &;
+auto listed(STRING::Hot layer) -> Flag;
+auto offered(STRING::Hot extension) -> Flag;
+}  // namespace INSTANCE
+
 auto compose() -> vk::raii::RenderPass;
 namespace COMMANDS {
 auto create() -> vk::raii::CommandBuffers;

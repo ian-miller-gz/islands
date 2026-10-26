@@ -20,7 +20,7 @@
 #include <island/gui/nga.internal.hpp>
 #include <island/gui/backend.hpp>
 
-void GUI::crank(Handle document, Float wheel, Flag control) {
+void GUI::crank(Handle document, Float wheel, Flag control, Flag shift) {
   if (wheel == 0.0f) return;
   auto &entry = STATE::documents[document];
   auto &pointer = entry.pointer;
@@ -35,7 +35,7 @@ void GUI::crank(Handle document, Float wheel, Flag control) {
   pointer.spun = deck;
   pointer.turned = {
     wheel, control, worn.pan.x + (spot.x - corner.x) / across,
-    worn.pan.y + (spot.y - corner.y) / down};
+    worn.pan.y + (spot.y - corner.y) / down, shift};
 }
 
 auto GUI::NGA::GET::wheel(Handle document, STRING::Hot id) -> Wheel {

@@ -6,9 +6,20 @@ struct Input
 {
     float2 Texcoord : TEXCOORD0;
     float4 Color : TEXCOORD1;
+    float3 Ramp : TEXCOORD2;
+    float2 Ends : TEXCOORD3;
 };
+
+static const float HALF = 0.5f;
 
 float4 main(Input input) : SV_Target0
 {
-    return input.Color * Texture.Sample(Sampler, input.Texcoord);
+    float4 color = input.Color * Texture.Sample(Sampler, input.Texcoord);
+    if (input.Ramp.z > 0.0f)
+    {
+        float side = input.Ramp.y - abs(input.Ramp.x);
+        float end = min(input.Ends.x, input.Ends.y);
+        color.a *= saturate(min(side, end) / input.Ramp.z + HALF);
+    }
+    return color;
 }

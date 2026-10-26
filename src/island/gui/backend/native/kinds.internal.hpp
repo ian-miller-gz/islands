@@ -44,7 +44,8 @@ enum : Whole {
 
 constexpr Whole SEGMENTS = 16;
 
-constexpr Whole PIECES = 24;
+constexpr Whole PIECES = 48;
+constexpr Float TRACK = 0.4f;
 constexpr Float SWEEP = 1.5f * std::numbers::pi_v<Float>;
 
 struct Entry {
@@ -78,7 +79,7 @@ extern const Paint PAINTS[];
 
 void stroke(const Node &node, const Slot &slot, Element *elements);
 
-auto piece(Position from, Position to, Float thickness, const GFX::Color &ink)
+auto line(Position from, Position to, Float thickness, const GFX::Color &ink)
   -> Element;
 
 void ring(const Node &node, const Slot &slot, Element *elements);

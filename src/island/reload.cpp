@@ -46,6 +46,8 @@ void ISLAND::reload() {
   TERMINAL::reset();
   NETWORK::INSTANCES::close();
   NETWORK::WEB::SERVER::close();
+  NETWORK::WEB::LOOPBACK::close();
+  NETWORK::WEB::SOCKET::close();
   GFX::reset();
   REQUIREMENTS::close();
   RELATIONS::close();
