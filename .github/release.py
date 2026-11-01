@@ -9,6 +9,7 @@ VERSION = re.compile(r'^\s*ENGINE_VERSION:\s*"([^"]*)"', re.M)
 RELEASED = re.compile(r'^release:\s*(\S+)', re.M)
 PROJECT = re.compile(r'^version\s*=\s*"([^"]*)"', re.M)
 TOOLS = re.compile(r'^tools:\s*(\S+)', re.M)
+SOUND = re.compile(r'^sound:\s*(\S+)', re.M)
 RELEASE = re.compile(r'^\d+\.\d+\.\d+$')
 WORKING = re.compile(r'^\d+\.\d+$')
 LINE = re.compile(r'^(\d+\.\d+)-[a-z0-9]+(?:-[a-z0-9]+)*$')
@@ -18,7 +19,9 @@ DAY = 24 * 60 * 60
 CONFIG = 'configs/make.yaml'
 MANIFEST = 'manifest.yaml'
 PYPROJECT = 'pyproject.toml'
-NUMBERED = {CONFIG: ('engine', VERSION), MANIFEST: ('bundle', RELEASED), PYPROJECT: ('tools', PROJECT)}
+PLUGINS = 'plugins.yaml'
+NUMBERED = {CONFIG: ('engine', VERSION), MANIFEST: ('bundle', RELEASED), PYPROJECT: ('tools', PROJECT),
+            PLUGINS: ('plugins', RELEASED)}
 TOOL = 'submodules/islands-tools'
 PRIVATE = ('agents', 'claude', 'recordings')
 FORBIDDEN = tuple('.' + name for name in PRIVATE) + ('CLAUDE' + '.md', 'docs', 'temp')
@@ -48,6 +51,8 @@ def stated(text):
 
 
 def kind(text):
+  if SOUND.search(text):
+    return 'plugins'
   for component, pattern in NUMBERED.values():
     if pattern.search(text):
       return component
@@ -305,7 +310,7 @@ def check_branch(label, head):
   return []
 
 
-def notes(label, head):
+def notes(label, head, bypass=None):
   text = config(head)
   rows = [(kind(text), name(version(head)), head)]
   for line in git('ls-tree', head).splitlines():
@@ -314,7 +319,32 @@ def notes(label, head):
       rows.append((path.split('/')[-1], required(text) if path == TOOL else '', sha))
   body = ['| component | release | commit |', '|---|---|---|']
   body += [f'| {component} | {release} | {sha} |' for component, release, sha in rows]
+  if bypass:
+    body += ['', f'The release rules were waived by {os.environ.get("GITHUB_ACTOR", "the owner")}: {bypass}']
   return '\n'.join(body) + '\n'
+
+
+def report(kind, label, head, problems, bypass):
+  verdict = 'ok' if not problems else 'bypassed' if bypass else 'refused'
+  actions = os.environ.get('GITHUB_ACTIONS') == 'true'
+  for problem in problems:
+    print(f'::{"warning" if bypass else "error"}::{problem}' if actions else problem,
+          file=sys.stdout if actions else sys.stderr)
+  if actions:
+    print(f'::notice::{kind} {label}: {verdict}')
+  summary = os.environ.get('GITHUB_STEP_SUMMARY')
+  if summary:
+    try:
+      states = stated(config(head)) or 'no number'
+    except SystemExit as absent:
+      states = str(absent)
+    with open(summary, 'a') as out:
+      out.write(f'### gate: {kind} {label} — {verdict}\n\n')
+      out.write(f'- head `{head[:8]}` states `{states}`\n')
+      out.writelines(f'- {problem}\n' for problem in problems)
+      if bypass:
+        out.write(f'- waived by {os.environ.get("GITHUB_ACTOR", "the owner")}: {bypass}\n')
+  print(f'{kind} {label}: {verdict}')
 
 
 def main(argv):
@@ -323,9 +353,11 @@ def main(argv):
   parser.add_argument('name')
   parser.add_argument('head')
   parser.add_argument('--before', default=NONE)
+  parser.add_argument('--bypass', default=None, metavar='REASON',
+                      help='waive the rules: refusals stand as warnings, the verdict is bypassed')
   options = parser.parse_args(argv)
   if options.kind == 'notes':
-    sys.stdout.write(notes(options.name, options.head))
+    sys.stdout.write(notes(options.name, options.head, options.bypass))
     return 0
   if options.kind == 'line':
     problems = check_line(options.name, options.before, options.head, int(time.time()))
@@ -335,10 +367,8 @@ def main(argv):
     problems = check_tag(options.name, options.head)
   else:
     problems = check_branch(options.name, options.head)
-  for problem in problems:
-    print(problem, file=sys.stderr)
-  print(f'{options.kind} {options.name}: {"refused" if problems else "ok"}')
-  return 1 if problems else 0
+  report(options.kind, options.name, options.head, problems, options.bypass)
+  return 1 if problems and not options.bypass else 0
 
 
 if __name__ == '__main__':

@@ -4,25 +4,50 @@ on:
     branches: [stable, latest]
     tags: ['[0-9]*.[0-9]*.[0-9]*']
   workflow_dispatch:
+    inputs:
+      bypass:
+        description: "waive the rules — the owner's alone: the refusals stand as warnings and the run goes on"
+        type: boolean
+        default: false
+      reason:
+        description: "why the rules are waived (required with bypass; written into the release notes)"
+        type: string
+        default: ""
 permissions:
   contents: write
 jobs:
   lines:
     runs-on: ubuntu-24.04
+    outputs:
+      bypass: ${{ steps.gate.outputs.bypass }}
     steps:
-      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+      - name: checkout
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
         with:
           fetch-depth: 0
-      - run: |
-            case "${{ github.ref }}" in
-              refs/tags/*)
-                python3 .github/release.py tag "${{ github.ref_name }}" "${{ github.sha }}" ;;
-              *)
-                python3 .github/release.py line "${{ github.ref_name }}" "${{ github.sha }}" \
-                  --before "${{ github.event.before || '0000000000000000000000000000000000000000' }}" ;;
-            esac
+      - name: "gate: the line rules"
+        id: gate
         env:
           RELEASE_PRIVATE: ${{ github.event.repository.private }}
+          BYPASS: ${{ inputs.bypass && inputs.reason || '' }}
+          ACTOR: ${{ github.actor }}
+          OWNER: ${{ github.repository_owner }}
+        run: |
+          if [ "${{ inputs.bypass }}" = true ]; then
+            [ "$ACTOR" = "$OWNER" ] || { echo "::error::the bypass is the repository owner's, not $ACTOR's"; exit 1; }
+            [ -n "$BYPASS" ] || { echo "::error::a bypass states its reason"; exit 1; }
+            echo "::warning::the rules are waived by $ACTOR: $BYPASS"
+          fi
+          echo "bypass=$BYPASS" >> "$GITHUB_OUTPUT"
+          case "${{ github.ref }}" in
+            refs/tags/*)
+              python3 .github/release.py tag "${{ github.ref_name }}" "${{ github.sha }}" \
+                ${BYPASS:+--bypass "$BYPASS"} ;;
+            *)
+              python3 .github/release.py line "${{ github.ref_name }}" "${{ github.sha }}" \
+                --before "${{ github.event.before || '0000000000000000000000000000000000000000' }}" \
+                ${BYPASS:+--bypass "$BYPASS"} ;;
+          esac
   build:
     if: ${{ !github.event.repository.private }}
     needs: lines
@@ -33,10 +58,16 @@ jobs:
     runs-on: ubuntu-24.04
     env:
       GH_TOKEN: ${{ github.token }}
+      BYPASS: ${{ needs.lines.outputs.bypass }}
     steps:
-      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
-      - run: python3 .github/release.py notes "${{ github.ref_name }}" "${{ github.sha }}" > notes.md
-      - run: |
-            gh release view "${{ github.ref_name }}" >/dev/null 2>&1 ||
-              gh release create "${{ github.ref_name }}" --verify-tag \
-                --title "${{ github.ref_name }}" --notes-file notes.md
+      - name: checkout
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+      - name: "notes: the components and their commits"
+        run: |
+          python3 .github/release.py notes "${{ github.ref_name }}" "${{ github.sha }}" \
+            ${BYPASS:+--bypass "$BYPASS"} > notes.md
+      - name: "publish: the GitHub release"
+        run: |
+          gh release view "${{ github.ref_name }}" >/dev/null 2>&1 ||
+            gh release create "${{ github.ref_name }}" --verify-tag \
+              --title "${{ github.ref_name }}" --notes-file notes.md

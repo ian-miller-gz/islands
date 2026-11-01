@@ -10,8 +10,10 @@ jobs:
   version:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
-      - run: python3 .github/release.py branch "${{ github.head_ref || github.ref_name }}" "${{ github.sha }}"
+      - name: checkout
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+      - name: "gate: the branch rule"
+        run: python3 .github/release.py branch "${{ github.head_ref || github.ref_name }}" "${{ github.sha }}"
   build:
     if: ${{ !github.event.repository.private }}
     needs: version

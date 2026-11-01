@@ -9,14 +9,36 @@ on:
       version:
         type: string
         required: true
+      bypass:
+        description: "waive the rules — the owner's alone: the refusals stand as warnings and the run goes on"
+        type: boolean
+        default: false
+      reason:
+        description: "why the rules are waived (required with bypass; written into the release notes)"
+        type: string
+        default: ""
 permissions:
   contents: write
 jobs:
   promote:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+      - name: checkout
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
         with:
           fetch-depth: 0
-      - run: python3 .github/release.py promote "${{ inputs.line }}" "${{ inputs.version }}"
-      - run: git push origin "refs/tags/${{ inputs.version }}^{commit}:refs/heads/${{ inputs.line }}"
+      - name: "gate: the promotion rules"
+        env:
+          BYPASS: ${{ inputs.bypass && inputs.reason || '' }}
+          ACTOR: ${{ github.actor }}
+          OWNER: ${{ github.repository_owner }}
+        run: |
+          if [ "${{ inputs.bypass }}" = true ]; then
+            [ "$ACTOR" = "$OWNER" ] || { echo "::error::the bypass is the repository owner's, not $ACTOR's"; exit 1; }
+            [ -n "$BYPASS" ] || { echo "::error::a bypass states its reason"; exit 1; }
+            echo "::warning::the rules are waived by $ACTOR: $BYPASS"
+          fi
+          python3 .github/release.py promote "${{ inputs.line }}" "${{ inputs.version }}" \
+            ${BYPASS:+--bypass "$BYPASS"}
+      - name: "promote: fast-forward ${{ inputs.line }} to ${{ inputs.version }}"
+        run: git push origin "refs/tags/${{ inputs.version }}^{commit}:refs/heads/${{ inputs.line }}"

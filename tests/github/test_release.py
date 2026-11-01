@@ -16,8 +16,9 @@ NOW = 1_800_000_000
 CONFIG = 'tools: 0.1.0\ncompiler: g++\n\ndirectives:\n  engine:\n    ENGINE_VERSION: "0.3.5"\n'
 MANIFEST = 'name: sound\nentry: libsound.so\nrelease: 0.3.5\n'
 PYPROJECT = '[project]\nname = "islands-tools"\nversion = "0.3.5"\n'
+PLUGINS = 'release: 0.3.5\nsound: 0.1\n'
 SHAPES = {'engine': (release.CONFIG, CONFIG), 'bundle': (release.MANIFEST, MANIFEST),
-          'tools': (release.PYPROJECT, PYPROJECT)}
+          'tools': (release.PYPROJECT, PYPROJECT), 'plugins': (release.PLUGINS, PLUGINS)}
 
 
 def test_parse_reads_three_numbers():
@@ -45,6 +46,7 @@ def test_a_numbered_file_names_its_component():
   assert release.kind(CONFIG) == 'engine'
   assert release.kind(MANIFEST) == 'bundle'
   assert release.kind(PYPROJECT) == 'tools'
+  assert release.kind(PLUGINS) == 'plugins'
   assert release.kind('compiler: g++\n') is None
 
 
@@ -137,6 +139,32 @@ def test_a_private_repository_skips_the_clean_tree_rule(repo, monkeypatch):
   assert release.check_tag('0.3.5', head) == ['README.md present']
   monkeypatch.setenv('RELEASE_PRIVATE', 'true')
   assert release.check_tag('0.3.5', head) == []
+
+
+def test_a_bypass_turns_refusals_into_warnings(repo, capsys):
+  head = repo.commit('0.3.5', NOW - 60)
+  assert release.main(['tag', '0.4.0', head]) == 1
+  assert 'tag 0.4.0: refused' in capsys.readouterr().out
+  assert release.main(['tag', '0.4.0', head, '--bypass', 'the owner says so']) == 0
+  assert 'tag 0.4.0: bypassed' in capsys.readouterr().out
+  assert release.main(['tag', '0.3.5', head, '--bypass', 'nothing to waive']) == 0
+  assert 'tag 0.3.5: ok' in capsys.readouterr().out
+  assert 'waived' in release.notes('0.3.5', head, 'the owner says so')
+  assert 'waived' not in release.notes('0.3.5', head)
+
+
+def test_the_gate_annotates_and_summarizes_under_actions(repo, tmp_path, monkeypatch, capsys):
+  head = repo.commit('0.3.5', NOW - 60)
+  summary = tmp_path / 'summary.md'
+  monkeypatch.setenv('GITHUB_ACTIONS', 'true')
+  monkeypatch.setenv('GITHUB_STEP_SUMMARY', str(summary))
+  assert release.main(['tag', '0.4.0', head]) == 1
+  out = capsys.readouterr().out
+  assert '::error::0.4.0 states 0.3.5' in out and '::notice::tag 0.4.0: refused' in out
+  assert 'refused' in summary.read_text() and '0.3.5' in summary.read_text()
+  assert release.main(['tag', '0.4.0', head, '--bypass', 'why']) == 0
+  assert '::warning::0.4.0 states 0.3.5' in capsys.readouterr().out
+  assert 'waived' in summary.read_text()
 
 
 def test_release_lines_are_linear():
@@ -315,7 +343,7 @@ def test_notes_table_the_engine_and_every_pin(repo):
   assert table[2] == f'| engine | 0.4.0 | {head} |'
 
 
-@pytest.mark.parametrize('shape', ['bundle', 'tools'])
+@pytest.mark.parametrize('shape', ['bundle', 'tools', 'plugins'])
 def test_a_bundle_or_tools_repo_follows_the_same_rules(repo, shape):
   older = repo.commit('0.3.0', NOW - 30 * DAY, shape=shape)
   repo.git('tag', '0.3.0')
@@ -334,3 +362,4 @@ def test_a_bundle_or_tools_repo_follows_the_same_rules(repo, shape):
   assert release.check_branch('0.4-ci', head)
   table = release.notes('0.4.0', head).splitlines()
   assert table[2] == f'| {shape} | 0.4.0 | {head} |'
+
