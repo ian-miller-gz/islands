@@ -19,6 +19,7 @@
 #include <island/gui/events.internal.hpp>
 #include <island/gui/backend.hpp>
 #include <island/gui/nga.internal.hpp>
+#include <island/window/backend.hpp>
 #include <algorithm>
 #include <cmath>
 
@@ -42,18 +43,69 @@ auto share(GUI::Anchor anchor, Flag across) -> Float {
   return far ? 1.0f : 0.0f;
 }
 
+auto room(GUI::Handle document, const GUI::Document &entry, Whole index)
+  -> GUI::Extent {
+  const auto parent = entry.nodes[index].parent;
+  return parent == GUI::PARENTLESS ? GUI::BACKEND::extent(document)
+                                   : GUI::BACKEND::measured(document, parent);
+}
+
 auto held(
   GUI::Handle document, const GUI::Document &entry, Whole index, Flag across,
   Float wanted) -> Float {
   const auto &node = entry.nodes[index];
-  const auto room = node.parent == GUI::PARENTLESS
-                      ? GUI::BACKEND::extent(document)
-                      : GUI::BACKEND::measured(document, node.parent);
   const Float scale = ::along(across, GUI::NGA::scaled(document, index));
   const Float span = ::along(across, GUI::BACKEND::measured(document, index));
-  const Float high = std::max(0.0f, (::along(across, room) - span) / scale);
+  const Float high = std::max(
+    0.0f, (::along(across, ::room(document, entry, index)) - span) / scale);
   const Float near = ::share(node.properties.anchor, across);
-  return std::clamp(wanted, -high * near, high * (1.0f - near));
+  const auto plate = GUI::whole(document, entry, index);
+  const Float lead = ::along(across, GUI::BACKEND::origin(document, index)) -
+                     ::along(across, plate.at);
+  const Float trail = ::along(across, plate.span) - lead - span;
+  const Float low = -high * near + lead / scale;
+  const Float top = high * (1.0f - near) - trail / scale;
+  return low > top ? low : std::clamp(wanted, low, top);
+}
+
+void confine(GUI::Handle document, const GUI::Document &entry, Whole index) {
+  const auto &pointer = entry.pointer;
+  if (!pointer.placed) return;
+  const auto &rect = pointer.placement;
+  const auto extent = GUI::BACKEND::extent(document);
+  if (rect.w <= 0.0f || rect.h <= 0.0f || extent.w <= 0.0f || extent.h <= 0.0f)
+    return;
+  const auto &grant = entry.nodes[index].properties;
+  const auto plate = GUI::whole(document, entry, index);
+  const auto corner = GUI::BACKEND::origin(document, index);
+  const auto box = ::room(document, entry, index);
+  const auto parent = entry.nodes[index].parent;
+  const GUI::Position home = parent == GUI::PARENTLESS
+                               ? GUI::Position{}
+                               : GUI::BACKEND::origin(document, parent);
+  Float low[2] = {0.0f, 0.0f}, high[2] = {extent.w, extent.h};
+  const Flag travels[2] = {
+    grant.across || grant.free, !grant.across || grant.free};
+  const Float origin[2] = {home.x, home.y};
+  const Float width[2] = {box.w, box.h};
+  const Float held[2] = {pointer.grab.x - corner.x, pointer.grab.y - corner.y};
+  const Float lead[2] = {corner.x - plate.at.x, corner.y - plate.at.y};
+  const Float span[2] = {plate.span.w, plate.span.h};
+  for (Whole axis = 0; axis < 2; axis += 1) {
+    if (!travels[axis]) continue;
+    low[axis] = origin[axis] + lead[axis] + held[axis];
+    high[axis] = std::max(
+      low[axis],
+      origin[axis] + width[axis] - span[axis] + lead[axis] + held[axis]);
+  }
+  const Float across = rect.w / extent.w;
+  const Float down = rect.h / extent.h;
+  const auto grid = [](Float length) {
+    return static_cast<Whole>(std::lround(std::max(0.0f, length)));
+  };
+  WINDOW::confine(
+    grid(rect.x + low[0] * across), grid(rect.y + low[1] * down),
+    grid((high[0] - low[0]) * across) + 1, grid((high[1] - low[1]) * down) + 1);
 }
 
 auto travelled(
@@ -80,6 +132,7 @@ void GUI::slide(Handle document, Document &entry, Float x, Float y) {
   if (!pointer.dragged) {
     pointer.armed = PARENTLESS;
     carry(document, entry, index, true);
+    ::confine(document, entry, index);
   }
   pointer.dragged = true;
   auto landed = grant.position;
@@ -96,6 +149,7 @@ void GUI::moor(Handle document, Document &entry) {
   if (index == PARENTLESS || !entry.nodes[index].live) return;
   if (entry.nodes[index].row != ::GRIP || !pointer.dragged) return;
   carry(document, entry, index, false);
+  WINDOW::release();
   record(entry, index, Event::MOVED);
   pointer.moves.push_back(entry.nodes[index].id);
 }

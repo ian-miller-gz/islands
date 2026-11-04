@@ -72,6 +72,10 @@ void join(
 
 auto GUI::KINDS::seats(const Document &entry, Whole index) -> Whole {
   const auto quads = KINDS::entry(entry.nodes[index]).quads;
+  if (
+    entry.nodes[index].row == KINDS::STROKE &&
+    entry.nodes[index].properties.dash > 0.0f)
+    return DASHES;
   if (entry.nodes[index].row != KINDS::GRAPH) return quads;
   const Whole loose = NGA::pending(entry) == index ? 1 : 0;
   Whole wires = loose;

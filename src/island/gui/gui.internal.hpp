@@ -51,6 +51,8 @@ struct Document {
   Whole editing = PARENTLESS;
   Flag seated = false;
   Pointer pointer;
+  Echo echo;
+  Flag echoed = false;
   Whole modal = PARENTLESS;
   INPUT::KEYS::Event keyed;
 };

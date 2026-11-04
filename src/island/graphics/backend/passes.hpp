@@ -48,6 +48,7 @@ struct Draw {
   Whole first = 0;
   Whole count = 0;
   GFX::Viewport scissor = GFX::UNCLIPPED;
+  Float dx = 0.0f, dy = 0.0f;
 };
 
 template <typename Block>

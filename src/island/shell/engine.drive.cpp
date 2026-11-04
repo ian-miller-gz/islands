@@ -301,6 +301,17 @@ void read(::SHELL::Session &session) {
     size.h, String(text)));
 }
 
+void cursor(::SHELL::Session &session) {
+  if (session.arguments.size() < 2) return session.print("usage: cursor <id>");
+  const auto document = resolve(session);
+  if (document == GUI::NONE) return;
+  const auto &id = session.arguments[1];
+  const auto row = GUI::GET::cursor(document, id.c_str());
+  session.print(std::format(
+    "cursor {} {}", id,
+    row == GUI::Cursor::NONE ? String("none") : std::to_string(row)));
+}
+
 }  // namespace
 
 auto debug() -> const Vector<::SHELL::Command> * {
@@ -320,6 +331,7 @@ auto debug() -> const Vector<::SHELL::Command> * {
     {"key", "feeds one composed key to the target document", key},
     {"type", "types text into the target document", type},
     {"read", "reads a widget's compiled rect and text", read},
+    {"cursor", "reads a list's marked row, or none", cursor},
     {"dialog", "raises the engine file dialog for driving", dialog}};
   return &table;
 }

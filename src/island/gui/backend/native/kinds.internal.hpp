@@ -44,6 +44,8 @@ enum : Whole {
 
 constexpr Whole SEGMENTS = 16;
 
+constexpr Whole DASHES = 64;
+
 constexpr Whole PIECES = 48;
 constexpr Float TRACK = 0.4f;
 constexpr Float SWEEP = 1.5f * std::numbers::pi_v<Float>;

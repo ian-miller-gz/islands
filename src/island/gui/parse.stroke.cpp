@@ -33,7 +33,7 @@ auto ended(const String &value, GUI::Ends &ends) -> Status {
 }  // namespace
 
 auto GUI::PARSE::stroked(const String &key) -> Flag {
-  return key == "to" || key == "shape" || key == "bend";
+  return key == "to" || key == "shape" || key == "bend" || key == "dash";
 }
 
 auto GUI::PARSE::stroke(
@@ -46,6 +46,10 @@ auto GUI::PARSE::stroke(
   if (key == "shape") {
     Shape shape;
     return read(value, shape) != 0 ? 1 : set(document, id, shape);
+  }
+  if (key == "dash") {
+    Dash dash;
+    return read(value, dash.length) != 0 ? 1 : set(document, id, dash);
   }
   Bend bend;
   return read(value, bend.value) != 0 ? 1 : set(document, id, bend);
@@ -65,6 +69,7 @@ auto GUI::PARSE::stroke(
     properties.shape = static_cast<Whole>(shape.run);
     return 0;
   }
+  if (key == "dash") return read(value, properties.dash);
   Float bend = 0.0f;
   if (read(value, bend) != 0) return 1;
   properties.bend = bend;

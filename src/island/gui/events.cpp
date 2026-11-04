@@ -61,8 +61,9 @@ auto GUI::GET::under(Float x, Float y, Handle behind) -> Flag {
     if (
       rect.w <= 0.0f || rect.h <= 0.0f || extent.w <= 0.0f || extent.h <= 0.0f)
       continue;
-    const Float px = (x - rect.x) / rect.w * extent.w;
-    const Float py = (y - rect.y) / rect.h * extent.h;
+    Float px = (x - rect.x) / rect.w * extent.w;
+    Float py = (y - rect.y) / rect.h * extent.h;
+    GUI::fold(entry, px, py);
     if (px < 0.0f || px >= extent.w || py < 0.0f || py >= extent.h) continue;
     if (BACKEND::pick(document, {px, py}) != PARENTLESS) return true;
   }

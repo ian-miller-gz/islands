@@ -90,3 +90,18 @@ gui click the lone socket: PASS
 select banded socket: at=5.0,5.0 pan=20.0,20.0 selected=[amp] events=[lone.out entered, lone.out pressed, lone.out clicked, lone.out exited] rewrites=73
 gui still nothing: PASS
 gui the write chooses: PASS
+gui a box past the edge: PASS
+gui wired past the edge: PASS
+select crops past the edge: draws=7 scissors=[0.0,0.0,0.0,0.0 40.0,40.0,560.0,360.0 0.0,0.0,0.0,0.0 280.0,408.0,320.0,64.0 0.0,0.0,0.0,0.0 16.0,420.0,240.0,60.0 40.0,40.0,560.0,360.0]
+gui echoed: PASS
+select crops echoed: draws=14 scissors=[0.0,0.0,0.0,0.0 40.0,40.0,560.0,360.0 0.0,0.0,0.0,0.0 280.0,408.0,320.0,64.0 0.0,0.0,0.0,0.0 16.0,420.0,240.0,60.0 40.0,40.0,560.0,360.0 40.0,440.0,560.0,360.0 40.0,440.0,560.0,360.0 40.0,440.0,560.0,360.0 -1.0,-1.0,0.0,0.0 40.0,440.0,560.0,360.0 -1.0,-1.0,0.0,0.0 40.0,440.0,560.0,360.0]
+select echo hover osc
+gui echo ended: PASS
+select echo gone hover roster.0
+gui a selection stands: PASS
+gui raise the roster: PASS
+select raised list keyed: at=40.0,225.0 pan=20.0,20.0 selected=[osc,amp] events=[roster selected] rewrites=83
+gui the raised list took it: PASS
+gui lower the roster: PASS
+select board keyed: at=40.0,225.0 pan=20.0,20.0 selected=[out] events=[deck selected] rewrites=83
+gui the board took it: PASS

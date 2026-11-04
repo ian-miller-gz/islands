@@ -88,6 +88,38 @@ static void append(GUI::Document &entry, GUI::Chrome &chrome, GFX::Pass &pass) {
   }
 }
 
+static void echo(
+  const GUI::Document &entry, const GUI::Chrome &chrome, GFX::Pass &pass,
+  Whole from) {
+  const auto &echo = entry.echo;
+  if (echo.w <= 0.0f || echo.h <= 0.0f || chrome.width <= 0.0f) return;
+  const Float scale = pass.viewport.w / chrome.width;
+  const Float dx = echo.dx * scale, dy = echo.dy * scale;
+  const GFX::Viewport to = {
+    pass.viewport.x + (echo.x + echo.dx) * scale,
+    pass.viewport.y + (echo.y + echo.dy) * scale, echo.w * scale,
+    echo.h * scale};
+  const Whole end = pass.draws.size();
+  for (Whole at = from; at < end; at += 1) {
+    GFX::Draw copy = pass.draws[at];
+    GFX::Viewport crop = to;
+    if (GFX::clips(copy.scissor)) {
+      const auto &own = copy.scissor;
+      const Float left = std::max(to.x, own.x + dx);
+      const Float top = std::max(to.y, own.y + dy);
+      const Float right = std::min(to.x + to.w, own.x + own.w + dx);
+      const Float bottom = std::min(to.y + to.h, own.y + own.h + dy);
+      crop = right > left && bottom > top
+               ? GFX::Viewport{left, top, right - left, bottom - top}
+               : GFX::Viewport{-1.0f, -1.0f, 0.0f, 0.0f};
+    }
+    copy.scissor = crop;
+    copy.dx = dx;
+    copy.dy = dy;
+    pass.draws.push_back(copy);
+  }
+}
+
 void GUI::BACKEND::flush(Handle document, GFX::Pass &pass) {
   if (!GUI::live(document)) return;
   auto &entry = GUI::STATE::documents[document];
@@ -109,7 +141,9 @@ void GUI::BACKEND::flush(Handle document, GFX::Pass &pass) {
       NATIVE::compile(document, entry, chrome);
     GUI::clean(document);
   }
+  const Whole from = pass.draws.size();
   ::append(entry, chrome, pass);
+  ::echo(entry, chrome, pass, from);
 }
 
 void GUI::BACKEND::forget(Handle document) { NATIVE::mirrors.erase(document); }

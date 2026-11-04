@@ -67,4 +67,7 @@ void WINDOW::BACKEND::capture(Flag on) {
     GLFW::window, GLFW_CURSOR, on ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL);
 }
 
+void WINDOW::BACKEND::confine(Whole, Whole, Whole, Whole) {}
+void WINDOW::BACKEND::release() {}
+
 #endif

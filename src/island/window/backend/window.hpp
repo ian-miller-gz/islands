@@ -63,6 +63,9 @@ void resize(Whole w, Whole h);
 
 void capture(Flag on);
 
+void confine(Whole x, Whole y, Whole w, Whole h);
+void release();
+
 void clipboard(STRING::Hot text);
 
 enum Shape { ARROW, IBEAM, ACROSS, DOWN };

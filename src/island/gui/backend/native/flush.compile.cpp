@@ -20,6 +20,8 @@
 #include <island/gui/nga.internal.hpp>
 #include <island/graphics/backend/resources.hpp>
 #include <algorithm>
+#include <chrono>
+#include <logger.hpp>
 
 namespace STATE = GUI::STATE;
 
@@ -212,6 +214,8 @@ auto GUI::BACKEND::NATIVE::ordering(const Document &entry) -> Vector<Whole> {
   return sequence;
 }
 
+static constexpr long BUDGET = 50;
+
 static void settle(
   GUI::Handle document, GUI::Document &entry, GUI::Chrome &chrome,
   Whole index) {
@@ -246,8 +250,31 @@ void GUI::BACKEND::NATIVE::compile(
   chrome.touched.assign(entry.nodes.size(), 0);
   chrome.stamp = 0;
   chrome.order.clear();
-  for (const Whole index : ordering(entry))
+  using Clock = std::chrono::steady_clock;
+  const auto begun = Clock::now();
+  Whole slowest = PARENTLESS;
+  Clock::duration longest{};
+  for (const Whole index : ordering(entry)) {
+    const auto before = Clock::now();
     ::settle(document, entry, chrome, index);
+    const auto took = Clock::now() - before;
+    if (took > longest) longest = took, slowest = index;
+  }
+  if (
+    Clock::now() - begun > std::chrono::milliseconds(BUDGET) &&
+    slowest != PARENTLESS)
+    LOGGER::get("~/island/gui::compile")
+      .warn(
+        "Compile of %zu nodes took %lld ms; the slowest settle was %s (%s), "
+        "%lld ms.",
+        entry.nodes.size(),
+        (long long)std::chrono::duration_cast<std::chrono::milliseconds>(
+          Clock::now() - begun)
+          .count(),
+        entry.nodes[slowest].id.c_str(), entry.nodes[slowest].kind.c_str(),
+        (long long)std::chrono::duration_cast<std::chrono::milliseconds>(
+          longest)
+          .count());
   ::band(entry, chrome);
   Whole seats = 0;
   for (const auto index : chrome.order) {

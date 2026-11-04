@@ -191,6 +191,7 @@ struct Rows {
 };
 
 struct Cursor {
+  static constexpr Whole NONE = static_cast<Whole>(-1);
   Whole row = 0;
 };
 
@@ -252,6 +253,10 @@ struct Shape {
 
 struct Bend {
   Float value = 0.0f;
+};
+
+struct Dash {
+  Float length = 0.0f;
 };
 
 struct Image {
@@ -328,6 +333,7 @@ struct Properties {
   Position to;
   Whole shape = 0;
   Float bend = 0.0f;
+  Float dash = 0.0f;
   GFX::Color track = GFX::COLORS::CLEAR;
 };
 
@@ -425,11 +431,26 @@ auto set(Handle document, STRING::Hot id, Shape shape) -> Status;
 
 auto set(Handle document, STRING::Hot id, Bend bend) -> Status;
 
+auto set(Handle document, STRING::Hot id, Dash dash) -> Status;
+
 auto set(Handle document, STRING::Hot id, Image image) -> Status;
 
 auto set(Handle document, STRING::Hot id, Style style) -> Status;
 
 auto place(Handle document, GFX::Viewport viewport) -> Status;
+
+struct Echo {
+  Float x = 0.0f, y = 0.0f, w = 0.0f, h = 0.0f;
+  Float dx = 0.0f, dy = 0.0f;
+};
+
+auto echo(Handle document, Echo echo) -> Status;
+
+namespace GET {
+
+auto echoed(Handle document) -> Flag;
+
+}  // namespace GET
 
 auto point(Handle document, Float u, Float v, Flag down) -> Status;
 
@@ -541,6 +562,7 @@ auto ends(Handle document, STRING::Hot id) -> Ends;
 auto shape(Handle document, STRING::Hot id) -> Shape;
 
 auto bend(Handle document, STRING::Hot id) -> Float;
+auto dash(Handle document, STRING::Hot id) -> Float;
 
 auto frame(Handle document, STRING::Hot id) -> GFX::SPRITES::Frame;
 

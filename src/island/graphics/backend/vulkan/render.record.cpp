@@ -46,16 +46,29 @@ static auto place(const GFX::Pass &pass, Whole image) -> Placement {
   return {GET::offscreen(), *target.framebuffer, target.extent};
 }
 
+static void view(
+  const vk::raii::CommandBuffer &commands, const GFX::Viewport &viewport,
+  Float dx, Float dy) {
+  commands.setViewport(
+    0, vk::Viewport{
+         viewport.x + dx, viewport.y + dy + viewport.h, viewport.w, -viewport.h,
+         0.0f, 1.0f});
+}
+
 static void arm(
   const vk::raii::CommandBuffer &commands, const GFX::Pass &pass,
   vk::Extent2D extent) {
   if (pass.draws.empty()) return;
-  auto &viewport = pass.viewport;
-  commands.setViewport(
-    0, vk::Viewport{
-         viewport.x, viewport.y + viewport.h, viewport.w, -viewport.h, 0.0f,
-         1.0f});
+  ::view(commands, pass.viewport, 0.0f, 0.0f);
   commands.setScissor(0, vk::Rect2D{{0, 0}, extent});
+}
+
+static auto shift(
+  const vk::raii::CommandBuffer &commands, const GFX::Pass &pass,
+  const GFX::Draw &draw, Flag shifted) -> Flag {
+  const Flag wants = draw.dx != 0.0f || draw.dy != 0.0f;
+  if (wants || shifted) ::view(commands, pass.viewport, draw.dx, draw.dy);
+  return wants;
 }
 
 static auto rect(const GFX::Viewport &scissor, vk::Extent2D extent)
@@ -101,9 +114,10 @@ static void execute(
     .pClearValues = values};
   commands.beginRenderPass(info, vk::SubpassContents::eInline);
   arm(commands, pass, where.extent);
-  Flag clipped = false;
+  Flag clipped = false, shifted = false;
   for (auto &draw : pass.draws) {
     clipped = clip(commands, draw, where.extent, clipped);
+    shifted = shift(commands, pass, draw, shifted);
     GFX::BACKEND::VULKAN::draw(commands, draw);
   }
   METRICS::count("gfx.draws", static_cast<Whole>(pass.draws.size()));

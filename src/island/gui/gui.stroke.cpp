@@ -59,6 +59,23 @@ auto GUI::GET::shape(Handle document, STRING::Hot id) -> Shape {
   return {static_cast<Shape::Run>(properties.shape)};
 }
 
+auto GUI::set(Handle document, STRING::Hot id, Dash dash) -> Status {
+  Whole node = PARENTLESS;
+  if (find(document, id, node) != 0) return 1;
+  auto &properties = STATE::documents[document].nodes[node].properties;
+  if (properties.dash == dash.length) return 0;
+  const Flag reseated = (properties.dash > 0.0f) != (dash.length > 0.0f);
+  properties.dash = dash.length;
+  if (reseated) STATE::documents[document].restructured = true;
+  return mark(document, node);
+}
+
+auto GUI::GET::dash(Handle document, STRING::Hot id) -> Float {
+  Whole node = PARENTLESS;
+  if (find(document, id, node) != 0) return {};
+  return STATE::documents[document].nodes[node].properties.dash;
+}
+
 auto GUI::GET::bend(Handle document, STRING::Hot id) -> Float {
   Whole node = PARENTLESS;
   if (find(document, id, node) != 0) return {};

@@ -98,10 +98,22 @@ static void squeeze(
   }
 }
 
+auto GUI::fold(const Document &entry, Float &x, Float &y) -> Flag {
+  const auto &echo = entry.echo;
+  if (echo.w <= 0.0f || echo.h <= 0.0f) return false;
+  const Float left = echo.x + echo.dx, top = echo.y + echo.dy;
+  if (x < left || x >= left + echo.w || y < top || y >= top + echo.h)
+    return false;
+  x -= echo.dx;
+  y -= echo.dy;
+  return true;
+}
+
 void GUI::point(Handle document, Float x, Float y, Flag inside, Flag down) {
   if (!live(document)) return;
   auto &entry = STATE::documents[document];
   auto &pointer = entry.pointer;
+  entry.echoed = fold(entry, x, y);
   pointer.spot = {x, y};
   pointer.inside = inside;
   const Flag captured =

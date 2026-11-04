@@ -55,8 +55,13 @@ void look(STRING::Hot name) {
   GFX::Pass pass = {.viewport = WHOLE};
   GUI::flush(::roll, pass);
   const auto top = GUI::GET::text(::roll, "menu.0");
-  std::cout << "steer " << name << ": cursor=" << GUI::GET::cursor(roll, "menu")
-            << " first=" << first << " top=" << (top.empty() ? "-" : top)
+  const auto cursor = GUI::GET::cursor(roll, "menu");
+  std::cout << "steer " << name << ": cursor=";
+  if (cursor == GUI::Cursor::NONE)
+    std::cout << "-";
+  else
+    std::cout << cursor;
+  std::cout << " first=" << first << " top=" << (top.empty() ? "-" : top)
             << " shown=" << shown << " back=" << GUI::GET::cursor(roll, "back")
             << " events=[";
   STRING::Hot comma = "";
@@ -177,6 +182,21 @@ Status steer() {
   status |= check("release", GUI::focus(::roll, false) == 0);
   ::press(INPUT::KEYS::DOWN);
   ::look("released");
+  status |= check("refocus for none", GUI::focus(::roll, true) == 0);
+  ::look("refocused");
+  GUI::set(::roll, "menu", GUI::Cursor{GUI::Cursor::NONE});
+  ::look("unmarked");
+  status |=
+    check("none reads", GUI::GET::cursor(::roll, "menu") == GUI::Cursor::NONE);
+  ::press(INPUT::KEYS::ENTER);
+  ::look("enter on none");
+  status |= check("nothing taken", !GUI::GET::activated(::roll, "menu"));
+  ::press(INPUT::KEYS::DOWN);
+  ::look("entered from the top");
+  GUI::set(::roll, "menu", GUI::Cursor{GUI::Cursor::NONE});
+  ::press(INPUT::KEYS::UP);
+  ::look("entered from the bottom");
+  status |= check("release after none", GUI::focus(::roll, false) == 0);
   status |= ::quicken();
   return status | ::folds();
 }

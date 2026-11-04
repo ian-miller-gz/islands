@@ -85,6 +85,12 @@ static auto steers(INPUT::KEYS::Action action) -> Flag {
 static auto landed(
   const INPUT::KEYS::Event &event, Whole cursor, Whole rows,
   Whole page) -> Whole {
+  if (cursor == GUI::Cursor::NONE) {
+    const Flag rising = event.action == INPUT::KEYS::UP ||
+                        event.action == INPUT::KEYS::PRIOR ||
+                        event.action == INPUT::KEYS::END;
+    return rising ? rows - 1 : 0;
+  }
   if (event.action == INPUT::KEYS::UP) return (cursor + rows - 1) % rows;
   if (event.action == INPUT::KEYS::DOWN) return (cursor + 1) % rows;
   if (event.action == INPUT::KEYS::HOME) return 0;
@@ -103,6 +109,7 @@ static auto steer(
   const auto rows = node.properties.rows;
   if (rows == 0) return false;
   if (event.action == INPUT::KEYS::ENTER) {
+    if (node.properties.cursor == GUI::Cursor::NONE) return true;
     GUI::record(entry, index, GUI::Event::ACTIVATED);
     entry.pointer.activations.push_back(node.id);
     return true;
@@ -131,9 +138,14 @@ auto GUI::key(Handle document, const INPUT::KEYS::Event &event) -> Status {
       entry.seated ? type(document, cell, event) : reach(document, cell, event);
     if (took) return 0;
   }
+  const auto column = ::steered(entry);
+  const auto deck = roaming(document);
+  const Flag raised = column != PARENTLESS && deck != PARENTLESS &&
+                      ::standing(entry, column) > ::standing(entry, deck);
+  if (raised && ::steer(document, column, event)) return 0;
   if (roam(document, event)) return 0;
-  const auto index = ::steered(entry);
-  if (index != PARENTLESS && ::steer(document, index, event)) return 0;
+  if (!raised && column != PARENTLESS && ::steer(document, column, event))
+    return 0;
   record(entry, event);
   return 0;
 }

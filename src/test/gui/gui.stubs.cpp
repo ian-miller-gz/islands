@@ -93,6 +93,9 @@ void WINDOW::BACKEND::shape(Shape wanted) {
   ::hoty = 0;
 }
 
+void WINDOW::BACKEND::confine(Whole, Whole, Whole, Whole) {}
+void WINDOW::BACKEND::release() {}
+
 void WINDOW::BACKEND::wear(const Image &image, Whole hotx, Whole hoty) {
   if (!image.w || !image.h) return;
   if (image.pixels.size() < image.w * image.h * CHANNELS) return;

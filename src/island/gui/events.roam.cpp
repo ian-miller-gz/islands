@@ -74,6 +74,12 @@ auto nearest(
 
 }  // namespace
 
+auto GUI::roaming(Handle document) -> Whole {
+  const auto &entry = STATE::documents[document];
+  const auto from = ::standing(entry);
+  return from == PARENTLESS ? PARENTLESS : board(entry, from);
+}
+
 auto GUI::roam(Handle document, const INPUT::KEYS::Event &event) -> Flag {
   auto &entry = STATE::documents[document];
   const auto from = ::standing(entry);

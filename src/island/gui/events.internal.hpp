@@ -138,6 +138,15 @@ void gather(Handle document, Document &entry);
 
 auto roam(Handle document, const INPUT::KEYS::Event &event) -> Flag;
 
+auto fold(const Document &entry, Float &x, Float &y) -> Flag;
+
+struct Plate {
+  Position at;
+  Extent span;
+};
+auto whole(Handle document, const Document &entry, Whole grip) -> Plate;
+auto roaming(Handle document) -> Whole;
+
 void hitch(Handle document, Document &entry, Whole hit, Float x, Float y);
 void trail(Handle document, Document &entry, Float x, Float y);
 void fasten(Handle document, Document &entry, Whole hit);

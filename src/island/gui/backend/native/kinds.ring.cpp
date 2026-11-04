@@ -77,9 +77,14 @@ void GUI::KINDS::ring(const Node &node, const Slot &slot, Element *elements) {
   const Flag bound = properties.most > properties.least;
   const auto spot =
     ::point(disc, bound ? share(properties, properties.value) : ::HALF);
+  const Flag glowing = properties.glow.a > 0.0f;
   elements[PIECES] = {
-    spot.x - mark * ::HALF, spot.y - mark * ::HALF, mark, mark, GUI::FULL,
-    properties.press};
+    spot.x - mark * ::HALF,
+    spot.y - mark * ::HALF,
+    mark,
+    mark,
+    GUI::FULL,
+    glowing ? properties.glow : properties.press};
 }
 
 auto GUI::KINDS::inset(const Node &node, const Slot &slot) -> Float {

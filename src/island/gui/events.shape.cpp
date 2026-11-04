@@ -23,6 +23,7 @@
 namespace {
 
 const Whole GRIP = GUI::BACKEND::row("grip");
+const Whole DIAL = GUI::BACKEND::row("dial");
 
 constexpr WINDOW::Shape AXES[] = {WINDOW::DOWN, WINDOW::ACROSS, WINDOW::ARROW};
 
@@ -33,6 +34,10 @@ auto axis(const GUI::Properties &properties) -> Whole {
 
 auto wanted(const GUI::Node &node) -> WINDOW::Shape {
   if (node.row == ::GRIP) return ::AXES[::axis(node.properties)];
+  if (node.row == ::DIAL) {
+    if (node.properties.seated) return WINDOW::IBEAM;
+    return GUI::flagged(node.properties) ? WINDOW::ARROW : WINDOW::ACROSS;
+  }
   return GUI::typeable(node) ? WINDOW::IBEAM : WINDOW::ARROW;
 }
 

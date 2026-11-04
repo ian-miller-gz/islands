@@ -26,6 +26,15 @@ steer second: cursor=2 first=1 top=beta shown=3 back=1 events=[back selected] re
 steer shrink: cursor=1 first=0 top=alpha shown=2 back=1 events=[menu.0 exited] rewrites=65
 gui release: PASS
 steer released: cursor=1 first=0 top=alpha shown=2 back=1 events=[menu.0 entered] rewrites=11
+gui refocus for none: PASS
+steer refocused: cursor=0 first=0 top=alpha shown=2 back=1 events=[menu selected] rewrites=27
+steer unmarked: cursor=- first=0 top=alpha shown=2 back=1 events=[] rewrites=27
+gui none reads: PASS
+steer enter on none: cursor=- first=0 top=alpha shown=2 back=1 events=[] rewrites=0
+gui nothing taken: PASS
+steer entered from the top: cursor=0 first=0 top=alpha shown=2 back=1 events=[menu selected] rewrites=27
+steer entered from the bottom: cursor=1 first=0 top=alpha shown=2 back=1 events=[menu selected] rewrites=27
+gui release after none: PASS
 steer arm: cursor=0 first=0 top=alpha shown=3 back=0 events=[menu.0 exited, menu.1 entered, menu.1 pressed] rewrites=81
 steer quick: cursor=1 first=0 top=alpha shown=3 back=0 events=[menu.1 clicked, menu selected, menu activated] rewrites=43
 gui quick click activates: PASS

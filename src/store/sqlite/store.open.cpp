@@ -58,6 +58,13 @@ auto STORE::open(STRING::Hot bundle) -> Handle {
   }
 
   char *message = nullptr;
+  const char *mode = "PRAGMA journal_mode=WAL; PRAGMA synchronous=NORMAL;";
+  if (sqlite3_exec(connection, mode, nullptr, nullptr, &message) != SQLITE_OK) {
+    logger.warn(
+      "The store keeps the rollback journal: " + String(message) + ".");
+    sqlite3_free(message);
+    message = nullptr;
+  }
   const char *ddl =
     "CREATE TABLE IF NOT EXISTS settings ("
     "  key TEXT PRIMARY KEY, value TEXT NOT NULL) WITHOUT ROWID;";

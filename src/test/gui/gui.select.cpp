@@ -94,6 +94,22 @@ void ask() {
             << std::endl;
 }
 
+void crops(STRING::Hot name) {
+  GUI::poll();
+  GFX::Pass pass = {.viewport = WHOLE};
+  GUI::flush(::bench, pass);
+  std::cout << std::fixed << std::setprecision(1) << "select crops " << name
+            << ": draws=" << pass.draws.size() << " scissors=[";
+  STRING::Hot comma = "";
+  for (const auto &draw : pass.draws) {
+    std::cout << comma << draw.scissor.x << "," << draw.scissor.y << ","
+              << draw.scissor.w << "," << draw.scissor.h;
+    comma = " ";
+  }
+  std::cout << "]" << std::endl;
+  ::written = GUI::GET::writes();
+}
+
 void at(Float x, Float y, Flag down) {
   ::pointer = {x, y};
   aim(x * PIXELS, y * PIXELS);
@@ -262,5 +278,50 @@ Status select() {
     "the write chooses",
     GUI::NGA::set(::bench, "lone", GUI::NGA::Selected{true}) == 0 &&
       GUI::NGA::GET::selected(::bench, "lone"));
+  using Side = GUI::NGA::Port::Side;
+  status |= check(
+    "a box past the edge",
+    GUI::NODES::create(::bench, "deck", "node", "far") == 0 &&
+      GUI::set(::bench, "far", GUI::Position{250.0f, 140.0f}) == 0 &&
+      GUI::set(::bench, "far", GUI::Extent{60.0f, 30.0f}) == 0 &&
+      GUI::NGA::set(::bench, "far", GUI::NGA::Port{Side::IN, ""}) == 0);
+  status |= check(
+    "wired past the edge", GUI::NGA::connect(::bench, "osc.out", "far") == 0);
+  ::crops("past the edge");
+  {
+    const GUI::Position deck = GUI::GET::origin(::bench, "deck");
+    const GUI::Extent size = GUI::GET::measured(::bench, "deck");
+    const GUI::Position osc = GUI::GET::origin(::bench, "osc");
+    const GUI::Extent box = GUI::GET::measured(::bench, "osc");
+    constexpr Float DOWN = 200.0f;
+    status |= check(
+      "echoed",
+      GUI::echo(::bench, {deck.x, deck.y, size.w, size.h, 0.0f, DOWN}) == 0);
+    ::crops("echoed");
+    ::at(osc.x + box.w / 2, osc.y + box.h / 2 + DOWN, false);
+    GUI::poll();
+    std::cout << "select echo hover " << GUI::GET::hover(::bench) << std::endl;
+    status |= check("echo ended", GUI::echo(::bench, {}) == 0);
+    ::at(osc.x + box.w / 2, osc.y + box.h / 2 + DOWN, false);
+    GUI::poll();
+    std::cout << "select echo gone hover " << GUI::GET::hover(::bench)
+              << std::endl;
+  }
+  status |= check(
+    "a selection stands",
+    GUI::NGA::set(::bench, "osc", GUI::NGA::Selected{true}) == 0 &&
+      GUI::set(::bench, "roster", GUI::Cursor{0}) == 0);
+  status |= check(
+    "raise the roster", GUI::set(::bench, "roster", GUI::Depth{1.0f}) == 0);
+  ::press(INPUT::KEYS::DOWN);
+  ::look("raised list keyed");
+  status |=
+    check("the raised list took it", GUI::GET::cursor(::bench, "roster") == 1);
+  status |= check(
+    "lower the roster", GUI::set(::bench, "roster", GUI::Depth{0.0f}) == 0);
+  ::press(INPUT::KEYS::DOWN);
+  ::look("board keyed");
+  status |=
+    check("the board took it", GUI::GET::cursor(::bench, "roster") == 1);
   return status;
 }

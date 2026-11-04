@@ -19,6 +19,7 @@
 #include <island/gui/events.internal.hpp>
 
 static auto inside(Whole value, Whole rows) -> Whole {
+  if (value == GUI::Cursor::NONE) return value;
   const Whole last = rows > 0 ? rows - 1 : 0;
   return value < last ? value : last;
 }
@@ -46,7 +47,7 @@ auto GUI::set(Handle document, STRING::Hot id, Cursor cursor) -> Status {
   const auto row = ::inside(cursor.row, properties.rows);
   const auto window = fits(document, node);
   auto first = properties.first;
-  if (window > 0) {
+  if (window > 0 && row != Cursor::NONE) {
     if (row < first) first = row;
     if (row >= first + window) first = row - window + 1;
   }

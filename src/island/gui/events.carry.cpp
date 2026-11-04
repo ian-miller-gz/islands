@@ -42,11 +42,6 @@ auto inside(Float where, Whole span) -> Whole {
   return ::grid(std::clamp(where, 0.0f, std::max(0.0f, far)));
 }
 
-struct Plate {
-  GUI::Position at;
-  GUI::Extent span;
-};
-
 auto hanging(const GUI::Document &entry, Whole index, Whole grip) -> Flag {
   for (auto at = index; at != GUI::PARENTLESS; at = entry.nodes[at].parent) {
     if (at == grip) return true;
@@ -56,8 +51,9 @@ auto hanging(const GUI::Document &entry, Whole index, Whole grip) -> Flag {
   return false;
 }
 
-auto whole(GUI::Handle document, const GUI::Document &entry, Whole grip)
-  -> Plate {
+}  // namespace
+
+auto GUI::whole(Handle document, const Document &entry, Whole grip) -> Plate {
   const auto at = GUI::BACKEND::origin(document, grip);
   const auto span = GUI::BACKEND::measured(document, grip);
   Float west = at.x;
@@ -76,8 +72,6 @@ auto whole(GUI::Handle document, const GUI::Document &entry, Whole grip)
   return {{west, north}, {east - west, south - north}};
 }
 
-}  // namespace
-
 void GUI::carry(Handle document, Document &entry, Whole index, Flag on) {
   const auto id = entry.nodes[index].id.c_str();
   if (!on) {
@@ -95,7 +89,7 @@ void GUI::carry(Handle document, Document &entry, Whole index, Flag on) {
     return;
   const Float across = rect.w / extent.w;
   const Float down = rect.h / extent.h;
-  const auto plate = ::whole(document, entry, index);
+  const auto plate = whole(document, entry, index);
   const Float x = rect.x + plate.at.x * across;
   const Float y = rect.y + plate.at.y * down;
   if (x < 0.0f || y < 0.0f || plate.span.w <= 0.0f || plate.span.h <= 0.0f)

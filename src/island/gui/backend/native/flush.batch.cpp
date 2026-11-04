@@ -19,6 +19,7 @@
 #include <island/gui/backend/native/kinds.internal.hpp>
 #include <island/graphics/backend/pipelines.hpp>
 #include <island/graphics/backend/resources.hpp>
+#include <algorithm>
 
 static auto pipeline() -> GFX::Handle {
   return GFX::PIPELINES::create(
@@ -39,6 +40,16 @@ static void size(GUI::Chrome &chrome, Whole needed) {
   chrome.limit = room;
 }
 
+static void range(
+  GUI::Chrome &chrome, GFX::SPRITES::Handle atlas, Whole first, Whole count,
+  Float z, Whole clipper) {
+  if (
+    chrome.runs.empty() || chrome.runs.back().atlas != atlas ||
+    chrome.runs.back().z != z || chrome.runs.back().clipper != clipper)
+    chrome.runs.push_back({atlas, first, 0, z, clipper});
+  chrome.runs.back().count += count;
+}
+
 void GUI::BACKEND::NATIVE::batch(Document &entry, Chrome &chrome) {
   chrome.runs.clear();
   Whole seats = 0;
@@ -50,13 +61,14 @@ void GUI::BACKEND::NATIVE::batch(Document &entry, Chrome &chrome) {
     const auto atlas = kind.textured && node.properties.atlas != UNBOUND
                          ? node.properties.atlas
                          : STATE::white;
-    const auto z = chrome.slots[index].z;
-    const auto clipper = chrome.slots[index].clipper;
-    if (
-      chrome.runs.empty() || chrome.runs.back().atlas != atlas ||
-      chrome.runs.back().z != z || chrome.runs.back().clipper != clipper)
-      chrome.runs.push_back({atlas, chrome.slots[index].first, 0, z, clipper});
-    chrome.runs.back().count += claimed;
+    const auto &slot = chrome.slots[index];
+    const Whole plate = node.row == KINDS::GRAPH && slot.clip
+                          ? std::min(kind.quads, claimed)
+                          : claimed;
+    ::range(chrome, atlas, slot.first, plate, slot.z, slot.clipper);
+    if (plate < claimed)
+      ::range(
+        chrome, atlas, slot.first + plate, claimed - plate, slot.z, index);
     seats += claimed;
     if (!chrome.pipelines.contains(atlas))
       chrome.pipelines[atlas] = ::pipeline();

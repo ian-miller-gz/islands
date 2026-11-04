@@ -19,6 +19,8 @@
 #include <island/terminal/backend/unix/listen.internal.hpp>
 #include <island/terminal/clear.hpp>
 #include <logger.hpp>
+#include <cerrno>
+#include <chrono>
 #define LOGGER_CATEGORY "~/island/terminal::listen"
 
 #if SR_LISTEN == SR_UNIX
@@ -27,7 +29,12 @@ static String buffer;
 
 void TERMINAL::BACKEND::LISTEN::send(const String &text) {
   if (session == NETWORK::NONE) return;
-  if (!NETWORK::SESSIONS::send(session, text)) drop();
+  if (NETWORK::SESSIONS::send(session, text)) return;
+  LOGGER::get(LOGGER_CATEGORY)
+    .warn(
+      "Session dropped: a send of %zu bytes failed (errno %d).", text.size(),
+      errno);
+  drop();
 }
 
 namespace {
@@ -56,10 +63,18 @@ void TERMINAL::BACKEND::LISTEN::serve() {
     buffer.erase(0, cut + 1);
     if (!line.empty() && line.back() == '\r') line.pop_back();
     logger.debug("Command: %s", line.c_str());
+    const auto before = std::chrono::steady_clock::now();
     respond(line);
+    const auto took = std::chrono::duration_cast<std::chrono::milliseconds>(
+      std::chrono::steady_clock::now() - before);
+    if (took.count() >= 50)
+      logger.warn(
+        "Command took %lld ms: %s", (long long)took.count(), line.c_str());
     if (session == NETWORK::NONE) return;
   }
-  if (!alive) drop();
+  if (alive) return;
+  logger.warn("Session dropped: the receive ended (errno %d).", errno);
+  drop();
 }
 
 void TERMINAL::BACKEND::LISTEN::drop() {
