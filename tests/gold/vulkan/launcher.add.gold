@@ -1,0 +1,39 @@
+launcher
+target assets/launcher.gui = document 0
+click store hover=store events=enter:store,press:store,click:store
+read state0 rect=`` 0x0 text=unreached
+click linkadd hover=linkadd events=enter:linkadd,press:linkadd,click:linkadd
+read sourcename rect=`` 0x0 text=Add cartridge
+read source rect=`` 440x28 text=
+read side rect=`` 88x28 text=remote
+type events=edit:source
+read side rect=`` 88x28 text=local
+click find hover=find events=enter:find,press:find,click:find
+read sourcestate rect=`` 0x0 text=found 2
+read side rect=`` 88x28 text=local
+read found.0 rect=`` 632x24 text=0.2-uat
+read found.1 rect=`` 632x24 text=0.3-uat
+click found.0 hover=found.0 events=enter:found.0,press:found.0,click:found.0,select:found
+click sourceadd hover=sourceadd events=enter:sourceadd,press:sourceadd,click:sourceadd
+read sourcestate rect=`` 0x0 text=added
+read sourcelist.0 rect=`` 632x24 text=0.2-uat  ``  local
+click sourceclose hover=sourceclose events=enter:sourceclose,press:sourceclose,click:sourceclose
+read name1 rect=`` 0x0 text=scratch
+read release1 rect=`` 0x0 text=0.2.0
+read rline1 rect=`` 120x28 text=0.2-uat
+read name2 rect=`` 0x0 text=
+links.yaml holds the scratch row on 0.2-uat
+target assets/launcher.gui = document 0
+click linkadd hover=linkadd events=enter:linkadd,press:linkadd,click:linkadd
+type events=edit:source
+click find hover=find events=enter:find,press:find,click:find
+read sourcestate rect=`` 0x0 text=found 1
+read found.0 rect=`` 632x24 text=0.3-uat
+click found.0 hover=found.0 events=enter:found.0,press:found.0,click:found.0,select:found
+click sourceadd hover=sourceadd events=enter:sourceadd,press:sourceadd,click:sourceadd
+read sourcestate rect=`` 0x0 text=kept
+read sourcelist.1 rect=`` 632x24 text=0.3-uat  ``  local
+click sourceclose hover=sourceclose events=enter:sourceclose,press:sourceclose,click:sourceclose
+read rline1 rect=`` 120x28 text=0.3-uat
+read name2 rect=`` 0x0 text=
+links.yaml stands, sources.yaml holds 0.2-uat and 0.3-uat

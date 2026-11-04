@@ -11,7 +11,7 @@ islands.dynamic(Test, Condition)
 islands.native(Test, Condition)
 islands.debug(Test, Condition)
 
-Test.Summary = "The launcher follows a line, adds a link and updates it"
+Test.Summary = "The launcher follows a line, adds a link, updates it in sight and surfaces a failed build and a newer engine"
 
 binary = islands.binary(Test.TestDirectory)
 reef = os.path.join(os.path.dirname(binary), 'Reef')
@@ -29,6 +29,11 @@ Test.SkipIf(Condition(
 
 first = '0.1.0'
 second = '0.1.1'
+third = '0.1.2'
+fourth = '0.1.3'
+fifth = '0.1.4'
+stated = '9.9.9'
+mark = '\u2713'
 walker = '-c user.email=walk@islands -c user.name=walk'
 sandbox = (
   f'mkdir -p home/cartridges state/islands/configs && '
@@ -52,15 +57,16 @@ sandbox = (
 
 settings = (
   f'"echo launcher" "target assets/launcher.gui" "click settings" '
-  f'"read line" "click line" "click sline1" "read line" "click line" '
-  f'"click sline0" "read line" "read linestate"')
+  f'"read line" "click line" "click releaseentry1" "read line" '
+  f'"click line" "click releaseentry0" "read line" "read linestate"')
 store = (
   f'"target assets/launcher.gui" "click store" "hold unreached read state0" '
-  f'"click linkadd" "click linkkeep" "read linknote" '
-  f'"type $$(pwd)/islands-box.git" "click linkkeep" "read linkstate" '
-  f'"click linkkeep" "hold box read name1" "hold {first} read release1" '
-  f'"click linkadd" "type $$(pwd)/islands-box.git" "click linkkeep" '
-  f'"read linknote" "click linkclose" "click linkkeep" "read name2" '
+  f'"click linkadd" "click sourceadd" "read sourcestate" '
+  f'"type $$(pwd)/islands-box.git" "click sourceadd" "read sourcestate" '
+  f'"click sourceclose" "click sourceadd" "hold box read name1" '
+  f'"hold {first} read release1" '
+  f'"click linkadd" "type $$(pwd)/islands-box.git" "click sourceadd" '
+  f'"read sourcestate" "click sourceclose" "click sourceadd" "read name2" '
   f'"click install1" "hold \u2713|failed read state1" "read install1" '
   f'"click update1"')
 bump = (
@@ -73,12 +79,36 @@ update = (
   f'"hold {second} read release1" "read state1" "click update1" '
   f'"hold \u2713|failed read state1" "read install1" "click update1"')
 manifest = 'state/islands/cartridges/box/manifest.yaml'
-placed = (
-  f'grep -qx "release: {second}" {manifest} && '
-  f'echo "box manifest holds {second}"')
-library = (
-  f'"target assets/launcher.gui" "click library" "click tree.0" '
-  f'"read pname" "click pupdate"')
+
+
+def placed(release, word='holds'):
+  return (
+    f'grep -qx "release: {release}" {manifest} && '
+    f'echo "box manifest {word} {release}"')
+
+
+def bumped(release, change=''):
+  return (
+    f'{change}sed -i "s/^release: .*/release: {release}/" bump/manifest.yaml && '
+    f'git -C bump {walker} commit -qam {release} && '
+    f'git -C bump push -q origin stable && echo "stable holds {release}"')
+
+
+gauge = (
+  f'"target assets/launcher.gui" "click store" "click store" '
+  f'"hold {third} read release1" "click library" "click tree.0" '
+  f'"read pname" "read pstate" "click pupdate" '
+  f'"hold building read pstate" "read pprogress" "click store" '
+  f'"hold {mark}|failed read state1" "click library" "click tree.0" '
+  f'"read pstate"')
+broken = (
+  f'"target assets/launcher.gui" "click store" "hold {fourth} read release1" '
+  f'"click update1" "hold failed read noticeline" "read state1" '
+  f'"click noticeclose" "click library" "click tree.0" "read pstate"')
+engine = (
+  f'"target assets/launcher.gui" "click store" "hold {fifth} read release1" '
+  f'"click update1" "hold checking read noticeline" "click noticeclose" '
+  f'"click library" "click tree.0" "read pstate"')
 
 run = Test.AddTestRun('update')
 sock = driver.endpoint()
@@ -91,11 +121,15 @@ run.Processes.Default.Command = (
   f'--listen {sock} > launcher.update.engine.out 2>&1 & '
   f'{paced} {settings} || kill $$!; '
   f'{paced} {store} || kill $$!; {bump}; '
-  f'{paced} {update} || kill $$!; {placed}; '
-  f'{paced} {library} quit || kill $$!; '
+  f'{paced} {update} || kill $$!; {placed(second)}; {bumped(third)}; '
+  f'{paced} {gauge} || kill $$!; {placed(third)}; '
+  f'{bumped(fourth, "echo broken >> bump/cartridge.cpp && ")}; '
+  f'{paced} {broken} || kill $$!; '
+  f'{bumped(fifth, f"echo islands: {stated} >> bump/manifest.yaml && ")}; '
+  f'{paced} {engine} quit || kill $$!; {placed(third, "still holds")}; '
   f'wait $$!; code=$$?; chmod u+w home; exit $$code')
 run.Processes.Default.ReturnCode = 0
-run.Processes.Default.TimeOut = 400
+run.Processes.Default.TimeOut = 600
 run.Processes.Default.Streams.stdout = islands.gold(
   Test.TestDirectory, islands.skin(Test.TestDirectory, config),
   'launcher.update.gold')

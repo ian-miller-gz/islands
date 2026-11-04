@@ -3,30 +3,31 @@ target assets/launcher.gui = document 0
 click settings hover=settings events=enter:settings,press:settings,click:settings
 read line rect=`` 160x32 text=stable
 click line hover=line events=enter:line,press:line,click:line
-click sline1 hover=sline1 events=enter:sline1,press:sline1,click:sline1
+click releaseentry1 hover=releaseentry1 events=enter:releaseentry1,press:releaseentry1,click:releaseentry1
 read line rect=`` 160x32 text=latest
 click line hover=line events=enter:line,press:line,click:line
-click sline0 hover=sline0 events=enter:sline0,press:sline0,click:sline0
+click releaseentry0 hover=releaseentry0 events=enter:releaseentry0,press:releaseentry0,click:releaseentry0
 read line rect=`` 160x32 text=stable
 read linestate rect=`` 0x0 text=
 target assets/launcher.gui = document 0
 click store hover=store events=enter:store,press:store,click:store
 read state0 rect=`` 0x0 text=unreached
 click linkadd hover=linkadd events=enter:linkadd,press:linkadd,click:linkadd
-click linkkeep hover=linkkeep events=enter:linkkeep,press:linkkeep,click:linkkeep
-read linknote rect=`` 0x0 text=empty
-type events=edit:link
-click linkkeep hover=linkkeep events=enter:linkkeep,press:linkkeep,click:linkkeep
-read linkstate rect=`` 0x0 text=added
-click linkkeep hover=- events=-
+click sourceadd hover=sourceadd events=enter:sourceadd,press:sourceadd,click:sourceadd
+read sourcestate rect=`` 0x0 text=empty
+type events=edit:source
+click sourceadd hover=sourceadd events=enter:sourceadd,press:sourceadd,click:sourceadd
+read sourcestate rect=`` 0x0 text=added
+click sourceclose hover=sourceclose events=enter:sourceclose,press:sourceclose,click:sourceclose
+click sourceadd hover=- events=-
 read name1 rect=`` 0x0 text=box
 read release1 rect=`` 0x0 text=0.1.0
 click linkadd hover=linkadd events=enter:linkadd,press:linkadd,click:linkadd
-type events=edit:link
-click linkkeep hover=linkkeep events=enter:linkkeep,press:linkkeep,click:linkkeep
-read linknote rect=`` 0x0 text=listed
-click linkclose hover=linkclose events=enter:linkclose,press:linkclose,click:linkclose
-click linkkeep hover=- events=-
+type events=edit:source
+click sourceadd hover=sourceadd events=enter:sourceadd,press:sourceadd,click:sourceadd
+read sourcestate rect=`` 0x0 text=listed
+click sourceclose hover=sourceclose events=enter:sourceclose,press:sourceclose,click:sourceclose
+click sourceadd hover=- events=-
 read name2 rect=`` 0x0 text=
 click install1 hover=install1 events=enter:install1,press:install1,click:install1
 read state1 rect=`` 0x0 text=✓
@@ -43,8 +44,43 @@ read state1 rect=`` 0x0 text=✓
 read install1 rect=`` 96x28 text=✗
 click update1 hover=- events=-
 box manifest holds 0.1.1
+stable holds 0.1.2
 target assets/launcher.gui = document 0
+click store hover=store events=enter:store,press:store,click:store
+click store hover=store events=enter:store,press:store,click:store
+read release1 rect=`` 0x0 text=0.1.2
 click library hover=library events=enter:library,press:library,click:library
 click tree.0 hover=tree.0 events=enter:tree.0,press:tree.0,click:tree.0,activate:tree
 read pname rect=`` 0x0 text=box
-click pupdate hover=preview events=enter:preview,press:preview,click:preview
+read pstate rect=`` 0x0 text=
+click pupdate hover=pupdate events=enter:pupdate,press:pupdate,click:pupdate
+read pstate rect=`` 0x0 text=building
+read pprogress rect=`` 400x4 text=
+click store hover=store events=enter:store,press:store,click:store
+read state1 rect=`` 0x0 text=✓
+click library hover=library events=enter:library,press:library,click:library
+click tree.0 hover=tree.0 events=enter:tree.0,press:tree.0,click:tree.0,activate:tree
+read pstate rect=`` 0x0 text=
+box manifest holds 0.1.2
+stable holds 0.1.3
+target assets/launcher.gui = document 0
+click store hover=store events=enter:store,press:store,click:store
+read release1 rect=`` 0x0 text=0.1.3
+click update1 hover=update1 events=enter:update1,press:update1,click:update1
+read noticeline rect=`` 0x0 text=box: failed building — cartridge.cpp:``: error: ``
+read state1 rect=`` 0x0 text=✓
+click noticeclose hover=noticeclose events=enter:noticeclose,press:noticeclose,click:noticeclose
+click library hover=library events=enter:library,press:library,click:library
+click tree.0 hover=tree.0 events=enter:tree.0,press:tree.0,click:tree.0,activate:tree
+read pstate rect=`` 0x0 text=box: failed building — cartridge.cpp:``: error: ``
+stable holds 0.1.4
+target assets/launcher.gui = document 0
+click store hover=store events=enter:store,press:store,click:store
+read release1 rect=`` 0x0 text=0.1.4
+click update1 hover=update1 events=enter:update1,press:update1,click:update1
+read noticeline rect=`` 0x0 text=box: failed checking — needs engine 9.9.9
+click noticeclose hover=noticeclose events=enter:noticeclose,press:noticeclose,click:noticeclose
+click library hover=library events=enter:library,press:library,click:library
+click tree.0 hover=tree.0 events=enter:tree.0,press:tree.0,click:tree.0,activate:tree
+read pstate rect=`` 0x0 text=box: failed checking — needs engine 9.9.9
+box manifest still holds 0.1.2

@@ -11,7 +11,7 @@ islands.dynamic(Test, Condition)
 islands.native(Test, Condition)
 islands.debug(Test, Condition)
 
-Test.Summary = "The launcher adds a local line on a row, updates it by tip and keeps the launcher's own line apart"
+Test.Summary = "The launcher adds a local line on a row through Add, updates it by tip and keeps the launcher's own line on the Lines page"
 
 binary = islands.binary(Test.TestDirectory)
 reef = os.path.join(os.path.dirname(binary), 'Reef')
@@ -62,15 +62,16 @@ tip = f'$$(git -C islands-box.git rev-parse {uat})'
 store = (
   f'"echo launcher" "target assets/launcher.gui" "click store" '
   f'"hold unreached read state0" "click linkadd" "type {bare}" '
-  f'"click linkkeep" "hold box read name1" "read sline" "read rline1" '
-  f'"click install1" "hold {mark}|failed read state1" "read install1" '
-  f'"click update1"')
+  f'"click sourceadd" "read sourcestate" "click sourceclose" '
+  f'"hold box read name1" "read rline1" "click install1" '
+  f'"hold {mark}|failed read state1" "read install1" "click update1"')
 card = (
-  f'"target assets/launcher.gui" "click radd1" "read sourcename" '
-  f'"read source" "read side" "click find" '
+  f'"target assets/launcher.gui" "click linkadd" "read sourcename" '
+  f'"read source" "type {bare}" "read side" "click find" '
   f'"hold found|none|unreached read sourcestate" "read found.0" '
   f'"click found.0" "click sourceadd" "read sourcestate" '
-  f'"read sourcelist.0" "click sourceclose"')
+  f'"read sourcelist.0" "click sourceclose" "hold box read name1" '
+  f'"read rline1"')
 kept = (
   f'grep -qx "  - leaf: box" {sources} && '
   f'grep -qx "    repository: {bare}" {sources} && '
@@ -79,7 +80,8 @@ kept = (
   f'echo "sources.yaml holds {uat} for box"')
 pick = (
   f'"target assets/launcher.gui" "click rline1" "read rentry2" '
-  f'"click rentry2" "read rline1" "read sline"')
+  f'"click rentry0" "read rline1" "hold box read name1" "click rline1" '
+  f'"click rentry2" "read rline1"')
 written = (
   f'grep -qx "box: {uat}" {lines} && test $$(wc -l < {lines}) = 1 && '
   f'echo "lines.yaml holds box: {uat}"')
@@ -99,7 +101,7 @@ moved = (
   f'"hold box read name1" "click update1" '
   f'"hold {mark}|failed read state1" "click update1"')
 refused = (
-  f'"target assets/launcher.gui" "click radd1" "read sourcestate" '
+  f'"target assets/launcher.gui" "click linkadd" "read sourcestate" '
   f'"click source" "key end" "key home shift" "type $$(pwd)/nowhere" '
   f'"click find" "hold unreached|found|none read sourcestate" '
   f'"click source" "key end" "key home shift" "type {bare}" "key enter" '
@@ -112,14 +114,16 @@ dropped = (
   f'! grep -q "branch: {uat}" {sources} && cp {lines} lines.before && '
   f'echo "sources.yaml drops {uat}"')
 top = (
-  f'"target assets/launcher.gui" "click sline" "read sline1" '
-  f'"click sline1" "read sline" "hold latest read rline1"')
+  f'"target assets/launcher.gui" "click settings" "read line" "click line" '
+  f'"read releaseentry1" "click releaseentry1" "read line" "click store" '
+  f'"hold latest read rline1"')
 apart = (
   f'grep -qx "release: latest" {followed} && cmp -s {lines} lines.before && '
   f'echo "release.yaml follows latest, lines.yaml stands"')
 settings = (
   f'"target assets/launcher.gui" "click settings" "read line" "click line" '
-  f'"read sline0" "click sline0" "read line" "click sline1"')
+  f'"read releaseentry0" "click releaseentry0" "read line" '
+  f'"click releaseentry1"')
 
 run = Test.AddTestRun('lines')
 sock = driver.endpoint()

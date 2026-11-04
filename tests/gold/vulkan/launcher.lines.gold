@@ -3,35 +3,42 @@ target assets/launcher.gui = document 0
 click store hover=store events=enter:store,press:store,click:store
 read state0 rect=`` 0x0 text=unreached
 click linkadd hover=linkadd events=enter:linkadd,press:linkadd,click:linkadd
-type events=edit:link
-click linkkeep hover=linkkeep events=enter:linkkeep,press:linkkeep,click:linkkeep
+type events=edit:source
+click sourceadd hover=sourceadd events=enter:sourceadd,press:sourceadd,click:sourceadd
+read sourcestate rect=`` 0x0 text=added
+click sourceclose hover=sourceclose events=enter:sourceclose,press:sourceclose,click:sourceclose
 read name1 rect=`` 0x0 text=box
-read sline rect=`` 120x28 text=stable
 read rline1 rect=`` 120x28 text=stable
 click install1 hover=install1 events=enter:install1,press:install1,click:install1
 read state1 rect=`` 0x0 text=✓
 read install1 rect=`` 96x28 text=✗
 click update1 hover=- events=-
 target assets/launcher.gui = document 0
-click radd1 hover=radd1 events=enter:radd1,press:radd1,click:radd1
-read sourcename rect=`` 0x0 text=box Sources
-read source rect=`` 440x28 text=``
+click linkadd hover=linkadd events=enter:linkadd,press:linkadd,click:linkadd
+read sourcename rect=`` 0x0 text=Add cartridge
+read source rect=`` 440x28 text=
+type events=edit:source
 read side rect=`` 88x28 text=local
 click find hover=find events=enter:find,press:find,click:find
 read sourcestate rect=`` 0x0 text=found 1
 read found.0 rect=`` 632x24 text=0.2-uat
 click found.0 hover=found.0 events=enter:found.0,press:found.0,click:found.0,select:found
 click sourceadd hover=sourceadd events=enter:sourceadd,press:sourceadd,click:sourceadd
-read sourcestate rect=`` 0x0 text=kept 1
+read sourcestate rect=`` 0x0 text=kept
 read sourcelist.0 rect=`` 632x24 text=0.2-uat  ``  local
 click sourceclose hover=sourceclose events=enter:sourceclose,press:sourceclose,click:sourceclose
+read name1 rect=`` 0x0 text=box
+read rline1 rect=`` 120x28 text=0.2-uat
 sources.yaml holds 0.2-uat for box
 target assets/launcher.gui = document 0
 click rline1 hover=rline1 events=enter:rline1,press:rline1,click:rline1
 read rentry2 rect=`` 112x30 text=0.2-uat
+click rentry0 hover=rentry0 events=enter:rentry0,press:rentry0,click:rentry0
+read rline1 rect=`` 120x28 text=stable
+read name1 rect=`` 0x0 text=box
+click rline1 hover=rline1 events=enter:rline1,press:rline1,click:rline1
 click rentry2 hover=rentry2 events=enter:rentry2,press:rentry2,click:rentry2
 read rline1 rect=`` 120x28 text=0.2-uat
-read sline rect=`` 120x28 text=stable
 lines.yaml holds box: 0.2-uat
 target assets/launcher.gui = document 0
 read name1 rect=`` 0x0 text=box
@@ -51,7 +58,7 @@ read state1 rect=`` 0x0 text=✓
 click update1 hover=- events=-
 lines.yaml records the 0.2-uat tip
 target assets/launcher.gui = document 0
-click radd1 hover=radd1 events=enter:radd1,press:radd1,click:radd1
+click linkadd hover=linkadd events=enter:linkadd,press:linkadd,click:linkadd
 read sourcestate rect=`` 0x0 text=
 click source hover=source events=enter:source,press:source,click:source
 key end events=-
@@ -75,17 +82,20 @@ click sourceclose hover=sourceclose events=enter:sourceclose,press:sourceclose,c
 read rline1 rect=`` 120x28 text=stable
 sources.yaml drops 0.2-uat
 target assets/launcher.gui = document 0
-click sline hover=sline events=enter:sline,press:sline,click:sline
-read sline1 rect=`` 112x30 text=latest
-click sline1 hover=sline1 events=enter:sline1,press:sline1,click:sline1
-read sline rect=`` 120x28 text=latest
+click settings hover=settings events=enter:settings,press:settings,click:settings
+read line rect=`` 160x32 text=stable
+click line hover=line events=enter:line,press:line,click:line
+read releaseentry1 rect=`` 112x30 text=latest
+click releaseentry1 hover=releaseentry1 events=enter:releaseentry1,press:releaseentry1,click:releaseentry1
+read line rect=`` 160x32 text=latest
+click store hover=store events=enter:store,press:store,click:store
 read rline1 rect=`` 120x28 text=latest
 release.yaml follows latest, lines.yaml stands
 target assets/launcher.gui = document 0
 click settings hover=settings events=enter:settings,press:settings,click:settings
 read line rect=`` 160x32 text=latest
 click line hover=line events=enter:line,press:line,click:line
-read sline0 rect=`` 112x30 text=stable
-click sline0 hover=sline0 events=enter:sline0,press:sline0,click:sline0
+read releaseentry0 rect=`` 112x30 text=stable
+click releaseentry0 hover=releaseentry0 events=enter:releaseentry0,press:releaseentry0,click:releaseentry0
 read line rect=`` 160x32 text=stable
-click sline1 hover=- events=-
+click releaseentry1 hover=- events=-
